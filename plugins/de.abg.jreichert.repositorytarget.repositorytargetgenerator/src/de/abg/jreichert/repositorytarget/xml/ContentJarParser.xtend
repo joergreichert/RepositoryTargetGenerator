@@ -4,6 +4,7 @@ import java.net.HttpURLConnection
 import java.net.JarURLConnection
 import java.net.URL
 import java.util.List
+import org.eclipse.xtext.xbase.lib.Functions
 
 class ContentJarParser extends ContentParser {
 	private val List<String> contents;
@@ -79,8 +80,8 @@ class ContentJarParser extends ContentParser {
 		if(url.endsWith("/")) url else url + "/"
 	}
 	
-	def parseVersionForId(String id) {
-      	val contentHandler = new ContentXmlHandler(id);
+	def parseVersionForId(String id, List<Functions$Function1<String, Boolean>> filters) {
+      	val contentHandler = new ContentXmlHandler(id, filters);
       	for(content : contents) {
 	      	parse(content, contentHandler)
       	}

@@ -73,8 +73,8 @@ class Unit {
 	
 	def String getTargetId() {
 		if(!_categoryId.nullOrEmpty && !_categoryId.endsWith("feature.group") && feature)
-           _categoryId + ".feature.group"
-		else _categoryId	
+           _targetId = _categoryId + ".feature.group"
+		else _targetId	
 	}
 
 	def String getCategoryId() {

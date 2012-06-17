@@ -18,7 +18,7 @@ class Target {
 
 		<target includeMode="feature" name="«name»" sequenceNumber="67">
 			<locations>
-				«locations.map(l|l.generateTarget).join»
+				«locations.map([generateTarget]).join»
 			</locations>
 			<environment>
 				<nl>en</nl>
@@ -33,7 +33,7 @@ class Target {
 	def generateCategoryXml() '''
 		<?xml version="1.0" encoding="UTF-8"?>
 		<site>
-			«locations.map(l|l.generateCategoryXml).join»
+			«locations.map([generateCategoryXml]).join»
 			<category-def name="3rdparty" label="Third Party">
 				<description>«name»</description>
 			</category-def>
@@ -53,13 +53,13 @@ class Location {
    
 	def generateTarget() '''
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			«units.map(u|u.generateTarget).join»
+			«units.map([generateTarget]).join»
 			<repository location="«repositoryLocation»"/>
 		</location>
 	'''
 	
 	def generateCategoryXml() '''
-		«units.map(u|u.generateCategoryXml).join»
+		«units.map([generateCategoryXml]).join»
 	''' 
 }
 
@@ -70,9 +70,11 @@ class Unit {
 	@Property private String url = ""
 	@Property private String category = "3rdparty"
 	@Property private Boolean feature = true
+	@Property private Boolean includeInCategoryXml = true
+	@Property private Boolean includeInTarget = true
 	
 	def String getTargetId() {
-		if(!_categoryId.nullOrEmpty && !_categoryId.endsWith("feature.group") && feature)
+		if(_targetId.nullOrEmpty && !_categoryId.nullOrEmpty && !_categoryId.endsWith("feature.group") && feature)
            _targetId = _categoryId + ".feature.group"
 		else _targetId	
 	}
@@ -90,12 +92,16 @@ class Unit {
 	}
 	
 	def generateTarget() '''
-		<unit id="«targetId»" version="«version»"/>
+		«IF includeInTarget»
+			<unit id="«targetId»" version="«version»"/>
+		«ENDIF»
 	'''
 	
 	def generateCategoryXml() '''
-		<feature url="«url»" id="«categoryId»" version="«version»">
-			<category name="«category»"/>
-		</feature>
+		«IF includeInCategoryXml»
+			<feature url="«url»" id="«categoryId»" version="«version»">
+				<category name="«category»"/>
+			</feature>
+		«ENDIF»
     '''	
 }

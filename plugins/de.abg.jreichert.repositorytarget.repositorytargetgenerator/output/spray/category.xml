@@ -39,19 +39,16 @@
 	<feature url="features/org.eclipse.graphiti.sdk.plus.feature_0.9.0.v20120606-0829.jar" id="org.eclipse.graphiti.sdk.plus.feature" version="0.9.0.v20120606-0829">
 		<category name="3rdparty"/>
 	</feature>
-	<feature url="features/org.eclipse.swt_3.100.0.v4232d.jar" id="org.eclipse.swt" version="3.100.0.v4232d">
+	<feature url="features/org.eclipse.emf.mwe2.language.sdk_2.3.0.v201206120758.jar" id="org.eclipse.emf.mwe2.language.sdk" version="2.3.0.v201206120758">
 		<category name="3rdparty"/>
 	</feature>
-	<feature url="features/org.eclipse.emf.mwe2.language.sdk_2.3.0.v201206051125.jar" id="org.eclipse.emf.mwe2.language.sdk" version="2.3.0.v201206051125">
+	<feature url="features/org.eclipse.emf.mwe2.runtime.sdk_2.3.0.v201206110920.jar" id="org.eclipse.emf.mwe2.runtime.sdk" version="2.3.0.v201206110920">
 		<category name="3rdparty"/>
 	</feature>
-	<feature url="features/org.eclipse.emf.mwe2.runtime.sdk_2.3.0.v201206050410.jar" id="org.eclipse.emf.mwe2.runtime.sdk" version="2.3.0.v201206050410">
+	<feature url="features/org.eclipse.xtext.sdk_2.3.0.v201206120633.jar" id="org.eclipse.xtext.sdk" version="2.3.0.v201206120633">
 		<category name="3rdparty"/>
 	</feature>
-	<feature url="features/org.eclipse.xtext.sdk_2.3.0.v201206051055.jar" id="org.eclipse.xtext.sdk" version="2.3.0.v201206051055">
-		<category name="3rdparty"/>
-	</feature>
-	<feature url="features/org.eclipse.xtend.sdk_2.3.0.v201206051055.jar" id="org.eclipse.xtend.sdk" version="2.3.0.v201206051055">
+	<feature url="features/org.eclipse.xtend.sdk_2.3.0.v201206120633.jar" id="org.eclipse.xtend.sdk" version="2.3.0.v201206120633">
 		<category name="3rdparty"/>
 	</feature>
 	<feature url="features/org.eclipselabs.xtext.utils.unittesting.feature_0.9.3.201204261440.jar" id="org.eclipselabs.xtext.utils.unittesting.feature" version="0.9.3.201204261440">

@@ -6,16 +6,21 @@ import java.util.List
 
 abstract class AbstractTargetDefinition {
 
-	def buildTarget(List<Functions$Function1<Unit, List<Functions$Function1<String, Boolean>>>> unitFilters) {
+	def buildTarget(List<Functions$Function1<Unit, List<Functions$Function1<String, Boolean>>>> unitFilters, List<Functions$Function1<Target, Target>> transformators) {
 		val target = targetDefinition()
 		target.fillVersions(unitFilters)
-		target
+		var tmpTarget = target
+		for(transformator : transformators) {
+			val finalTarget = tmpTarget
+			tmpTarget = transformator.apply(finalTarget)
+		}
+		tmpTarget
 	}
 	
 	def Target fillVersions(Target target, List<Functions$Function1<Unit, List<Functions$Function1<String, Boolean>>>> unitFilters) {
 		for(l : target.locations) {
 			val parser = new ContentJarParser(l.repositoryLocation)
-			l.units.forEach(u|u.fillVersion(parser, u.filter(unitFilters)))			
+			l.units.forEach([fillVersion(parser, filter(unitFilters))])			
 		}
 		target
 	}

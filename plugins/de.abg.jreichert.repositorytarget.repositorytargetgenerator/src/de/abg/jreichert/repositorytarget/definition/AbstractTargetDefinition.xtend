@@ -34,5 +34,5 @@ abstract class AbstractTargetDefinition {
 		}	
 	}
 
-	def Target targetDefinition((Unit) => boolean... filter) 
+	def Target targetDefinition() 
 }

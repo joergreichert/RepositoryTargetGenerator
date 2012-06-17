@@ -11,7 +11,7 @@ class LocalTargetDefinition extends AbstractTargetDefinition {
 		this.targetFilePath = targetFilePath
 	}
 	
-	override targetDefinition((Unit) => boolean... filter) { 
+	override targetDefinition() { 
 		val sprayContentParser = new ContentParser
 		val sprayTargetHandler = new de.abg.jreichert.repositorytarget.xml.TargetHandler
 		val sprayTargetContent = sprayContentParser.getContent(new FileInputStream(new File(targetFilePath)))

@@ -2,7 +2,7 @@ package de.abg.jreichert.repositorytarget.definition
 
 class OperaTargetDefinition extends AbstractTargetDefinition {
 	
-	override targetDefinition((Unit) => boolean... filter) { 
+	override targetDefinition() { 
 		val target = new Target => [
  			name = "Xtext TODO Platform - Eclipse 4.2"
  			locations += createLocation [

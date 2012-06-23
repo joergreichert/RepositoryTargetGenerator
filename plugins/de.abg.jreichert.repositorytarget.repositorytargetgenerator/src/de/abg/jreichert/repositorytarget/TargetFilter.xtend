@@ -28,7 +28,7 @@ class TargetFilter {
 		val (Unit) => boolean targetIdFilter = [ expectedTargetId.equals(targetId) ]
 		val (Unit) => List<(String) => boolean> unitFilter
 			= [ if(targetIdFilter.apply(it)) versionFilters else emptyVersionFilters ]
-//		val List<(Unit) => List<(String) => boolean>> list = newArrayList(unitFilter)
+//		newArrayList(unitFilter)
 		val List<(Unit) => List<(String) => boolean>> list = newArrayList()
 		list.add(unitFilter)
 		list

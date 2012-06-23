@@ -6,8 +6,8 @@ class Target {
    @Property private String name
    @Property private List<Location> locations = newArrayList
   
-   def createLocation((Location)=>void initializer) {
-      val location = new Location()
+   def createLocation((Location) => void initializer) {
+      val location = new Location
       initializer.apply(location)
       location
    }
@@ -18,7 +18,7 @@ class Target {
 
 		<target includeMode="feature" name="«name»" sequenceNumber="67">
 			<locations>
-				«locations.map([generateTarget]).join»
+				«locations.map[generateTarget].join»
 			</locations>
 			<environment>
 				<nl>en</nl>
@@ -33,7 +33,7 @@ class Target {
 	def generateCategoryXml() '''
 		<?xml version="1.0" encoding="UTF-8"?>
 		<site>
-			«locations.map([generateCategoryXml]).join»
+			«locations.map[generateCategoryXml].join»
 			<category-def name="3rdparty" label="Third Party">
 				<description>«name»</description>
 			</category-def>
@@ -45,7 +45,7 @@ class Location {
    @Property private List<Unit> units = newArrayList
    @Property private String repositoryLocation
 	
-   def createUnit((Unit)=>void initializer) {
+   def createUnit((Unit) => void initializer) {
       val unit = new Unit()
       initializer.apply(unit)
       unit
@@ -53,13 +53,13 @@ class Location {
    
 	def generateTarget() '''
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			«units.map([generateTarget]).join»
+			«units.map[generateTarget].join»
 			<repository location="«repositoryLocation»"/>
 		</location>
 	'''
 	
 	def generateCategoryXml() '''
-		«units.map([generateCategoryXml]).join»
+		«units.map[generateCategoryXml].join»
 	''' 
 }
 

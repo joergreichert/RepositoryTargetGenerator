@@ -1,13 +1,11 @@
 package de.abg.jreichert.repositorytarget.xml
 
-import org.xml.sax.helpers.DefaultHandler
+import java.util.List
 import java.util.SortedSet
 import java.util.TreeSet
-import org.xml.sax.SAXException
 import org.xml.sax.Attributes
-import org.eclipse.xtext.xbase.lib.Functions$Function1
-import java.util.List
-import org.eclipse.xtext.xbase.lib.Functions
+import org.xml.sax.SAXException
+import org.xml.sax.helpers.DefaultHandler
 
 class ContentXmlHandler extends DefaultHandler {
 
@@ -15,9 +13,9 @@ class ContentXmlHandler extends DefaultHandler {
 	private SortedSet<String> versions = new TreeSet<String>();
 	private String version;
 	private String expectedId;
-	private List<Functions$Function1<String, Boolean>> filters;
+	private List<(String) => boolean> filters;
 	
-	new(String expectedId, List<Functions$Function1<String, Boolean>> filters) {
+	new(String expectedId, List<(String) => boolean> filters) {
 		this.expectedId = expectedId
 		this.filters = filters
 	}
@@ -30,9 +28,9 @@ class ContentXmlHandler extends DefaultHandler {
 			Attributes atts) throws SAXException {
 		if (localName.equals("unit")) {
 			id = atts.getValue("id")
-			if(id != null && id.startsWith(expectedId)) {
+			if(id?.startsWith(expectedId)) {
 				version = atts.getValue("version")
-				if(version != null && filter(version)) {
+				if(version?.filter) {
 					versions.add(atts.getValue("version"))
 				}
 			}

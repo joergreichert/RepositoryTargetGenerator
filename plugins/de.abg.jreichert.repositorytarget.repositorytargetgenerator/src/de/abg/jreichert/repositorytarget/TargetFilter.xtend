@@ -1,6 +1,5 @@
 package de.abg.jreichert.repositorytarget
 
-import org.eclipse.xtext.xbase.lib.Functions
 import de.abg.jreichert.repositorytarget.definition.Unit
 import java.util.List
 import java.util.regex.Pattern
@@ -8,8 +7,7 @@ import java.util.regex.Pattern
 class TargetFilter {
 	
 	def unitFilters() {
-		val list = <Functions$Function1<Unit, List<Functions$Function1<String, Boolean>>>>newArrayList()
-		list.addAll(sdkFilter())
+		val list = sdkFilter()
 		list.addAll(pdeFilter())
 		list
 	}
@@ -24,12 +22,15 @@ class TargetFilter {
 	
 	def unitFilters(String expectedTargetId, String versionRegex) {
 		val versionPattern = Pattern::compile(versionRegex)
-		val Functions$Function1<String, Boolean> filterVersion = [ versionPattern.matcher(it).matches ]
-		val List<Functions$Function1<String, Boolean>> versionFilters = newArrayList(filterVersion)
-		val List<Functions$Function1<String, Boolean>> emptyVersionFilters = newArrayList()
+		val (String) => boolean filterVersion = [ versionPattern.matcher(it).matches ]
+		val versionFilters = newArrayList(filterVersion)
+		val emptyVersionFilters = <(String) => boolean>newArrayList()
 		val (Unit) => boolean targetIdFilter = [ expectedTargetId.equals(targetId) ]
-		val Functions$Function1<Unit, List<Functions$Function1<String, Boolean>>> unitFilter
+		val (Unit) => List<(String) => boolean> unitFilter
 			= [ if(targetIdFilter.apply(it)) versionFilters else emptyVersionFilters ]
-		newArrayList(unitFilter)
+//		val List<(Unit) => List<(String) => boolean>> list = newArrayList(unitFilter)
+		val List<(Unit) => List<(String) => boolean>> list = newArrayList()
+		list.add(unitFilter)
+		list
 	}
 }

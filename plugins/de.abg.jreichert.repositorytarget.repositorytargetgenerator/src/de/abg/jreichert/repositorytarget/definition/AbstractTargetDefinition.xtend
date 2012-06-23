@@ -1,12 +1,11 @@
 package de.abg.jreichert.repositorytarget.definition
 
 import de.abg.jreichert.repositorytarget.xml.ContentJarParser
-import org.eclipse.xtext.xbase.lib.Functions
 import java.util.List
 
 abstract class AbstractTargetDefinition {
 
-	def buildTarget(List<Functions$Function1<Unit, List<Functions$Function1<String, Boolean>>>> unitFilters, List<Functions$Function1<Target, Target>> transformators) {
+	def buildTarget(List<(Unit) => List<(String) => boolean>> unitFilters, List<(Target) => Target> transformators) {
 		val target = targetDefinition()
 		target.fillVersions(unitFilters)
 		var tmpTarget = target
@@ -17,23 +16,23 @@ abstract class AbstractTargetDefinition {
 		tmpTarget
 	}
 	
-	def Target fillVersions(Target target, List<Functions$Function1<Unit, List<Functions$Function1<String, Boolean>>>> unitFilters) {
+	def Target fillVersions(Target target, List<(Unit) => List<(String) => boolean>> unitFilters) {
 		for(l : target.locations) {
 			val parser = new ContentJarParser(l.repositoryLocation)
-			l.units.forEach([fillVersion(parser, filter(unitFilters))])			
+			l.units.forEach[fillVersion(parser, filter(unitFilters))]			
 		}
 		target
 	}
 	
-	def filter(Unit unit, List<Functions$Function1<Unit, List<Functions$Function1<String, Boolean>>>> unitFilters) {
-		val list = <Functions$Function1<String, Boolean>>newArrayList
+	def filter(Unit unit, List<(Unit) => List<(String) => boolean>> unitFilters) {
+		val list = <(String) => boolean>newArrayList
 		for(f : unitFilters) {
 			list.addAll(f.apply(unit))
 		}
 		list
 	}
 	
-	def fillVersion(Unit unit, ContentJarParser parser, List<Functions$Function1<String, Boolean>> filters) {
+	def fillVersion(Unit unit, ContentJarParser parser, List<(String) => boolean> filters) {
 		if(unit.version.nullOrEmpty) {
 			unit.version = parser.parseVersionForId(unit.categoryId, filters)
 		}	

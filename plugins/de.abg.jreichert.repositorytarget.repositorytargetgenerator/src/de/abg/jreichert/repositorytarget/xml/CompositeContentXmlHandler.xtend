@@ -12,9 +12,10 @@ class CompositeContentXmlHandler extends DefaultHandler {
 	private String child;
 
 	new(String location) {
-		this.location = location;
 		if (!location.endsWith("/")) {
 			this.location = location + "/";
+		} else {
+			this.location = location;
 		}
 	}
 

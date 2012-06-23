@@ -9,9 +9,9 @@ import de.abg.jreichert.repositorytarget.definition.Target
 
 class TargetHandler extends DefaultHandler {
 
-	private Location location = null;
-	private Target target = null;
-	private Unit unit = null;
+	private Location location = null
+	private Target target = null
+	private Unit unit = null
 	
 	new() {
 	}
@@ -22,20 +22,24 @@ class TargetHandler extends DefaultHandler {
 
 	override startElement(String uri, String localName, String qName,
 			Attributes atts) throws SAXException {
-		if (localName.equals("target")) {
-			target = new Target();
-			target.setName(atts.getValue("name"));
-		} else if (localName.equals("location")) {
-			location = new Location();
-			target.getLocations().add(location);
-		} else if (localName.equals("unit")) {
-			unit = new Unit();
-			unit.setTargetId(atts.getValue("id"));
-			location.getUnits().add(unit);
-			//unit.setVersion(atts.getValue("version"));
-		} else if (localName.equals("repository")) {
-			location.setRepositoryLocation(atts.getValue("location"));
-		}
+		switch localName {
+			case "target" : {
+				target = new Target()
+				target.setName(atts.getValue("name"))
+			}
+			case "location" : {
+				location = new Location();
+				target.getLocations().add(location);
+		 	}	
+			case "unit" : {
+				unit = new Unit();
+				unit.setTargetId(atts.getValue("id"));
+				location.getUnits().add(unit);
+			}	
+			case "repository" :	{
+				location.setRepositoryLocation(atts.getValue("location"));
+			}
+		}			
 	}
 	
 	def getTarget() {

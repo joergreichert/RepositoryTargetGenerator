@@ -6,7 +6,7 @@ import de.abg.jreichert.repositorytarget.definition.Unit
 class TargetTransformator {
 	
 	def targetTransformators() {
-		val list = <(Target)=>Target>newArrayList()
+		val list = <(Target) => void>newArrayList()
 		list.addAll(swtTargetTransformator())
 		list
 	}
@@ -15,30 +15,27 @@ class TargetTransformator {
 		val unitTransformatorList = swtTargetIdUnitTransformator()
 		unitTransformatorList.addAll(swtCategoryUnitTransformator())
 
-		val (Target) => Target transformator = [
+		val (Target) => void transformator = [
 			locations.forEach[units.forEach(u|unitTransformatorList.forEach[apply(u)])]
-			it
 		]
 		newArrayList(transformator)
 	}	
 	
 	def swtTargetIdUnitTransformator() {
-		val (Unit) => Unit unitTransformator = [
+		val (Unit) => void unitTransformator = [
 			if("org.eclipse.swt.feature.group".equals(targetId)) { 
 				targetId = "org.eclipse.swt"
 				feature=false
 			}
-			it
 		]
 		newArrayList(unitTransformator)
 	}	
 	
 	def swtCategoryUnitTransformator() {
-		val (Unit) => Unit unitTransformator = [
+		val (Unit) => void unitTransformator = [
 			if("org.eclipse.swt.feature.group".equals(targetId) || "org.eclipse.swt".equals(targetId)) { 
 				includeInCategoryXml=false
 			}
-			it
 		]
 		newArrayList(unitTransformator)
 	}	

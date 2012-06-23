@@ -5,15 +5,13 @@ import java.util.List
 
 abstract class AbstractTargetDefinition {
 
-	def buildTarget(List<(Unit) => List<(String) => boolean>> unitFilters, List<(Target) => Target> transformators) {
+	def buildTarget(List<(Unit) => List<(String) => boolean>> unitFilters, List<(Target) => void> transformators) {
 		val target = targetDefinition()
 		target.fillVersions(unitFilters)
-		var tmpTarget = target
 		for(transformator : transformators) {
-			val finalTarget = tmpTarget
-			tmpTarget = transformator.apply(finalTarget)
+			transformator.apply(target)
 		}
-		tmpTarget
+		target
 	}
 	
 	def Target fillVersions(Target target, List<(Unit) => List<(String) => boolean>> unitFilters) {

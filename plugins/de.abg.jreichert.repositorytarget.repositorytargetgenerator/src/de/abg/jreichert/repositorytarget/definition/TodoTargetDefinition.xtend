@@ -1,6 +1,6 @@
 package de.abg.jreichert.repositorytarget.definition
 
-class OperaTargetDefinition extends AbstractTargetDefinition {
+class TodoTargetDefinition extends AbstractTargetDefinition {
 	
 	override targetDefinition() { 
 		val target = new Target => [

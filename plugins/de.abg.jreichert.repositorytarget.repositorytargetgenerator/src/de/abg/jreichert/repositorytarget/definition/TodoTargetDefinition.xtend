@@ -30,11 +30,9 @@ class TodoTargetDefinition extends AbstractTargetDefinition {
   				repositoryLocation = "http://download.eclipse.org/releases/juno"
   				units += createUnit [
 					categoryId = "org.eclipse.sdk"
-					version = "4.2.0.v20120429-1556-7T7mDFDPz-3Fdco66AJ3a4_XNEnQ8tP_lErJc8cg4oBO3"
   				]
   				units += createUnit [
 					categoryId = "org.eclipse.pde"
-					version = "3.8.0.v20120511-0746-7c7vFcdFFt6Zr5_Zt4Jz0hBd"
   				]
   				units += createUnit [
 					categoryId = "org.eclipse.emf.sdk"
@@ -45,7 +43,7 @@ class TodoTargetDefinition extends AbstractTargetDefinition {
   				]
   			]
   			locations += createLocation [
-  				repositoryLocation = "http://download.eclipse.org/modeling/tmf/xtext/updates/composite/milestones/"
+  				repositoryLocation = "http://download.itemis.de/updates/"
   				units += createUnit [
 					categoryId = "org.eclipse.emf.mwe2.language.sdk"
   				]

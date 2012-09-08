@@ -16,9 +16,9 @@ class Target {
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 		<?pde version="3.6"?>
 
-		<target includeMode="feature" name="«name»" sequenceNumber="67">
+		<target includeMode="feature" name="Â«nameÂ»" sequenceNumber="67">
 			<locations>
-				«locations.map[generateTarget].join»
+				Â«locations.map[generateTarget].joinÂ»
 			</locations>
 			<environment>
 				<nl>en</nl>
@@ -33,9 +33,9 @@ class Target {
 	def generateCategoryXml() '''
 		<?xml version="1.0" encoding="UTF-8"?>
 		<site>
-			«locations.map[generateCategoryXml].join»
+			Â«locations.map[generateCategoryXml].joinÂ»
 			<category-def name="3rdparty" label="Third Party">
-				<description>«name»</description>
+				<description>Â«nameÂ»</description>
 			</category-def>
 		</site>
 	'''    
@@ -53,13 +53,13 @@ class Location {
    
 	def generateTarget() '''
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			«units.map[generateTarget].join»
-			<repository location="«repositoryLocation»"/>
+			Â«units.map[generateTarget].joinÂ»
+			<repository location="Â«repositoryLocationÂ»"/>
 		</location>
 	'''
 	
 	def generateCategoryXml() '''
-		«units.map[generateCategoryXml].join»
+		Â«units.map[generateCategoryXml].joinÂ»
 	''' 
 }
 
@@ -92,16 +92,16 @@ class Unit {
 	}
 	
 	def generateTarget() '''
-		«IF includeInTarget»
-			<unit id="«targetId»" version="«version»"/>
-		«ENDIF»
+		Â«IF includeInTargetÂ»
+			<unit id="Â«targetIdÂ»" version="Â«versionÂ»"/>
+		Â«ENDIFÂ»
 	'''
 	
 	def generateCategoryXml() '''
-		«IF includeInCategoryXml»
-			<feature url="«url»" id="«categoryId»" version="«version»">
-				<category name="«category»"/>
+		Â«IF includeInCategoryXmlÂ»
+			<feature url="Â«urlÂ»" id="Â«categoryIdÂ»" version="Â«versionÂ»">
+				<category name="Â«categoryÂ»"/>
 			</feature>
-		«ENDIF»
+		Â«ENDIFÂ»
     '''	
 }

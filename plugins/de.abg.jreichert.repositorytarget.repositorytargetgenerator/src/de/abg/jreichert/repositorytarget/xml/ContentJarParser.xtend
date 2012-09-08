@@ -80,16 +80,28 @@ class ContentJarParser extends ContentParser {
 	}
 	
 	def parseVersionForId(String id, List<(String) => boolean> filters) {
+		getParsedContent(id, filters).version
+	}
+	
+	def parseVersionsForId(String id, List<(String) => boolean> filters) {
+		getParsedContent(id, filters).versions
+	}
+	
+	def private getParsedContent(String id, List<(String) => boolean> filters) {
       	val contentHandler = new ContentXmlHandler(id, filters);
       	for(content : contents) {
 	      	parse(content, contentHandler)
       	}
-		contentHandler.version
+		contentHandler
 	}
 	
 	def parseLocations(String content, String location) {
       	val contentHandler = new CompositeContentXmlHandler(location);
       	parse(content, contentHandler)
 		contentHandler.locations
+	}
+	
+	def getContents() {
+		contents
 	}
 }

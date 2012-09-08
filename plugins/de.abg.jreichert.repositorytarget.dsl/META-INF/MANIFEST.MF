@@ -1,0 +1,34 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: de.abg.jreichert.repositorytarget.dsl
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: de.abg.jreichert.repositorytarget.dsl; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext;visibility:=reexport,
+ org.eclipse.xtext.xbase;resolution:=optional;visibility:=reexport,
+ org.eclipse.xtext.generator;resolution:=optional,
+ org.apache.commons.logging;bundle-version="1.0.4";resolution:=optional,
+ org.eclipse.emf.codegen.ecore;resolution:=optional,
+ org.eclipse.emf.mwe.utils;resolution:=optional,
+ org.eclipse.emf.mwe2.launch;resolution:=optional,
+ org.eclipse.xtext.util,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.common,
+ org.antlr.runtime,
+ org.eclipse.xtext.common.types
+Import-Package: org.apache.log4j,
+ org.eclipse.xtext.xbase.lib
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: de.abg.jreichert,
+ de.abg.jreichert.services,
+ de.abg.jreichert.targetDefinition,
+ de.abg.jreichert.targetDefinition.impl,
+ de.abg.jreichert.targetDefinition.util,
+ de.abg.jreichert.serializer,
+ de.abg.jreichert.parser.antlr,
+ de.abg.jreichert.parser.antlr.internal,
+ de.abg.jreichert.validation,
+ de.abg.jreichert.scoping,
+ de.abg.jreichert.generator,
+ de.abg.jreichert.formatting

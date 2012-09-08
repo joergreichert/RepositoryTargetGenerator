@@ -1,0 +1,43 @@
+grammar de.abg.jreichert.TargetDefinition hidden(WS, ML_COMMENT, SL_COMMENT)
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+generate targetDefinition "http://www.abg.de/jreichert/TargetDefinition"
+
+
+Target:
+	'TargetDefinition' name=STRING
+	locations+=Location*
+;
+
+Location:
+	(name=STRING)? repositoryLocation=URL '{'
+		unit+=Unit*
+	'}'
+;
+
+Unit:
+	categoryId=CATEGORYID (version=VERSION)? (noFeature?='noFeature')?
+;
+
+terminal URL: 
+	('http'|'https')('://')('a'..'z'|'A'..'Z'|'?'|'&'|'%'|'$'|'/'|'.'|'_'|'-'|'0'..'9')*
+;
+
+terminal CATEGORYID:
+	('a'..'z'|'A'..'Z'|'_'|'.')('a'..'z'|'A'..'Z'|'_'|'.'|'0'..'9')*
+; 
+
+terminal VERSION:
+	('0'..'9')*('.'('a'..'z'|'A'..'Z'|'_'|'-'|'0'..'9')*)*
+;
+
+terminal ID  		: '^'?;
+terminal STRING	: 
+			'"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|'"') )* '"' |
+			"'" ( '\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|"'") )* "'"
+		; 
+terminal ML_COMMENT	: '/*' -> '*/';
+terminal SL_COMMENT 	: '//' !('\n'|'\r')* ('\r'? '\n')?;
+
+terminal WS			: (' '|'\t'|'\r'|'\n')+;
+
+terminal ANY_OTHER: .;

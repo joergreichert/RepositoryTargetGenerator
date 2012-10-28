@@ -95,12 +95,23 @@ class ContentXmlHandler extends DefaultHandler {
 	}
 	
 	def SortedSet<String> getVersions() {
-		if(expectedId != null) expectedId.versions else <String>newTreeSet([s1, s2 | compareStrings(s1, s2)])
+		if(expectedId != null) expectedId.versions else createEmptySortedSet
 	}
 	
 	def SortedSet<String> getVersions(String id) {
-		if(id != null) idToVersions.get(id) else <String>newTreeSet([s1, s2 | compareStrings(s1, s2)])
+		if(id != null) idToVersions.getNullSafe(id) else createEmptySortedSet
 	}	
+	
+	def private getNullSafe(SortedMap<String, SortedSet<String>> map, String key) {
+		if (map.get(id) == null) {
+			map.put(id, createEmptySortedSet)
+		}
+		map.get(id)
+	}
+	
+	def private createEmptySortedSet() {
+		<String>newTreeSet([s1, s2 | compareStrings(s1, s2)])
+	}
 	
 	def String getVersion(String id) {
 		id.versions.version

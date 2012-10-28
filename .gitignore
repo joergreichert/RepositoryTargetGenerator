@@ -1,3 +1,7 @@
 
 /plugins/de.abg.jreichert.repositorytarget.repositorytargetgenerator/target
 /plugins/de.abg.jreichert.repositorytarget.xtextmavenproject/target
+/plugins\de.abg.jreichert.repositorytarget.dsl/.antlr-generator-3.2.0.jar
+/plugins\de.abg.jreichert.repositorytarget.dsl/bin
+/plugins\de.abg.jreichert.repositorytarget.dsl.tests/bin
+/plugins\de.abg.jreichert.repositorytarget.dsl.ui/bin

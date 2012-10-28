@@ -28,6 +28,8 @@ import de.abg.jreichert.targetDefinition.Unit;
  */
 public class TargetDefinitionProposalProvider extends
 		AbstractTargetDefinitionProposalProvider {
+	private static String FEATURE_GROUP = ".feature.group";
+	
 	private Map<String, SortedMap<String, SortedSet<String>>> urlToCategoryIdsToVersions = new HashMap<String, SortedMap<String, SortedSet<String>>>();
 
 	@Override
@@ -105,6 +107,7 @@ public class TargetDefinitionProposalProvider extends
 				String categoryId = unit.getCategoryId();
 				if (categoryId != null) {
 					fill(repositoryLocation);
+					categoryId = unit.isNoFeature() || categoryId.endsWith(FEATURE_GROUP) ? categoryId : categoryId + ".feature.group";
 					Set<String> versions = urlToCategoryIdsToVersions.get(
 							repositoryLocation).get(categoryId);
 					if (versions != null) {

@@ -3,13 +3,53 @@
  */
 package de.abg.jreichert.generator
 
+import de.abg.jreichert.repositorytarget.definition.Target
+import de.abg.jreichert.repositorytarget.definition.Location
+import de.abg.jreichert.repositorytarget.definition.Unit
 import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.xtext.generator.IGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess
+import org.eclipse.xtext.generator.IGenerator
 
 class TargetDefinitionGenerator implements IGenerator {
 	
 	override void doGenerate(Resource resource, IFileSystemAccess fsa) {
-		//TODO implement me
+		val dslTarget = resource.allContents.filter(typeof(de.abg.jreichert.targetDefinition.Target)).head
+		if(dslTarget != null) {
+			val generatorTarget = dslTarget.transformTarget
+			fsa.generateFile("category.xml", generatorTarget.generateCategoryXml)  
+			fsa.generateFile(dslTarget.fileName, generatorTarget.generateTarget)  
+		}
 	}
+	
+	def private fileName(de.abg.jreichert.targetDefinition.Target it) {
+		if(targetFileName.nullOrEmpty) {
+			name.replaceAll(" ", "").toFirstUpper + ".target"
+		} else {
+			if(targetFileName.endsWith(".target")) {
+				targetFileName
+			} else {
+				targetFileName + ".target"
+			}
+		}
+	}
+	
+	def Target create generatorTarget : new Target transformTarget(de.abg.jreichert.targetDefinition.Target dslTarget) {
+		generatorTarget.name = dslTarget.name
+		dslTarget.locations.forEach[generatorTarget.locations.add(transformLocation)]
+	}
+	
+	def Location create generatorLocation : new Location transformLocation(de.abg.jreichert.targetDefinition.Location dslLocation) {
+		generatorLocation.repositoryLocation = dslLocation.repositoryLocation 
+		dslLocation.unit.forEach[generatorLocation.units.add(transformUnit)]
+	}
+	
+	def Unit create generatorUnit : new Unit transformUnit(de.abg.jreichert.targetDefinition.Unit dslUnit) {
+		if(dslUnit.noFeature) {
+			generatorUnit.targetId = dslUnit.categoryId 
+		} else {
+			generatorUnit.categoryId = dslUnit.categoryId 
+		}
+		generatorUnit.version = dslUnit.version
+		generatorUnit.feature = !dslUnit.noFeature
+	}	
 }

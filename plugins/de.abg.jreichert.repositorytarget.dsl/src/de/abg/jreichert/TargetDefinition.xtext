@@ -5,32 +5,32 @@ generate targetDefinition "http://www.abg.de/jreichert/TargetDefinition"
 
 Target:
 	'TargetDefinition' name=STRING
+	('targetFile' '=' targetFileName=ID)?
 	locations+=Location*
 ;
 
 Location:
 	(name=STRING)? repositoryLocation=URL '{'
-		unit+=Unit*
+		(unit+=Unit) (',' unit+=Unit)*
 	'}'
 ;
 
 Unit:
-	categoryId=CATEGORYID (version=VERSION)? (noFeature?='noFeature')?
+	categoryId=ID (version=VERSION)? (noFeature?='noFeature')?
 ;
 
 terminal URL: 
 	('http'|'https')('://')('a'..'z'|'A'..'Z'|'?'|'&'|'%'|'$'|'/'|'.'|'_'|'-'|'0'..'9')*
 ;
 
-terminal CATEGORYID:
-	('a'..'z'|'A'..'Z'|'_'|'.')('a'..'z'|'A'..'Z'|'_'|'.'|'0'..'9')*
+terminal ID:
+	('a'..'z'|'A'..'Z'|'_'|'.'|'-')('a'..'z'|'A'..'Z'|'_'|'.'|'-'|'0'..'9')*
 ; 
 
 terminal VERSION:
 	('0'..'9')*('.'('a'..'z'|'A'..'Z'|'_'|'-'|'0'..'9')*)*
 ;
 
-terminal ID  		: '^'?;
 terminal STRING	: 
 			'"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|'"') )* '"' |
 			"'" ( '\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|"'") )* "'"

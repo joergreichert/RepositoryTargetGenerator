@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/de.abg.jreichert.repositorytarget.feature_0.0.0.jar" id="de.abg.jreichert.repositorytarget.feature" version="0.0.0">
+      <category name="repositorytarget"/>
+   </feature>
+   <category-def name="repositorytarget" label="Repository Target Generator"/>
+</site>

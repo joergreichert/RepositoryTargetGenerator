@@ -7,29 +7,29 @@ import org.eclipse.xtext.ui.generator.*
 var grammarURI = "classpath:/de/abg/jreichert/TargetDefinition.xtext"
 var file.extensions = "targetdef"
 var projectName = "de.abg.jreichert.repositorytarget.dsl"
-var runtimeProject = "../${projectName}"
+var runtimeProject = "${projectName}"
 
 Workflow {
     bean = StandaloneSetup {
             scanClassPath = true
-            platformUri = "${runtimeProject}/.."
+            platformUri = "../${runtimeProject}/.."
             // The following two lines can be removed, if Xbase is not used.
             registerGeneratedEPackage = "org.eclipse.xtext.xbase.XbasePackage"
             registerGenModelFile = "platform:/resource/org.eclipse.xtext.xbase/model/Xbase.genmodel"
         }
     
         component = DirectoryCleaner {
-            directory = "${runtimeProject}/src-gen"
+            directory = "../${runtimeProject}/src-gen"
         }
     
         component = DirectoryCleaner {
-            directory = "${runtimeProject}.ui/src-gen"
+            directory = "../${runtimeProject}.ui/src-gen"
         }
     
         component = Generator {
-            pathRtProject = runtimeProject
-            pathUiProject = "${runtimeProject}.ui"
-            pathTestProject = "${runtimeProject}.tests"
+            pathRtProject = "../${runtimeProject}"
+            pathUiProject = "../${runtimeProject}.ui"
+            pathTestProject = "../../tests/${runtimeProject}.tests"
             projectNameRt = projectName
             projectNameUi = "${projectName}.ui"
             language = {

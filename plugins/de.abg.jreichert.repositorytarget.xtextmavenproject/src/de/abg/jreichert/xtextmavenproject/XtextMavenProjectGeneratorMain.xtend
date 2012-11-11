@@ -46,7 +46,12 @@ import java.util.List
 		generateRepositoryParentProject()
 		generateRepositoryProject()
 		generateParentProject()
-		val pluginProjects = newArrayList("repositorytargetgenerator", "xtextmavenproject")
+		val pluginProjects = newArrayList(
+			"dsl",
+			"dsl.tests",
+			"dsl.ui",
+			"repositorytargetgenerator"
+		)
 		pluginProjects.forEach(pp|pp.generatePluginProject())
 		generateDistributionProject(pluginProjects)
 	}
@@ -122,14 +127,14 @@ import java.util.List
 			<packaging>pom</packaging>
 		
 			<properties>
-				<tycho-version>0.14.1</tycho-version>
+				<tycho-version>0.16.0</tycho-version>
 				<junit-version>4.8.1</junit-version>
-				<platform-version-name>indigo</platform-version-name>
+				<platform-version-name>juno</platform-version-name>
 				<eclipse-site>http://download.eclipse.org/releases/${platform-version-name}</eclipse-site>
 				<orbit-site>http://download.eclipse.org/tools/orbit/downloads/drops/R20110523182458/repository</orbit-site>
-				<platform-version>[3.7,3.8)</platform-version>
+				<platform-version>[4.2,4.3)</platform-version>
 				<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-				<target-platform-version>0.1.1-SNAPSHOT</target-platform-version>
+				<target-platform-version>0.1.0-SNAPSHOT</target-platform-version>
 				<maven-resources-plugin-version>2.5</maven-resources-plugin-version>
 				<maven-antrun-plugin-version>1.7</maven-antrun-plugin-version>
 				<maven-surefire-plugin-version>2.9</maven-surefire-plugin-version>
@@ -137,7 +142,7 @@ import java.util.List
 				<maven-assembly-plugin-version>2.3</maven-assembly-plugin-version>
 				<build-helper-maven-plugin-version>1.7</build-helper-maven-plugin-version>
 				<fornax-oaw-m2-plugin-version>3.3.1</fornax-oaw-m2-plugin-version>
-				<xtend-maven-plugin-version>2.2.2</xtend-maven-plugin-version>
+				<xtend-maven-plugin-version>2.3.1</xtend-maven-plugin-version>
 			</properties>
 		
 			<build>
@@ -334,15 +339,15 @@ import java.util.List
 		
 			<profiles>
 				<profile>
-					<id>platform-indigo</id>
+					<id>platform-juno</id>
 					<activation>
 						<property>
 							<name>platform-version-name</name>
-							<value>indigo</value>
+							<value>juno</value>
 						</property>
 					</activation>
 					<properties>
-						<eclipse-site>http://download.eclipse.org/releases/indigo</eclipse-site>
+						<eclipse-site>http://download.eclipse.org/releases/juno</eclipse-site>
 						<platform-version>${platform-version}</platform-version>
 					</properties>
 				</profile>
@@ -370,87 +375,6 @@ import java.util.List
 						<ui.test.vmargs>-Xmx512m -XX:MaxPermSize=256m</ui.test.vmargs>
 					</properties>
 				</profile>
-				<profile>
-					<id>sonarLocal</id>
-					<properties>
-						<sonar.jdbc.url>jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8</sonar.jdbc.url>
-						<sonar.jdbc.driverClassName>com.mysql.jdbc.Driver</sonar.jdbc.driverClassName>
-						<sonar.jdbc.username>sonar</sonar.jdbc.username>
-						<sonar.jdbc.password>sonar</sonar.jdbc.password>
-						<sonar.host.url>http://localhost:9000/</sonar.host.url>
-						<sonar.java.source>1.6</sonar.java.source>
-						<sonar.java.target>1.6</sonar.java.target>				
-						<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-					</properties> 
-				</profile>
-				<profile>
-					<id>sonarRemote</id>
-					<properties>
-						<sonar.jdbc.url>jdbc:mysql://ec2-174-129-80-78.compute-1.amazonaws.com:3306/sonar?useUnicode=true&amp;characterEncoding=utf8</sonar.jdbc.url>
-						<sonar.jdbc.driverClassName>com.mysql.jdbc.Driver</sonar.jdbc.driverClassName>
-						<sonar.jdbc.username>sonar</sonar.jdbc.username>
-						<sonar.jdbc.password>sonar</sonar.jdbc.password>
-						<sonar.host.url>http://ec2-174-129-80-78.compute-1.amazonaws.com:9000/sonar</sonar.host.url>
-						<sonar.java.source>1.6</sonar.java.source>
-						<sonar.java.target>1.6</sonar.java.target>				
-						<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-					</properties> 
-				</profile>
-				<profile>
-					<id>noCodeCoverage</id>
-					<activation>
-						<property>
-							<name>!codeCoverage</name>
-						</property>
-					</activation>
-					<properties>
-						<coverageAgent></coverageAgent>
-						<it.coverage.argLine></it.coverage.argLine>
-					</properties>
-				</profile>		
-				<profile>
-					<id>codeCoverage</id>
-					<properties>
-						<jacoco.version>0.5.6.201201232323</jacoco.version>
-						<jacoco.destFile>${project.basedir}/../../releng/«name».parent/target/jacoco.exec</jacoco.destFile>
-						<jacoco.it.destFile>${project.basedir}/../../releng/«name».parent/target/jacoco_it.exec</jacoco.it.destFile>
-						<!-- Sonar -->
-						<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
-						<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-						<sonar.jacoco.reportPath>${jacoco.destFile}</sonar.jacoco.reportPath>
-						<sonar.surefire.reportsPath>../${project.artifactId}.tests/target/surefire-reports/</sonar.surefire.reportsPath>
-						<sonar.jacoco.itReportPath>${jacoco.it.destFile}</sonar.jacoco.itReportPath>
-						<!--sonar.skippedModules>plugin.tests</sonar.skippedModules-->				
-					</properties> 
-					<build>
-						<plugins>			
-							<plugin>
-								<groupId>org.jacoco</groupId>
-								<artifactId>jacoco-maven-plugin</artifactId>
-								<version>${jacoco.version}</version>
-								<executions>
-									<execution>
-										<id>pre-unit-test</id>
-										<goals>
-											<goal>prepare-agent</goal>
-										</goals>
-									</execution>
-									<execution>
-										<id>pre-integration-test</id>
-										<phase>pre-integration-test</phase>
-										<goals>
-											<goal>prepare-agent</goal>
-										</goals>
-										<configuration>
-											<destFile>${jacoco.it.destFile}</destFile>
-											<propertyName>it.coverage.argLine</propertyName>
-										</configuration>
-									</execution>
-								</executions>
-							</plugin>
-						</plugins>
-					</build>
-				</profile>				
 			</profiles>
 		
 			<licenses>

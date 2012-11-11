@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>de.abg.jreichert.repositorytarget</groupId>
@@ -10,30 +11,33 @@
 	</parent>
 
 	<groupId>de.abg.jreichert.repositorytarget</groupId>
-	<artifactId>repositorytargetgenerator</artifactId>
+	<artifactId>de.abg.jreichert.repositorytarget.repositorytargetgenerator</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.eclipse.xtend2</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>src-gen</directory>
+							<excludes>
+								<exclude>.gitignore</exclude>
+							</excludes>
+						</fileset>
+						<fileset>
+							<directory>xtend-gen</directory>
+							<excludes>
+								<exclude>.gitignore</exclude>
+							</excludes>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.xtend</groupId>
 				<artifactId>xtend-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-					</execution>
-				</executions>
-				<dependencies>
-					<!-- these dependencies are contributed in Eclipse by the "Xtend Library" classpath container -->
-					<dependency>
-						<groupId>org.eclipse.xtend</groupId>
-						<artifactId>xtend-library</artifactId>
-						<version>2.2.1</version>
-						<type>pom</type>
-					</dependency>
-				</dependencies>
 			</plugin>
 		</plugins>
 	</build>

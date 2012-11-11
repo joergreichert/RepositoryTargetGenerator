@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<psf version="2.0">
+<provider id="org.eclipse.egit.core.GitProvider">
+<project reference="1.0,https://github.com/joergreichert/RepositoryTargetGenerator,master,releng/de.abg.jreichert.repositorytarget.distribution"/>
+<project reference="1.0,https://github.com/joergreichert/RepositoryTargetGenerator,master,plugins/de.abg.jreichert.repositorytarget.dsl"/>
+<project reference="1.0,https://github.com/joergreichert/RepositoryTargetGenerator,master,tests/de.abg.jreichert.repositorytarget.dsl.tests"/>
+<project reference="1.0,https://github.com/joergreichert/RepositoryTargetGenerator,master,plugins/de.abg.jreichert.repositorytarget.dsl.ui"/>
+<project reference="1.0,https://github.com/joergreichert/RepositoryTargetGenerator,master,features/de.abg.jreichert.repositorytarget.feature"/>
+<project reference="1.0,https://github.com/joergreichert/RepositoryTargetGenerator,master,releng/de.abg.jreichert.repositorytarget.parent"/>
+<project reference="1.0,https://github.com/joergreichert/RepositoryTargetGenerator,master,releng/de.abg.jreichert.repositorytarget.repository"/>
+<project reference="1.0,https://github.com/joergreichert/RepositoryTargetGenerator,master,releng/de.abg.jreichert.repositorytarget.repository.parent"/>
+<project reference="1.0,https://github.com/joergreichert/RepositoryTargetGenerator,master,plugins/de.abg.jreichert.repositorytarget.repositorytargetgenerator"/>
+<project reference="1.0,https://github.com/joergreichert/RepositoryTargetGenerator,master,releng/de.abg.jreichert.repositorytarget.targetplatform"/>
+<project reference="1.0,https://github.com/joergreichert/RepositoryTargetGenerator,master,features/de.abg.jreichert.repositorytarget.updatesite"/>
+<project reference="1.0,https://github.com/joergreichert/RepositoryTargetGenerator,master,plugins/de.abg.jreichert.repositorytarget.xtextmavenproject"/>
+<project reference="1.0,https://github.com/joergreichert/RepositoryTargetGenerator,master,examples/Test"/>
+<project reference="1.0,https://github.com/joergreichert/RepositoryTargetGenerator,master,wiki"/>
+</provider>
+<workingSets editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" id="1352643077897_7" label="Repository Target Generator Examples" name="Repository Target Generator Examples">
+<item elementID="=Test" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSets>
+<workingSets editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" id="1352643051682_6" label="Repository Target Generator Features" name="Repository Target Generator Features">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/de.abg.jreichert.repositorytarget.updatesite" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/de.abg.jreichert.repositorytarget.feature" type="4"/>
+</workingSets>
+<workingSets editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" id="1352643030437_5" label="Repository Target Generator Plug-ins" name="Repository Target Generator Plug-ins">
+<item elementID="=de.abg.jreichert.repositorytarget.dsl.ui" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=de.abg.jreichert.repositorytarget.xtextmavenproject" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=de.abg.jreichert.repositorytarget.dsl" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=de.abg.jreichert.repositorytarget.repositorytargetgenerator" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSets>
+<workingSets editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" id="1352643005096_4" label="Repository Target Generator Releng" name="Repository Target Generator Releng">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/wiki" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/de.abg.jreichert.repositorytarget.distribution" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/de.abg.jreichert.repositorytarget.parent" type="4"/>
+</workingSets>
+<workingSets editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" id="1352643133719_9" label="Repository Target Generator Repository" name="Repository Target Generator Repository">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/de.abg.jreichert.repositorytarget.repository" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/de.abg.jreichert.repositorytarget.repository.parent" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/de.abg.jreichert.repositorytarget.targetplatform" type="4"/>
+</workingSets>
+<workingSets editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" id="1352643091654_8" label="Repository Target Generator Tests" name="Repository Target Generator Tests">
+<item elementID="=de.abg.jreichert.repositorytarget.dsl.tests" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSets>
+</psf>

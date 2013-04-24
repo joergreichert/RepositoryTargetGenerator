@@ -13,8 +13,14 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.EcoreUtil2;
+import org.eclipse.xtext.RuleCall;
+import org.eclipse.xtext.common.ui.contentassist.TerminalsProposalProvider;
+import org.eclipse.xtext.ui.editor.contentassist.ConfigurableCompletionProposal;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
+
+import com.google.inject.Inject;
 
 import de.abg.jreichert.repositorytarget.xml.ContentJarParser;
 import de.abg.jreichert.repositorytarget.xml.ContentXmlHandler;
@@ -28,8 +34,12 @@ import de.abg.jreichert.targetDefinition.Unit;
  */
 public class TargetDefinitionProposalProvider extends
 		AbstractTargetDefinitionProposalProvider {
+
+	@Inject
+	private TerminalsProposalProvider terminalsProposalProvider;
+
 	private static String FEATURE_GROUP = ".feature.group";
-	
+
 	private Map<String, SortedMap<String, SortedSet<String>>> urlToCategoryIdsToVersions = new HashMap<String, SortedMap<String, SortedSet<String>>>();
 
 	@Override
@@ -107,7 +117,9 @@ public class TargetDefinitionProposalProvider extends
 				String categoryId = unit.getCategoryId();
 				if (categoryId != null) {
 					fill(repositoryLocation);
-					categoryId = unit.isNoFeature() || categoryId.endsWith(FEATURE_GROUP) ? categoryId : categoryId + ".feature.group";
+					categoryId = unit.isNoFeature()
+							|| categoryId.endsWith(FEATURE_GROUP) ? categoryId
+							: categoryId + ".feature.group";
 					Set<String> versions = urlToCategoryIdsToVersions.get(
 							repositoryLocation).get(categoryId);
 					if (versions != null) {
@@ -122,6 +134,34 @@ public class TargetDefinitionProposalProvider extends
 					}
 				}
 			}
+		}
+	}
+
+	@Override
+	public void complete_URL(EObject model, RuleCall ruleCall,
+			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		String exampleUrl = "http://www.example.org/p2";
+		StyledString displayString = new StyledString(exampleUrl);
+		ConfigurableCompletionProposal proposal = doCreateProposal(exampleUrl,
+				displayString, null, 0, context);
+		acceptor.accept(proposal);
+	}
+
+	@Override
+	public void complete_STRING(EObject model, RuleCall ruleCall,
+			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		terminalsProposalProvider.complete_STRING(model, ruleCall, context,
+				acceptor);
+	}
+
+	@Override
+	public void complete_ID(EObject model, RuleCall ruleCall,
+			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		if(EcoreUtil2.getContainerOfType(model, Location.class) == null) {
+			terminalsProposalProvider.complete_ID(model, ruleCall, context,
+					acceptor);
+		} else {
+			super.complete_ID(model, ruleCall, context, acceptor);
 		}
 	}
 }

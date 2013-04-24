@@ -3,15 +3,26 @@
  */
 package de.abg.jreichert.ui.contentassist;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.SortedSet;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.viewers.StyledString;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.RuleCall;
@@ -26,6 +37,7 @@ import de.abg.jreichert.repositorytarget.xml.ContentJarParser;
 import de.abg.jreichert.repositorytarget.xml.ContentXmlHandler;
 import de.abg.jreichert.targetDefinition.Location;
 import de.abg.jreichert.targetDefinition.Unit;
+import de.abg.jreichert.ui.internal.TargetDefinitionActivator;
 
 /**
  * see
@@ -51,28 +63,75 @@ public class TargetDefinitionProposalProvider extends
 		if (location != null) {
 			String repositoryLocation = location.getRepositoryLocation();
 			if (repositoryLocation != null) {
-				fill(repositoryLocation);
-				Set<String> ids = urlToCategoryIdsToVersions.get(
-						repositoryLocation).keySet();
-				for (String id : ids) {
-					displayString = new StyledString(id);
-					proposal = doCreateProposal(id, displayString, null, 0,
-							context);
-					acceptor.accept(proposal);
+				try {
+					fill(repositoryLocation);
+					Set<String> ids = urlToCategoryIdsToVersions.get(
+							repositoryLocation).keySet();
+					for (String id : ids) {
+						displayString = new StyledString(id);
+						proposal = doCreateProposal(id, displayString, null, 0,
+								context);
+						acceptor.accept(proposal);
+					}
+				} catch (Exception exception) {
+					IStatus status = new Status(
+							IStatus.ERROR,
+							TargetDefinitionActivator.DE_ABG_JREICHERT_TARGETDEFINITION,
+							"Exception while parsing the content.xml",
+							exception);
+					StatusManager.getManager().handle(status,
+							StatusManager.LOG | StatusManager.SHOW);
 				}
 			}
 		}
 	}
 
-	private void fill(String repositoryLocation) {
+	private void fill(final String repositoryLocation)
+			throws InvocationTargetException, InterruptedException {
 		if (repositoryLocation != null) {
 			if (urlToCategoryIdsToVersions.get(repositoryLocation) == null) {
-				ContentJarParser parser = new ContentJarParser(
-						repositoryLocation);
-				ContentXmlHandler contentHandler = new ContentXmlHandler();
-				for (String content : parser.getContents()) {
-					parser.parse(content, contentHandler);
-				}
+				final ContentXmlHandler contentHandler = new ContentXmlHandler();
+				IRunnableWithProgress runnable = new IRunnableWithProgress() {
+
+					@Override
+					public void run(IProgressMonitor monitor)
+							throws InvocationTargetException,
+							InterruptedException {
+						try {
+							monitor.beginTask(
+									"Read out P2 repository metadata", 2);
+							monitor.subTask("Fetch contents");
+							final ContentJarParser parser = new ContentJarParser(
+									repositoryLocation);
+							List<String> contents = parser.getContents();
+							monitor.worked(1);
+							monitor.subTask("Parse contents (this could take up to one minute)");
+							SubProgressMonitor subProgressMonitor = new SubProgressMonitor(
+									monitor, 1);
+							subProgressMonitor.beginTask(
+									"Read out P2 repository metadata",
+									contents.size());
+							int i = 0;
+							for (String content : contents) {
+								subProgressMonitor.subTask("Parsing file " + i);
+								parser.parse(content, contentHandler);
+								subProgressMonitor.worked(i++);
+							}
+							monitor.done();
+						} catch (java.lang.OutOfMemoryError ooe) {
+							IStatus status = new Status(
+									IStatus.ERROR,
+									TargetDefinitionActivator.DE_ABG_JREICHERT_TARGETDEFINITION,
+									"Out of memory: Please start your Eclipse with something like -Xmx1024m -Xms1024m -XX:MaxPermSize=512m",
+									ooe);
+							StatusManager.getManager().handle(status,
+									StatusManager.LOG | StatusManager.SHOW);
+						}
+					}
+				};
+				Shell shell = Display.getDefault().getActiveShell();
+				ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell);
+				dialog.run(true, true, runnable);
 				urlToCategoryIdsToVersions.put(repositoryLocation,
 						contentHandler.getIdToVersion());
 			}
@@ -116,21 +175,31 @@ public class TargetDefinitionProposalProvider extends
 			if (repositoryLocation != null) {
 				String categoryId = unit.getCategoryId();
 				if (categoryId != null) {
-					fill(repositoryLocation);
-					categoryId = unit.isNoFeature()
-							|| categoryId.endsWith(FEATURE_GROUP) ? categoryId
-							: categoryId + ".feature.group";
-					Set<String> versions = urlToCategoryIdsToVersions.get(
-							repositoryLocation).get(categoryId);
-					if (versions != null) {
-						for (String version : versions) {
-							if (version != null) {
-								displayString = new StyledString(version);
-								proposal = doCreateProposal(version,
-										displayString, null, 0, context);
-								acceptor.accept(proposal);
+					try {
+						fill(repositoryLocation);
+						categoryId = unit.isNoFeature()
+								|| categoryId.endsWith(FEATURE_GROUP) ? categoryId
+								: categoryId + ".feature.group";
+						Set<String> versions = urlToCategoryIdsToVersions.get(
+								repositoryLocation).get(categoryId);
+						if (versions != null) {
+							for (String version : versions) {
+								if (version != null) {
+									displayString = new StyledString(version);
+									proposal = doCreateProposal(version,
+											displayString, null, 0, context);
+									acceptor.accept(proposal);
+								}
 							}
 						}
+					} catch (Exception exception) {
+						IStatus status = new Status(
+								IStatus.ERROR,
+								TargetDefinitionActivator.DE_ABG_JREICHERT_TARGETDEFINITION,
+								"Exception while parsing the content.xml",
+								exception);
+						StatusManager.getManager().handle(status,
+								StatusManager.LOG | StatusManager.SHOW);
 					}
 				}
 			}
@@ -157,7 +226,7 @@ public class TargetDefinitionProposalProvider extends
 	@Override
 	public void complete_ID(EObject model, RuleCall ruleCall,
 			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-		if(EcoreUtil2.getContainerOfType(model, Location.class) == null) {
+		if (EcoreUtil2.getContainerOfType(model, Location.class) == null) {
 			terminalsProposalProvider.complete_ID(model, ruleCall, context,
 					acceptor);
 		} else {

@@ -39,6 +39,34 @@ class Target {
 			</category-def>
 		</site>
 	'''    
+	
+	def generateFeatureXml() '''
+		<?xml version="1.0" encoding="UTF-8"?>
+		<feature
+		      id="%featureId"
+		      label="%featureName"
+		      version="%featureVersion"
+		      provider-name="%providerName">
+		
+		   <description url="http://www.example.com/description">
+		      [Enter Feature Description here.]
+		   </description>
+		
+		   <copyright url="http://www.example.com/copyright">
+		      [Enter Copyright Description here.]
+		   </copyright>
+		
+		   <license url="http://www.example.com/license">
+		      [Enter License Description here.]
+		   </license>
+		
+		   «locations.map[generateFeatureXml].join»
+		
+		</feature>
+	'''
+
+	def generateDistoBuilderXML() '''
+	'''
 }
 
 class Location {
@@ -61,6 +89,10 @@ class Location {
 	def generateCategoryXml() '''
 		«units.map[generateCategoryXml].join»
 	''' 
+	
+	def generateFeatureXml() '''
+		«units.map[generateFeatureXml].join»
+	'''
 }
 
 class Unit {
@@ -104,4 +136,10 @@ class Unit {
 			</feature>
 		«ENDIF»
     '''	
+    
+    def generateFeatureXml() '''
+	   <includes
+	         id="«targetId»"
+	         version="0.0.0"/>
+    '''
 }

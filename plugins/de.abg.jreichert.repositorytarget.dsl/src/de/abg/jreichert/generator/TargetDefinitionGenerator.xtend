@@ -20,6 +20,7 @@ class TargetDefinitionGenerator implements IGenerator {
 			val dslTargetFolderName = dslTargetFileName.replace('.target', '')
 			fsa.generateFile(dslTargetFolderName + "/category.xml", generatorTarget.generateCategoryXml)
 			fsa.generateFile(dslTargetFolderName + "/" + dslTargetFileName, generatorTarget.generateTarget)
+			fsa.generateFile(dslTargetFolderName + "/feature.xml", generatorTarget.generateFeatureXml)
 		}
 	}
 	

@@ -3,6 +3,7 @@ package de.abg.jreichert.repositorytarget.xml
 import java.net.HttpURLConnection
 import java.net.JarURLConnection
 import java.net.URL
+import java.net.URLConnection
 import java.util.List
 
 class ContentJarParser extends ContentParser {
@@ -54,7 +55,7 @@ class ContentJarParser extends ContentParser {
 
 	def getXmlContent(String url, String contentFileName) {
 		val xmlUrl = new URL(url.toUrl + contentFileName + ".xml")
-    	val connection = xmlUrl.openConnection() as HttpURLConnection
+    	val connection = xmlUrl.openConnection()
 		val input = connection.inputStream
 		getContent(input)
 	}
@@ -69,10 +70,17 @@ class ContentJarParser extends ContentParser {
 
 	def existsUrl(String url, String contentFileName, String fileExt) {
 		val contentUrl = new URL(url.toUrl + contentFileName + "." + fileExt);
-		val contentCon = contentUrl.openConnection as HttpURLConnection
+		contentUrl.openConnection.existsUrl
+	}
+	
+	def private dispatch existsUrl(HttpURLConnection contentCon) {
  		contentCon.requestMethod = "HEAD";
  		val code = contentCon.responseCode 
 		code == HttpURLConnection::HTTP_OK
+	}
+	
+	def private dispatch existsUrl(URLConnection contentCon) {
+ 		true
 	}
 	
 	def toUrl(String url) {

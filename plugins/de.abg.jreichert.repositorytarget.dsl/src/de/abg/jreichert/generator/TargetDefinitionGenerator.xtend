@@ -16,8 +16,10 @@ class TargetDefinitionGenerator implements IGenerator {
 		val dslTarget = resource.allContents.filter(typeof(de.abg.jreichert.targetDefinition.Target)).head
 		if(dslTarget != null) {
 			val generatorTarget = dslTarget.transformTarget
-			fsa.generateFile("category.xml", generatorTarget.generateCategoryXml)  
-			fsa.generateFile(dslTarget.fileName, generatorTarget.generateTarget)  
+			val dslTargetFileName = dslTarget.fileName
+			val dslTargetFolderName = dslTargetFileName.replace('.target', '')
+			fsa.generateFile(dslTargetFolderName + "/category.xml", generatorTarget.generateCategoryXml)
+			fsa.generateFile(dslTargetFolderName + "/" + dslTargetFileName, generatorTarget.generateTarget)
 		}
 	}
 	

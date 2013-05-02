@@ -1,0 +1,64 @@
+/* XPECT formatted ---
+TargetDefinition "Spray Target Platform - Eclipse 4.2"
+
+	targetFile = spray-juno2
+
+	"Xtext ANTLR" http://download.itemis.com/updates/releases/2.0.0/ {
+		de.itemis.xtext.antlr.sdk 2.0.0.v201108011202,
+		de.itemis.xtext.antlr.feature 2.0.0.v201108011202
+	}
+
+	"Eclipse Juno" http://download.eclipse.org/releases/juno {
+		org.eclipse.sdk 4.2.1.v20120814-120134-7T7oDODQ-3Heq-afCDlg7T4xJuvxaC2ohMfCfB5451Rz0,
+		org.eclipse.pde 3.8.1.v20120814-104528-7c7vFixFFt6Zr5aC6KM6LGWSd,
+		org.eclipse.emf.sdk 2.8.1.v20120917-0436,
+		org.eclipse.emf.transaction.sdk 1.6.0.v20120328-0001-777Z-9A_WsZmcPluNecyPkvrPKlH,
+		org.eclipse.emf.eef.sdk-feature 1.1.1.201206051542,
+		org.eclipse.gef.sdk 3.9.0.201208201742,
+		org.eclipse.zest.sdk 1.5.0.201208201742,
+		org.eclipse.graphiti.sdk.plus.feature 0.9.1.v20120919-0732,
+		org.eclipse.emf.mwe2.language.sdk 2.3.0.v201206120758,
+		org.eclipse.emf.mwe2.runtime.sdk 2.3.0.v201206110920,
+		org.eclipse.swt 3.100.1.v4234e noFeature
+	}
+
+	"SWTBot" http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site {
+		org.eclipse.swtbot.eclipse 2.0.5.20111003_1754-3676ac8-dev-e36,
+		org.eclipse.swtbot.eclipse.gef 2.0.5.20111003_1754-3676ac8-dev-e36,
+		org.eclipse.swtbot.eclipse.test.junit4 2.0.5.20111003_1754-3676ac8-dev-e36
+	}
+
+	"Xtext & Xtend" http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/ {
+		org.eclipse.xtext.sdk 2.3.1.v201208210947,
+		org.eclipse.xtend.sdk 2.3.1.v201208210947
+	}
+
+	"Xtext utils" http://xtext-utils.eclipselabs.org.codespot.com/git.distribution/releases/unittesting-0.9.x {
+		org.eclipselabs.xtext.utils.unittesting.feature 0.9.3.201204261440
+	}
+--- */
+TargetDefinition "Spray Target Platform - Eclipse 4.2" targetFile = spray-juno2
+"Xtext ANTLR" http://download.itemis.com/updates/releases/2.0.0/ {
+de.itemis.xtext.antlr.sdk 2.0.0.v201108011202 , de.itemis.xtext.antlr.feature
+2.0.0.v201108011202 } "Eclipse Juno" http://download.eclipse.org/releases/juno
+{ org.eclipse.sdk
+4.2.1.v20120814-120134-7T7oDODQ-3Heq-afCDlg7T4xJuvxaC2ohMfCfB5451Rz0 ,
+org.eclipse.pde 3.8.1.v20120814-104528-7c7vFixFFt6Zr5aC6KM6LGWSd ,
+org.eclipse.emf.sdk 2.8.1.v20120917-0436 , org.eclipse.emf.transaction.sdk
+1.6.0.v20120328-0001-777Z-9A_WsZmcPluNecyPkvrPKlH ,
+org.eclipse.emf.eef.sdk-feature 1.1.1.201206051542 , org.eclipse.gef.sdk
+3.9.0.201208201742 , org.eclipse.zest.sdk 1.5.0.201208201742 ,
+org.eclipse.graphiti.sdk.plus.feature 0.9.1.v20120919-0732 ,
+org.eclipse.emf.mwe2.language.sdk 2.3.0.v201206120758 ,
+org.eclipse.emf.mwe2.runtime.sdk 2.3.0.v201206110920 , org.eclipse.swt
+3.100.1.v4234e noFeature } "SWTBot"
+http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site {
+org.eclipse.swtbot.eclipse 2.0.5.20111003_1754-3676ac8-dev-e36 ,
+org.eclipse.swtbot.eclipse.gef 2.0.5.20111003_1754-3676ac8-dev-e36 ,
+org.eclipse.swtbot.eclipse.test.junit4 2.0.5.20111003_1754-3676ac8-dev-e36 }
+"Xtext & Xtend"
+http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/ {
+org.eclipse.xtext.sdk 2.3.1.v201208210947 , org.eclipse.xtend.sdk
+2.3.1.v201208210947 } "Xtext utils"
+http://xtext-utils.eclipselabs.org.codespot.com/git.distribution/releases/unittesting-0.9.x
+{ org.eclipselabs.xtext.utils.unittesting.feature 0.9.3.201204261440 }

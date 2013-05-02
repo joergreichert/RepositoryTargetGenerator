@@ -5,8 +5,10 @@ package de.abg.jreichert.formatting
 
 import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter
 import org.eclipse.xtext.formatting.impl.FormattingConfig
-// import com.google.inject.Inject;
-// import de.abg.jreichert.services.TargetDefinitionGrammarAccess
+import com.google.inject.Inject;
+import de.abg.jreichert.services.TargetDefinitionGrammarAccess
+import org.eclipse.xtext.IGrammarAccess
+import org.eclipse.xtext.GrammarUtil
 
 /**
  * This class contains custom formatting description.
@@ -18,13 +20,48 @@ import org.eclipse.xtext.formatting.impl.FormattingConfig
  */
 class TargetDefinitionFormatter extends AbstractDeclarativeFormatter {
 
-//	@Inject extension TargetDefinitionGrammarAccess
-	
+	@Inject extension TargetDefinitionGrammarAccess
+
 	override protected void configureFormatting(FormattingConfig c) {
-// It's usually a good idea to activate the following three statements.
-// They will add and preserve newlines around comments
-//		c.setLinewrap(0, 1, 2).before(SL_COMMENTRule)
-//		c.setLinewrap(0, 1, 2).before(ML_COMMENTRule)
-//		c.setLinewrap(0, 1, 1).after(ML_COMMENTRule)
+		c.setLinewrap(0, 1, 2).before(SL_COMMENTRule)
+		c.setLinewrap(0, 1, 2).before(ML_COMMENTRule)
+		c.setLinewrap(0, 1, 1).after(ML_COMMENTRule)
+		
+		c.genericFormatting
+		
+		c.setIndentationIncrement.before(targetAccess.targetFileKeyword_2_0);
+		c.setIndentationDecrement.after(targetAccess.targetFileNameAssignment_2_2);
+		c.setLinewrap(2,2,2).before(targetAccess.targetFileKeyword_2_0)
+		c.setLinewrap(2,2,2).after(targetAccess.targetFileNameAssignment_2_2)
+
+		c.setLinewrap(2,2,2).around(targetAccess.locationsAssignment_3)
+		c.setIndentationIncrement.before(targetAccess.locationsAssignment_3);
+		c.setIndentationDecrement.after(targetAccess.locationsAssignment_3);
+
+		c.setNoLinewrap.between(locationAccess.nameAssignment_0, locationAccess.repositoryLocationAssignment_1)
+		
+		c.setLinewrap.before(locationAccess.unitAssignment_3)
+		c.setLinewrap.before(locationAccess.unitAssignment_4_1)
+		c.setNoLinewrap.between(unitAccess.categoryIdAssignment_0, unitAccess.versionAssignment_1)
+		c.setNoSpace.before(locationAccess.commaKeyword_4_0);
+		c.setNoLinewrap.between(locationAccess.unitAssignment_4_1, locationAccess.commaKeyword_4_0);
+		c.setLinewrap.after(locationAccess.commaKeyword_4_0)
+	}
+
+	// see: http://blog.dietmar-stoll.de/2011/02/quickly-formatting-dsls-with-xtext.html
+	def private genericFormatting(FormattingConfig config) {
+		for (pair : findKeywordPairs("{", "}")) {
+			config.setSpace(" ").before(pair.getFirst());
+			config.setIndentation(pair.getFirst(), pair.getSecond());
+			config.setLinewrap(1).before(pair.getSecond());
+		}
+		
+		findKeywords("=").forEach[config.setSpace(" ").around(it)]
+		
+//		val allKeywords = GrammarUtil::getAllKeywords(grammar.getGrammar());
+//		val keywords = grammar.findKeywords(allKeywords)
+//		for (keyword : keywords) {
+//			config.setLinewrap().before(keyword);
+//		} 
 	}
 }

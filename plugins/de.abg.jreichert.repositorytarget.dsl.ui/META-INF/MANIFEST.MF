@@ -16,11 +16,13 @@ Require-Bundle: de.abg.jreichert.repositorytarget.dsl;bundle-version="0.1.0";vis
  org.eclipse.xtext.common.types.ui,
  org.eclipse.xtext.ui.codetemplates.ui,
  org.eclipse.compare,
- de.abg.jreichert.repositorytarget.repositorytargetgenerator;bundle-version="0.1.0",
- org.eclipse.xtext.xbase.lib;bundle-version="2.3.1"
-Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: de.abg.jreichert.ui.contentassist,
+ org.eclipse.xtend2.lib,
+ org.apache.log4j
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: de.abg.jreichert.ui.quickfix,
+ de.abg.jreichert.ui.contentassist,
  de.abg.jreichert.ui.contentassist.antlr,
  de.abg.jreichert.ui.internal
 Bundle-Activator: de.abg.jreichert.ui.internal.TargetDefinitionActivator
+Import-Package: org.eclipse.xtext.xbase.lib,
+ org.apache.log4j

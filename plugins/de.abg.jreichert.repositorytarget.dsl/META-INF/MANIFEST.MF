@@ -17,10 +17,10 @@ Require-Bundle: org.eclipse.xtext;visibility:=reexport,
  org.eclipse.emf.common,
  org.antlr.runtime,
  org.eclipse.xtext.common.types,
- de.abg.jreichert.repositorytarget.repositorytargetgenerator;bundle-version="0.1.0"
+ de.abg.jreichert.repositorytarget.repositorytargetgenerator;bundle-version="0.1.0";visibility:=reexport
 Import-Package: org.apache.log4j,
  org.eclipse.xtext.xbase.lib
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: de.abg.jreichert,
  de.abg.jreichert.services,
  de.abg.jreichert.targetDefinition,

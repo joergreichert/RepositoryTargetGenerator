@@ -3,9 +3,10 @@
 */
 package de.abg.jreichert.ui.quickfix
 
-//import org.eclipse.xtext.ui.editor.quickfix.Fix
-//import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor
-//import org.eclipse.xtext.validation.Issue
+import org.eclipse.xtext.ui.editor.quickfix.Fix
+import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor
+import org.eclipse.xtext.validation.Issueimport de.abg.jreichert.validation.TargetDefinitionValidator
+import de.abg.jreichert.targetDefinition.Unit
 
 /**
  * Custom quickfixes.
@@ -14,13 +15,14 @@ package de.abg.jreichert.ui.quickfix
  */
 class TargetDefinitionQuickfixProvider extends org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider {
 
-//	@Fix(MyDslValidator::INVALID_NAME)
-//	def capitalizeName(Issue issue, IssueResolutionAcceptor acceptor) {
-//		acceptor.accept(issue, 'Capitalize name', 'Capitalize the name.', 'upcase.png') [
-//			context |
-//			val xtextDocument = context.xtextDocument
-//			val firstLetter = xtextDocument.get(issue.offset, 1)
-//			xtextDocument.replace(issue.offset, 1, firstLetter.toUpperCase)
-//		]
-//	}
+	@Fix(TargetDefinitionValidator::NOT_UPTODATE)
+	def fixVersion(Issue issue, IssueResolutionAcceptor acceptor) {
+		acceptor.accept(issue, 'Update version', 'Updates version.', null) [
+			element, context |
+			if(element instanceof Unit) {
+				val unit = element as Unit
+				unit.version = issue.data.last
+			}
+		]
+	}
 }

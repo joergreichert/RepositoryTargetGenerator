@@ -4,7 +4,7 @@
 package de.abg.jreichert.ui.contentassist
 
 import com.google.inject.Inject
-import de.abg.jreichert.repositorytarget.xml.ContentJarParser
+import de.abg.jreichert.logic.ReadOutP2Repository
 import de.abg.jreichert.repositorytarget.xml.ContentXmlHandler
 import de.abg.jreichert.targetDefinition.Location
 import de.abg.jreichert.targetDefinition.Unit
@@ -15,7 +15,6 @@ import java.util.SortedSet
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
-import org.eclipse.core.runtime.SubProgressMonitor
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.jface.dialogs.ProgressMonitorDialog
 import org.eclipse.jface.operation.IRunnableWithProgress
@@ -37,6 +36,9 @@ class TargetDefinitionProposalProvider extends AbstractTargetDefinitionProposalP
 
 	@Inject
 	private TerminalsProposalProvider terminalsProposalProvider
+
+	@Inject
+	private ReadOutP2Repository readOutP2Repository
 
 	private static String FEATURE_GROUP = ".feature.group"
 
@@ -63,7 +65,8 @@ class TargetDefinitionProposalProvider extends AbstractTargetDefinitionProposalP
 					val ids = urlToCategoryIdsToVersions.get(repositoryLocation).keySet()
 					for (String id : ids) {
 						displayString = new StyledString(id)
-						proposal = doCreateProposal(id, displayString, null, 0, context)
+						val proposalString = id.replace(".feature.group", "")
+						proposal = doCreateProposal(proposalString, displayString, null, 0, context)
 						acceptor.accept(proposal)
 					}
 				} catch (Exception exception) {
@@ -92,7 +95,7 @@ class TargetDefinitionProposalProvider extends AbstractTargetDefinitionProposalP
 		if (repositoryLocation != null) {
 			if (urlToCategoryIdsToVersions.get(repositoryLocation) == null) {
 				val contentHandler = new ContentXmlHandler()
-				val runnable = new ReadOutP2RepositoryRunnable(repositoryLocation, contentHandler)
+				val runnable = new ReadOutP2RepositoryRunnable(repositoryLocation, contentHandler, readOutP2Repository)
 				val shell = Display::getDefault().getActiveShell()
 				val dialog = new ProgressMonitorDialog(shell)
 				dialog.run(true, true, runnable)
@@ -113,8 +116,11 @@ class TargetDefinitionProposalProvider extends AbstractTargetDefinitionProposalP
 					var ICompletionProposal proposal = null
 					try {
 						fill(repositoryLocation)
-						categoryId = if(unit.isNoFeature() || categoryId.endsWith(FEATURE_GROUP)) categoryId else categoryId +
-							".feature.group"
+						categoryId = 
+							if(unit.isNoFeature() || categoryId.endsWith(FEATURE_GROUP)) 
+								categoryId 
+							else 
+								categoryId + ".feature.group"
 						val versions = urlToCategoryIdsToVersions.get(repositoryLocation).get(categoryId)
 						if (versions != null) {
 							for (String version : versions) {
@@ -169,25 +175,15 @@ class TargetDefinitionProposalProvider extends AbstractTargetDefinitionProposalP
 class ReadOutP2RepositoryRunnable implements IRunnableWithProgress {
 	private val String repositoryLocation
 	private val ContentXmlHandler contentHandler
+	private ReadOutP2Repository readOutP2Repository
 
 	override run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 		try {
-			monitor.beginTask("Read out P2 repository metadata", 2)
-			monitor.subTask("Fetch contents")
-			val parser = new ContentJarParser(repositoryLocation)
-			val contents = parser.getContents()
-			monitor.worked(1)
-			monitor.subTask("Parse contents (this could take up to one minute)")
-			val subProgressMonitor = new SubProgressMonitor(monitor, 1)
-			subProgressMonitor.beginTask("Read out P2 repository metadata", contents.size())
-			var int i = 0
-			for (String content : contents) {
-				subProgressMonitor.subTask("Parsing file " + i)
-				parser.parse(content, contentHandler)
-				subProgressMonitor.worked(i)
-				i = i + 1
-			}
-			monitor.done()
+			readOutP2Repository.execute(repositoryLocation, contentHandler, monitor)
+		} catch (IllegalArgumentException iae) {
+			val status = new Status(IStatus::ERROR, TargetDefinitionActivator::DE_ABG_JREICHERT_TARGETDEFINITION,
+				iae.message, iae)
+			StatusManager::getManager().handle(status, StatusManager::LOG.bitwiseOr(StatusManager::SHOW))
 		} catch (OutOfMemoryError ooe) {
 			val status = new Status(IStatus::ERROR, TargetDefinitionActivator::DE_ABG_JREICHERT_TARGETDEFINITION,
 				"Out of memory: Please start your Eclipse with something like -Xmx1024m -Xms1024m -XX:MaxPermSize=512m",

@@ -1,0 +1,65 @@
+// see https://github.com/joergreichert/RepositoryTargetGenerator/wiki
+// download update site from here: https://github.com/joergreichert/RepositoryTargetGenerator/tree/master/releases 
+TargetDefinition "Spray Target Platform - Eclipse 4.3" 
+
+	targetFile = spray-kepler
+
+	"Xtext ANTLR" http://download.itemis.com/updates/releases/2.0.0/ {
+		de.itemis.xtext.antlr.sdk 2.0.0.v201108011202,
+		de.itemis.xtext.antlr.feature 2.0.0.v201108011202
+	}
+	
+	"Eclipse Kepler" http://download.eclipse.org/releases/kepler {
+		org.eclipse.sdk 4.3.0.v20130530-1801,
+		org.eclipse.pde 3.9.0.v20130530-1553,
+		org.eclipse.emf.sdk 2.9.0.v20130603-0742,
+		org.eclipse.emf.transaction.sdk 1.7.0.201305221412,
+		org.eclipse.emf.eef.sdk-feature 1.2.0.201301111054,
+		org.eclipse.gef.sdk 3.9.0.201305060205,
+		org.eclipse.zest.sdk 1.5.0.201305060205,
+		org.eclipse.graphiti.sdk.plus.feature 0.10.0.v20130605-1155,
+		org.eclipse.swt 3.102.0.v20130530-1600 noFeature,
+		org.eclipse.xtext.sdk 2.4.2.v201306040922,
+		org.eclipse.xtend.sdk 2.4.2.v201306040922,
+		org.eclipse.emf.mwe2.language.sdk 2.4.0.v201306040943,
+		org.eclipse.emf.mwe2.runtime.sdk 2.4.0.v201306040844
+	}
+	
+	"Xtext/Xtend Releases" http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases {
+		org.eclipse.xtext.sdk 2.4.2.v201306040922,
+		org.eclipse.xtend.sdk 2.4.2.v201306040922,
+		org.eclipse.emf.mwe2.language.sdk 2.4.0.v201306040943,
+		org.eclipse.emf.mwe2.runtime.sdk 2.4.0.v201306040844
+	}
+
+	"Xtext/Xtend Milestones" http://download.eclipse.org/modeling/tmf/xtext/updates/composite/milestones {
+		org.eclipse.xtext.sdk 2.4.2.v201306040922,
+		org.eclipse.xtend.sdk 2.4.2.v201306040922,
+		org.eclipse.emf.mwe2.language.sdk 2.4.0.v201306040943,
+		org.eclipse.emf.mwe2.runtime.sdk 2.4.0.v201306040844
+	}
+	
+	"Xtext/Xtend Snapshots" http://download.eclipse.org/modeling/tmf/xtext/updates/composite/snapshots {
+		org.eclipse.xtext.sdk 2.4.2.v201306040922,
+		org.eclipse.xtend.sdk 2.4.2.v201306040922,
+		org.eclipse.emf.mwe2.language.sdk 2.4.0.v201306040943,
+		org.eclipse.emf.mwe2.runtime.sdk 2.4.0.v201306040844
+	}
+
+	"SWTBot" http://download.eclipse.org/technology/swtbot/releases/latest/ {
+		org.eclipse.swtbot.eclipse 2.1.0.201302221524,
+		org.eclipse.swtbot.eclipse.gef 2.1.0.201302221524
+	}
+	
+	"SWTBot" http://download.eclipse.org/technology/swtbot/snapshots/ {
+		org.eclipse.swtbot.eclipse 2.1.1.201306140045,
+		org.eclipse.swtbot.eclipse.gef 2.1.1.201306140045
+	}
+
+	"Xpect" http://www.xpect-tests.org/updatesite/nightly/ {
+		org.xpect.sdk 0.1.0.201306110942
+	}
+
+	"Xtext utils" http://xtext-utils.eclipselabs.org.codespot.com/git.distribution/releases/unittesting-0.9.x {
+		org.eclipselabs.xtext.utils.unittesting.feature 0.9.3.201204261440
+	}

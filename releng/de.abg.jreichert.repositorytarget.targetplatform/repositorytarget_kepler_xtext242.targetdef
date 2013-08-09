@@ -22,5 +22,5 @@ TargetDefinition "Repository Target Generator - Eclipse 4.3, Xtext/Xtend 2.4.2"
 	}
 	
 	"Xpect" http://meysholdt.github.com/Xpect/updatesite/nightly/ {
-		org.xpect.sdk 0.1.0.201306110942
+		org.xpect.sdk 0.1.0.201308071738
 	}

@@ -15,9 +15,9 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<platform-version-name>juno</platform-version-name>
+		<platform-version-name>kepler</platform-version-name>
 		<eclipse-site>http://download.eclipse.org/releases/${platform-version-name}</eclipse-site>
-		<orbit-site>http://download.eclipse.org/tools/orbit/downloads/drops/R20110523182458/repository</orbit-site>
+		<orbit-site>http://download.eclipse.org/tools/orbit/downloads/drops/R20130118183705/repository</orbit-site>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<tycho-version>0.18.0</tycho-version>
@@ -37,9 +37,9 @@
 		<build-helper-maven-plugin.version>1.8</build-helper-maven-plugin.version>
 		<eclipse-signing-maven-plugin.version>1.0.5</eclipse-signing-maven-plugin.version>
 		<fornax-oaw-m2-plugin.version>3.4.0</fornax-oaw-m2-plugin.version>
-		<xtend-maven-plugin.version>2.4.1</xtend-maven-plugin.version>
-		<xtend-library.version>2.4.1</xtend-library.version>
-		<jacoco-maven-plugin.version>0.6.2.201302030002</jacoco-maven-plugin.version>
+		<xtend-maven-plugin.version>2.4.2-SNAPSHOT</xtend-maven-plugin.version>
+		<xtend-library.version>2.4.2-SNAPSHOT</xtend-library.version>
+		<jacoco-maven-plugin.version>0.6.3.201306030806</jacoco-maven-plugin.version>
 		<junit-version>4.11</junit-version>
 		<local-build-platform.version>[3.8,4.3)</local-build-platform.version>		
 		<ui.test.vmargs></ui.test.vmargs>
@@ -336,6 +336,16 @@
 			<url>http://repository.sonatype.org/content/groups/sonatype-public-grid/</url>
 			<releases>
 				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+		<pluginRepository>
+			<id>sonatype_snapshot</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
 			</releases>
 			<snapshots>
 				<enabled>true</enabled>

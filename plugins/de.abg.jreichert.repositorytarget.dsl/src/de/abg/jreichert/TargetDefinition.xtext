@@ -71,7 +71,7 @@ Location:
 ;
 
 Unit:
-	categoryId=ID (version=VERSION)? (noFeature?='noFeature')? 
+	categoryId=ID (noFeature?='noFeature')? (version=VERSION)? 
 		('includes' '[' includes+=GeneratedArtifacts (includes+=GeneratedArtifacts)* ']')? 
 		('excludes' '[' includes+=GeneratedArtifacts (includes+=GeneratedArtifacts)* ']')? 
 		('category' '=' category=[Category])?

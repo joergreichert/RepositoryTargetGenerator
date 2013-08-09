@@ -5,33 +5,20 @@
 	<groupId>de.abg.jreichert.repositorytarget</groupId>
 	<artifactId>de.abg.jreichert.repositorytarget.targetplatform</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
-	<packaging>pom</packaging>
-
+	<packaging>eclipse-target-definition</packaging>
+	
+	<properties>
+		<tycho-version>0.18.0</tycho-version>
+	</properties>
+	
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>1.3</version>
-				<executions>
-					<execution>
-						<id>attach-artifacts</id>
-						<phase>package</phase>
-						<goals>
-							<goal>attach-artifact</goal>
-						</goals>
-						<configuration>
-							<artifacts>
-								<artifact>
-									<file>repositorytarget.target</file>
-									<type>target</type>
-									<classifier>repositorytarget</classifier>
-								</artifact>
-							</artifacts>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<extensions>true</extensions>
+			</plugin>		
 		</plugins>
 	</build>
 </project>

@@ -3,17 +3,26 @@
 */
 package de.abg.jreichert.ui.quickfix
 
+import de.abg.jreichert.targetDefinition.Unit
+import de.abg.jreichert.validation.TargetDefinitionValidator
+import org.eclipse.core.internal.resources.Workspace
+import org.eclipse.core.resources.IMarker
+import org.eclipse.core.resources.IResource
+import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.core.runtime.Path
+import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider
 import org.eclipse.xtext.ui.editor.quickfix.Fix
 import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor
-import org.eclipse.xtext.validation.Issueimport de.abg.jreichert.validation.TargetDefinitionValidator
-import de.abg.jreichert.targetDefinition.Unit
+import org.eclipse.xtext.validation.Issue
 
 /**
  * Custom quickfixes.
  *
  * see http://www.eclipse.org/Xtext/documentation.html#quickfixes
  */
-class TargetDefinitionQuickfixProvider extends org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider {
+class TargetDefinitionQuickfixProvider extends DefaultQuickfixProvider {
 
 	@Fix(TargetDefinitionValidator::NOT_UPTODATE)
 	def fixVersion(Issue issue, IssueResolutionAcceptor acceptor) {
@@ -22,7 +31,21 @@ class TargetDefinitionQuickfixProvider extends org.eclipse.xtext.ui.editor.quick
 			if(element instanceof Unit) {
 				val unit = element as Unit
 				unit.version = issue.data.last
+				removeMarker(unit, issue)
 			}
 		]
+	}
+	
+	def private removeMarker(EObject eObject, Issue issue) {
+		val file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(URI.decode(eObject.eResource.URI.toPlatformString(true))));
+		if(file.exists) {
+			val markerManager = (ResourcesPlugin.getWorkspace() as Workspace).getMarkerManager();
+			val markerList = <IMarker>newArrayList
+			markerManager.doFindMarkers(file, markerList, "de.abg.jreichert.repositorytarget.dsl.ui.targetdefinition.check.expensive", true, IResource.DEPTH_INFINITE)
+			val markers = markerList.filter[it.getAttribute(IMarker.CHAR_START) == issue.offset] 
+			markers.forEach[delete]
+		} else {
+			println(file + " does not exist.")
+		}
 	}
 }

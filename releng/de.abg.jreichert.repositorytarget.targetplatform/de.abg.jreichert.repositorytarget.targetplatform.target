@@ -4,13 +4,13 @@
 <target includeMode="feature" name="Repository Target Generator - Eclipse 4.3, Xtext/Xtend 2.4.2" sequenceNumber="67">
 	<locations>
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="org.eclipse.sdk.feature.group" version="4.3.0.v20130530-1801"/>
-			<unit id="org.eclipse.pde.feature.group" version="3.9.0.v20130530-1553"/>
-			<unit id="org.eclipse.emf.sdk.feature.group" version="2.9.0.v20130603-0742"/>
-			<unit id="org.eclipse.xtext.sdk.feature.group" version="2.4.2.v201306040922"/>
-			<unit id="org.eclipse.xtend.sdk.feature.group" version="2.4.2.v201306040922"/>
-			<unit id="org.eclipse.emf.mwe2.language.sdk.feature.group" version="2.4.0.v201306040943"/>
-			<unit id="org.eclipse.emf.mwe2.runtime.sdk.feature.group" version="2.4.0.v201306040844"/>
+			<unit id="org.eclipse.sdk.feature.group" version="4.3.0.v20130605-2000"/>
+			<unit id="org.eclipse.pde.feature.group" version="3.9.0.v20130605-2000"/>
+			<unit id="org.eclipse.emf.sdk.feature.group" version="2.9.0.v20130610-0406"/>
+			<unit id="org.eclipse.xtext.sdk.feature.group" version="2.4.2.v201306120542"/>
+			<unit id="org.eclipse.xtend.sdk.feature.group" version="2.4.2.v201306120542"/>
+			<unit id="org.eclipse.emf.mwe2.language.sdk.feature.group" version="2.4.0.v201306110940"/>
+			<unit id="org.eclipse.emf.mwe2.runtime.sdk.feature.group" version="2.4.0.v201306110341"/>
 			<repository location="http://download.eclipse.org/releases/kepler"/>
 		</location>
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
@@ -23,8 +23,8 @@
 			<repository location="http://xtext-utils.eclipselabs.org.codespot.com/git.distribution/releases/unittesting-0.9.x"/>
 		</location>
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="org.xpect.sdk.feature.group" version="0.1.0.201306110942"/>
-			<repository location="http://meysholdt.github.com/Xpect/updatesite/nightly/"/>
+			<unit id="org.xpect.sdk.feature.group" version="0.1.0.201308071738"/>
+			<repository location="http://www.xpect-tests.org/updatesite/nightly/"/>
 		</location>
 	</locations>
 	<environment>

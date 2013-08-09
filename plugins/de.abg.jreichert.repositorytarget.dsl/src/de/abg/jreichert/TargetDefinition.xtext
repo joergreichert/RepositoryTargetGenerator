@@ -2,108 +2,20 @@ grammar de.abg.jreichert.TargetDefinition hidden(WS, ML_COMMENT, SL_COMMENT)
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 generate targetDefinition "http://www.abg.de/jreichert/TargetDefinition"
 
-
 Target:
 	'TargetDefinition' name=STRING
 	('targetFile' '=' targetFileName=ID)?
-	('generate:' artifactsToGenerate+=GeneratedArtifacts (',' artifactsToGenerate+=GeneratedArtifacts)*)?
-	('target' 'configuration' '{'
-		('includeMode' '=' includeMode=TargetIncludeMode)?
-		('includeAllPlatforms' '=' ((includeAllPlatforms?='true')|'false'))?
-		('includeSources' '=' ((includeSources?='true')|'false'))?
-		('includeConfigurePhase' '=' ((includeConfigurePhase?='true')|'false')) ?
-		('locationIncludeMode' '=' locationIncludeMode=LocationIncludeMode)? 
-		('type' '=' targetType=TargetType)?
-	'}')?
-	('categories' '{'
-		categories+=Category (',' categories+=Category)*
-	'}')?
-	('launcherArgs' '{'
-		('vmArgs' '=' vmArgs+=VmArg (',' vmArgs+=VmArg)*)?
-		('programArgs' '=' programArgs+=ProgramArg (',' programArgs+=ProgramArg)*)?
-	'}')?
-	('environment' '{'
-		('os' '=' os=OsType)?
-		('ws' '=' ws=WsType)?
-		('arch' '=' arch=ArchType)?
-		('nl' '=' nl=NlType)?
-	'}')?
 	locations+=Location*
-	('include' 'bundles' '{'
-		includeBundles+=Bundle (',' includeBundles+=Bundle)*
-	'}')?
-	('implicitDependencies' '{'
-		implicitDependencies+=Bundle (',' implicitDependencies+=Bundle)*
-	'}')?
-;
-
-enum GeneratedArtifacts:
-	all='all' | target='target' | categoryXML = 'categoryXML' | 
-	featureXML = 'featureXML' | distroBuilderPom = 'distroBuilderPom'
-;
-
-Category:
-	name=STRING (longName=STRING)? ('description:' description=STRING)? (default?='default')?
-;
-
-enum TargetIncludeMode:
-	feature="feature" | plugin="plugin"
-;
-
-enum LocationIncludeMode:
-	feature="planner" | slicer="slicer"
-;
-
-enum TargetType:
-	installableUnit = 'InstallableUnit' | feature = 'Feature'
 ;
 
 Location:
-	(name=STRING)? repositoryLocation=URL 
-		('includeMode' '=' includeMode=LocationIncludeMode)? 
-		('includeAllPlatforms' '=' includeAllPlatforms?='yes')? 
-		('includeSources' '=' includeSources?='yes')?
-		('includeConfigurePhase' '=' includeConfigurePhase?='true') ?
-		('type' '=' targetType=TargetType)?
-	'{'
+	(name=STRING)? repositoryLocation=URL '{'
 		(unit+=Unit) (',' unit+=Unit)*
 	'}'
 ;
 
 Unit:
-	categoryId=ID (version=VERSION)? (noFeature?='noFeature')? 
-		('includes' '[' includes+=GeneratedArtifacts (includes+=GeneratedArtifacts)* ']')? 
-		('excludes' '[' includes+=GeneratedArtifacts (includes+=GeneratedArtifacts)* ']')? 
-		('category' '=' category=[Category])?
-;
-
-
-Bundle:
-	name=ID (version=VERSION)?
-;
-
-VmArg:
-	name=STRING		
-;
-
-ProgramArg:
-	name=STRING		
-;
-
-enum OsType:
-	win='win' | macosx='macosx'	| linux='linux' | solaris='solaris' | aix='aix' | hpux='hpux'
-;
-
-enum WsType:
-	cocoa = 'cocoa' | carbon='carbon' | gtk='gtk' | motif='motif' | win32='win32' | wpf='wpf'
-;
-
-enum ArchType:
-	x86='x86' | x86_64='x86_64' | ppc='ppc' | sparc='sparc' | ia64_32='ia64_32'
-;
-
-enum NlType:
-	ger='de' | en='en'
+	categoryId=ID (noFeature?='noFeature')? (version=VERSION)? 
 ;
 
 terminal URL: 

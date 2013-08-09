@@ -39,7 +39,7 @@ class TargetDefinitionProposalProvider extends AbstractTargetDefinitionProposalP
 
 	@Inject
 	private ReadOutP2Repository readOutP2Repository
-
+	
 	private static String FEATURE_GROUP = ".feature.group"
 
 	private val urlToCategoryIdsToVersions = <String, SortedMap<String, SortedSet<String>>>newHashMap
@@ -65,7 +65,13 @@ class TargetDefinitionProposalProvider extends AbstractTargetDefinitionProposalP
 					val ids = urlToCategoryIdsToVersions.get(repositoryLocation).keySet()
 					for (String id : ids) {
 						displayString = new StyledString(id)
-						val proposalString = id.replace(".feature.group", "")
+						val index = id.indexOf(".feature.group")
+						val proposalString = 
+							if(index > 0) {
+								id.replace(".feature.group", "")
+							} else {
+								id + " noFeature "
+							} 
 						proposal = doCreateProposal(proposalString, displayString, null, 0, context)
 						acceptor.accept(proposal)
 					}

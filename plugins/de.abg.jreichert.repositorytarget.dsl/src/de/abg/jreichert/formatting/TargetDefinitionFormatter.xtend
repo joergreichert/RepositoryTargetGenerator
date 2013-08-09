@@ -3,12 +3,10 @@
  */
 package de.abg.jreichert.formatting
 
+import com.google.inject.Inject
+import de.abg.jreichert.services.TargetDefinitionGrammarAccess
 import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter
 import org.eclipse.xtext.formatting.impl.FormattingConfig
-import com.google.inject.Inject;
-import de.abg.jreichert.services.TargetDefinitionGrammarAccess
-import org.eclipse.xtext.IGrammarAccess
-import org.eclipse.xtext.GrammarUtil
 
 /**
  * This class contains custom formatting description.
@@ -34,18 +32,18 @@ class TargetDefinitionFormatter extends AbstractDeclarativeFormatter {
 		c.setLinewrap(2,2,2).before(targetAccess.targetFileKeyword_2_0)
 		c.setLinewrap(2,2,2).after(targetAccess.targetFileNameAssignment_2_2)
 
-		c.setLinewrap(2,2,2).around(targetAccess.locationsAssignment_8)
-		c.setIndentationIncrement.before(targetAccess.locationsAssignment_8);
-		c.setIndentationDecrement.after(targetAccess.locationsAssignment_8);
+		c.setLinewrap(2,2,2).around(targetAccess.locationsAssignment_3)
+		c.setIndentationIncrement.before(targetAccess.locationsAssignment_3);
+		c.setIndentationDecrement.after(targetAccess.locationsAssignment_3);
 
 		c.setNoLinewrap.between(locationAccess.nameAssignment_0, locationAccess.repositoryLocationAssignment_1)
 		
-		c.setLinewrap.before(locationAccess.unitAssignment_8)
-		c.setLinewrap.before(locationAccess.unitAssignment_9_1)
-		c.setNoLinewrap.between(unitAccess.categoryIdAssignment_0, unitAccess.versionAssignment_1)
-		c.setNoSpace.before(locationAccess.commaKeyword_9_0);
-		c.setNoLinewrap.between(locationAccess.unitAssignment_9_1, locationAccess.commaKeyword_9_0);
-		c.setLinewrap.after(locationAccess.commaKeyword_9_0)
+		c.setLinewrap.before(locationAccess.unitAssignment_3)
+		c.setLinewrap.before(locationAccess.unitAssignment_4_1)
+		c.setNoLinewrap.between(unitAccess.categoryIdAssignment_0, unitAccess.versionAssignment_2)
+		c.setNoSpace.before(locationAccess.commaKeyword_4_0);
+		c.setNoLinewrap.between(locationAccess.unitAssignment_4_1, locationAccess.commaKeyword_4_0);
+		c.setLinewrap.after(locationAccess.commaKeyword_4_0)
 	}
 
 	// see: http://blog.dietmar-stoll.de/2011/02/quickly-formatting-dsls-with-xtext.html

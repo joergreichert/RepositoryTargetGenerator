@@ -1,4 +1,3 @@
-<!doctype html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -18,18 +17,19 @@
 
   </head>
   <body>
-      <div id="header">
+	<div id="header">
         <nav>
           <li class="fork"><a href="https://github.com/joergreichert/RepositoryTargetGenerator">View On GitHub</a></li>
           <li class="downloads"><a href="https://github.com/joergreichert/RepositoryTargetGenerator/zipball/master">ZIP</a></li>
           <li class="downloads"><a href="https://github.com/joergreichert/RepositoryTargetGenerator/tarball/master">TAR</a></li>
           <li class="title">DOWNLOADS</li>
         </nav>
-      </div><!-- end header -->
+	</div><!-- end header -->
 
     <div class="wrapper">
 
       <section>
+	  
         <div id="title">
           <h1>Repository Target Generator</h1>
           <p>Editor and Generator for .target and category.xml</p>
@@ -38,15 +38,32 @@
           <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
         </div>
 
-        <p><img src="https://raw.github.com/joergreichert/RepositoryTargetGenerator/master/wiki/TargetDefEditor.png" alt="DSL Editor"></p>
+		<p>Update site: <a href="http://joergreichert.github.io/RepositoryTargetGenerator/updatesite/">http://joergreichert.github.io/RepositoryTargetGenerator/updatesite/</a></p>
+		
+		<p>After having defined the URL of a repository you get auto completion for the features resp. plug-ins contained in this P2 repository or update site. </p>
 
-<p>After having defined the URL of a repository you get auto completion for the features resp. plug-ins contained in this P2 repository or update site. </p>
+		<p>Having a plug-in selected you can further trigger auto completion of the versions the selected element is available in.</p>
 
-<p>Having a plug-in selected you can further trigger auto completion of the versions the selected element is available in.</p>
+		<p><img src="https://raw.github.com/joergreichert/RepositoryTargetGenerator/master/wiki/TargetDefEditor.png" alt="DSL Editor" /></p>
 
-<p>When saving the targetdef file a target file and a category.xml file are generated within the projects's src-gen folder. The name of the generated target file you can influence by specifying the target file name inside the targetdef file.</p>
+		<p>There is a context menu entry "Validate" to check the URLs, categoryIds and versions in the given target definition.</p>
 
-<p>Download update site from <a href="https://github.com/joergreichert/RepositoryTargetGenerator/blob/master/releases/de.abg.jreichert.repositorytarget.updatesite-0.1.0.201305030058.zip?raw=true">here</a> or use it directly from <a href="http://joergreichert.github.io/RepositoryTargetGenerator/updatesite/">http://joergreichert.github.io/RepositoryTargetGenerator/updatesite/</a></p>
+		<p><img src="images/validate.png" alt="validate entry context menu" /></p>
+
+		<p>These validation take some time as the repositories have to be visited thus this process runs in background.</p>
+
+		<p><img src="images/xtext_validation_background.png" alt="validation in progress" /></p>
+
+		<p>For non existing URIs, categoryIds and versions there are produced error markers, if there are newer versions there are warn markers created.</p>
+
+		<p><img src="images/marker.png" alt="created markers" /></p>
+
+		<p>For the warn markers there are offered quickfixes to update the current version with the last available one.</p>
+
+		<p><img src="images/marker_update_version.png" alt="proposed quickfix" /></p>
+
+		<p>When saving the targetdef file a target file and a category.xml file are generated within the projects's src-gen folder. The name of the generated target file you can influence by specifying the target file name inside the targetdef file.</p>
+
       </section>
 
     </div>

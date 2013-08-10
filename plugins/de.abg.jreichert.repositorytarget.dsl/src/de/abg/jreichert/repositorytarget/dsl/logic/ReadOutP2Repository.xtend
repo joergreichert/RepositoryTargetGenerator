@@ -1,4 +1,4 @@
-package de.abg.jreichert.logic
+package de.abg.jreichert.repositorytarget.dsl.logic
 
 import org.eclipse.core.runtime.IProgressMonitor
 import de.abg.jreichert.repositorytarget.xml.ContentXmlHandler

@@ -1,10 +1,10 @@
-package de.abg.jreichert.validation
+package de.abg.jreichert.repositorytarget.dsl.validation
 
 import com.google.inject.Inject
-import de.abg.jreichert.logic.ReadOutP2Repository
+import de.abg.jreichert.repositorytarget.dsl.logic.ReadOutP2Repository
 import de.abg.jreichert.repositorytarget.xml.ContentXmlHandler
-import de.abg.jreichert.targetDefinition.Target
-import de.abg.jreichert.targetDefinition.TargetDefinitionPackage
+import de.abg.jreichert.repositorytarget.dsl.targetDefinition.Target
+import de.abg.jreichert.repositorytarget.dsl.targetDefinition.TargetDefinitionPackage
 import org.apache.log4j.Logger
 import org.eclipse.core.runtime.NullProgressMonitor
 import org.eclipse.xtext.validation.Check

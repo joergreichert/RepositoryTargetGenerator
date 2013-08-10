@@ -1,4 +1,6 @@
-/* XPECT formatted ---
+/* XPECT_SETUP de.abg.jreichert.repositorytarget.dsl.formatting.TargetDefinitionFormatterTest END_SETUP */
+
+/* XPECT formatted --- 
 TargetDefinition "Spray Target Platform - Eclipse 4.2"
 
 	targetFile = spray-juno2

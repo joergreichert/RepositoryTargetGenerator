@@ -6,8 +6,8 @@
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package 
        uri = "http://www.abg.de/jreichert/TargetDefinition" 
-       class = "de.abg.jreichert.targetDefinition.TargetDefinitionPackage"
-       genModel = "de/abg/jreichert/TargetDefinition.genmodel" /> 
+       class = "de.abg.jreichert.repositorytarget.dsl.targetDefinition.TargetDefinitionPackage"
+       genModel = "de/abg/jreichert/repositorytarget/dsl/TargetDefinition.genmodel" /> 
 	
   </extension>
 

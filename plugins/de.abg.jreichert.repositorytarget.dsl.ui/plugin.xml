@@ -6,48 +6,48 @@
     <extension
             point="org.eclipse.ui.editors">
         <editor
-            class="de.abg.jreichert.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
+            class="de.abg.jreichert.repositorytarget.dsl.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
             contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
             default="true"
             extensions="targetdef"
-            id="de.abg.jreichert.TargetDefinition"
+            id="de.abg.jreichert.repositorytarget.dsl.TargetDefinition"
             name="TargetDefinition Editor">
         </editor>
     </extension>
     <extension
         point="org.eclipse.ui.handlers">
         <handler
-            class="de.abg.jreichert.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
+            class="de.abg.jreichert.repositorytarget.dsl.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
             commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
             <activeWhen>
                 <reference
-                    definitionId="de.abg.jreichert.TargetDefinition.Editor.opened">
+                    definitionId="de.abg.jreichert.repositorytarget.dsl.TargetDefinition.Editor.opened">
                 </reference>
             </activeWhen>
         </handler>
         <handler
-            class="de.abg.jreichert.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
-            commandId="de.abg.jreichert.TargetDefinition.validate">
+            class="de.abg.jreichert.repositorytarget.dsl.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
+            commandId="de.abg.jreichert.repositorytarget.dsl.TargetDefinition.validate">
          <activeWhen>
             <reference
-                    definitionId="de.abg.jreichert.TargetDefinition.Editor.opened">
+                    definitionId="de.abg.jreichert.repositorytarget.dsl.TargetDefinition.Editor.opened">
             </reference>
          </activeWhen>
       	</handler>
       	<!-- copy qualified name -->
         <handler
-            class="de.abg.jreichert.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
+            class="de.abg.jreichert.repositorytarget.dsl.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
             commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName">
             <activeWhen>
-				<reference definitionId="de.abg.jreichert.TargetDefinition.Editor.opened" />
+				<reference definitionId="de.abg.jreichert.repositorytarget.dsl.TargetDefinition.Editor.opened" />
             </activeWhen>
         </handler>
         <handler
-            class="de.abg.jreichert.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
+            class="de.abg.jreichert.repositorytarget.dsl.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
             commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedName">
             <activeWhen>
             	<and>
-            		<reference definitionId="de.abg.jreichert.TargetDefinition.XtextEditor.opened" />
+            		<reference definitionId="de.abg.jreichert.repositorytarget.dsl.TargetDefinition.XtextEditor.opened" />
 	                <iterate>
 						<adapt type="org.eclipse.xtext.ui.editor.outline.IOutlineNode" />
 					</iterate>
@@ -56,22 +56,22 @@
         </handler>
     </extension>
     <extension point="org.eclipse.core.expressions.definitions">
-        <definition id="de.abg.jreichert.TargetDefinition.Editor.opened">
+        <definition id="de.abg.jreichert.repositorytarget.dsl.TargetDefinition.Editor.opened">
             <and>
                 <reference definitionId="isActiveEditorAnInstanceOfXtextEditor"/>
                 <with variable="activeEditor">
                     <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
-                        value="de.abg.jreichert.TargetDefinition" 
+                        value="de.abg.jreichert.repositorytarget.dsl.TargetDefinition" 
                         forcePluginActivation="true"/>
                 </with>        
             </and>
         </definition>
-        <definition id="de.abg.jreichert.TargetDefinition.XtextEditor.opened">
+        <definition id="de.abg.jreichert.repositorytarget.dsl.TargetDefinition.XtextEditor.opened">
             <and>
                 <reference definitionId="isXtextEditorActive"/>
                 <with variable="activeEditor">
                     <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
-                        value="de.abg.jreichert.TargetDefinition" 
+                        value="de.abg.jreichert.repositorytarget.dsl.TargetDefinition" 
                         forcePluginActivation="true"/>
                 </with>        
             </and>
@@ -80,33 +80,33 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            class="de.abg.jreichert.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="de.abg.jreichert.TargetDefinition"
+            class="de.abg.jreichert.repositorytarget.dsl.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="de.abg.jreichert.repositorytarget.dsl.TargetDefinition"
             name="TargetDefinition">
-            <keywordReference id="de.abg.jreichert.ui.keyword_TargetDefinition"/>
+            <keywordReference id="de.abg.jreichert.repositorytarget.dsl.ui.keyword_TargetDefinition"/>
         </page>
         <page
-            category="de.abg.jreichert.TargetDefinition"
-            class="de.abg.jreichert.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
-            id="de.abg.jreichert.TargetDefinition.coloring"
+            category="de.abg.jreichert.repositorytarget.dsl.TargetDefinition"
+            class="de.abg.jreichert.repositorytarget.dsl.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+            id="de.abg.jreichert.repositorytarget.dsl.TargetDefinition.coloring"
             name="Syntax Coloring">
-            <keywordReference id="de.abg.jreichert.ui.keyword_TargetDefinition"/>
+            <keywordReference id="de.abg.jreichert.repositorytarget.dsl.ui.keyword_TargetDefinition"/>
         </page>
         <page
-            category="de.abg.jreichert.TargetDefinition"
-            class="de.abg.jreichert.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
-            id="de.abg.jreichert.TargetDefinition.templates"
+            category="de.abg.jreichert.repositorytarget.dsl.TargetDefinition"
+            class="de.abg.jreichert.repositorytarget.dsl.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
+            id="de.abg.jreichert.repositorytarget.dsl.TargetDefinition.templates"
             name="Templates">
-            <keywordReference id="de.abg.jreichert.ui.keyword_TargetDefinition"/>
+            <keywordReference id="de.abg.jreichert.repositorytarget.dsl.ui.keyword_TargetDefinition"/>
         </page>
     </extension>
     <extension
             point="org.eclipse.ui.propertyPages">
         <page
-            class="de.abg.jreichert.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="de.abg.jreichert.TargetDefinition"
+            class="de.abg.jreichert.repositorytarget.dsl.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="de.abg.jreichert.repositorytarget.dsl.TargetDefinition"
             name="TargetDefinition">
-            <keywordReference id="de.abg.jreichert.ui.keyword_TargetDefinition"/>
+            <keywordReference id="de.abg.jreichert.repositorytarget.dsl.ui.keyword_TargetDefinition"/>
             <enabledWhen>
 	            <adapt type="org.eclipse.core.resources.IProject"/>
 			</enabledWhen>
@@ -116,14 +116,14 @@
     <extension
         point="org.eclipse.ui.keywords">
         <keyword
-            id="de.abg.jreichert.ui.keyword_TargetDefinition"
+            id="de.abg.jreichert.repositorytarget.dsl.ui.keyword_TargetDefinition"
             label="TargetDefinition"/>
     </extension>
     <extension
          point="org.eclipse.ui.commands">
       <command
             description="Trigger expensive validation"
-            id="de.abg.jreichert.TargetDefinition.validate"
+            id="de.abg.jreichert.repositorytarget.dsl.TargetDefinition.validate"
             name="Validate">
       </command>
       <!-- copy qualified name -->
@@ -144,12 +144,12 @@
         <menuContribution
             locationURI="popup:#TextEditorContext?after=group.edit">
              <command
-                 commandId="de.abg.jreichert.TargetDefinition.validate"
+                 commandId="de.abg.jreichert.repositorytarget.dsl.TargetDefinition.validate"
                  style="push"
                  tooltip="Trigger expensive validation">
             <visibleWhen checkEnabled="false">
                 <reference
-                    definitionId="de.abg.jreichert.TargetDefinition.Editor.opened">
+                    definitionId="de.abg.jreichert.repositorytarget.dsl.TargetDefinition.Editor.opened">
                 </reference>
             </visibleWhen>
          </command>  
@@ -159,7 +159,7 @@
          	<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName" 
          		style="push" tooltip="Copy Qualified Name">
             	<visibleWhen checkEnabled="false">
-                	<reference definitionId="de.abg.jreichert.TargetDefinition.Editor.opened" />
+                	<reference definitionId="de.abg.jreichert.repositorytarget.dsl.TargetDefinition.Editor.opened" />
             	</visibleWhen>
          	</command>  
          </menuContribution>
@@ -167,7 +167,7 @@
          	<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName"
             	style="push" tooltip="Copy Qualified Name">
             	<visibleWhen checkEnabled="false">
-                	<reference definitionId="de.abg.jreichert.TargetDefinition.Editor.opened" />
+                	<reference definitionId="de.abg.jreichert.repositorytarget.dsl.TargetDefinition.Editor.opened" />
             	</visibleWhen>
          	</command>  
          </menuContribution>
@@ -176,7 +176,7 @@
 				style="push" tooltip="Copy Qualified Name">
          		<visibleWhen checkEnabled="false">
 	            	<and>
-	            		<reference definitionId="de.abg.jreichert.TargetDefinition.XtextEditor.opened" />
+	            		<reference definitionId="de.abg.jreichert.repositorytarget.dsl.TargetDefinition.XtextEditor.opened" />
 						<iterate>
 							<adapt type="org.eclipse.xtext.ui.editor.outline.IOutlineNode" />
 						</iterate>
@@ -189,7 +189,7 @@
 		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
 			<command commandId="org.eclipse.xtext.ui.editor.FindReferences">
 				<visibleWhen checkEnabled="false">
-                	<reference definitionId="de.abg.jreichert.TargetDefinition.Editor.opened">
+                	<reference definitionId="de.abg.jreichert.repositorytarget.dsl.TargetDefinition.Editor.opened">
                 	</reference>
             	</visibleWhen>
 			</command>
@@ -197,11 +197,11 @@
 	</extension>
 	<extension point="org.eclipse.ui.handlers">
 	    <handler
-            class="de.abg.jreichert.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
+            class="de.abg.jreichert.repositorytarget.dsl.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
             commandId="org.eclipse.xtext.ui.editor.FindReferences">
             <activeWhen>
                 <reference
-                    definitionId="de.abg.jreichert.TargetDefinition.Editor.opened">
+                    definitionId="de.abg.jreichert.repositorytarget.dsl.TargetDefinition.Editor.opened">
                 </reference>
             </activeWhen>
         </handler>
@@ -212,19 +212,19 @@
 	<extension
 		point="org.eclipse.emf.ecore.extension_parser">
 		<parser
-			class="de.abg.jreichert.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+			class="de.abg.jreichert.repositorytarget.dsl.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
 			type="targetdef">
 		</parser>
 	</extension>
 	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
         <resourceServiceProvider
-            class="de.abg.jreichert.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+            class="de.abg.jreichert.repositorytarget.dsl.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
             uriExtension="targetdef">
         </resourceServiceProvider>
     </extension>
 
 
-	<!-- marker definitions for de.abg.jreichert.TargetDefinition -->
+	<!-- marker definitions for de.abg.jreichert.repositorytarget.dsl.TargetDefinition -->
 	<extension
 	        id="targetdefinition.check.fast"
 	        name="TargetDefinition Problem"
@@ -250,27 +250,27 @@
    <extension
          point="org.eclipse.xtext.builder.participant">
       <participant
-            class="de.abg.jreichert.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant">
+            class="de.abg.jreichert.repositorytarget.dsl.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant">
       </participant>
    </extension>
    <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            category="de.abg.jreichert.TargetDefinition"
-            class="de.abg.jreichert.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
-            id="de.abg.jreichert.TargetDefinition.compiler.preferencePage"
+            category="de.abg.jreichert.repositorytarget.dsl.TargetDefinition"
+            class="de.abg.jreichert.repositorytarget.dsl.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+            id="de.abg.jreichert.repositorytarget.dsl.TargetDefinition.compiler.preferencePage"
             name="Compiler">
-            <keywordReference id="de.abg.jreichert.ui.keyword_TargetDefinition"/>
+            <keywordReference id="de.abg.jreichert.repositorytarget.dsl.ui.keyword_TargetDefinition"/>
         </page>
     </extension>
     <extension
             point="org.eclipse.ui.propertyPages">
         <page
-            category="de.abg.jreichert.TargetDefinition"
-            class="de.abg.jreichert.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
-            id="de.abg.jreichert.TargetDefinition.compiler.propertyPage"
+            category="de.abg.jreichert.repositorytarget.dsl.TargetDefinition"
+            class="de.abg.jreichert.repositorytarget.dsl.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+            id="de.abg.jreichert.repositorytarget.dsl.TargetDefinition.compiler.propertyPage"
             name="Compiler">
-            <keywordReference id="de.abg.jreichert.ui.keyword_TargetDefinition"/>
+            <keywordReference id="de.abg.jreichert.repositorytarget.dsl.ui.keyword_TargetDefinition"/>
             <enabledWhen>
 	            <adapt type="org.eclipse.core.resources.IProject"/>
 			</enabledWhen>
@@ -282,11 +282,11 @@
 	<extension
 		point="org.eclipse.ui.handlers">
 		<handler 
-			class="de.abg.jreichert.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
+			class="de.abg.jreichert.repositorytarget.dsl.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
 			commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline">
 			<activeWhen>
 				<reference
-					definitionId="de.abg.jreichert.TargetDefinition.Editor.opened">
+					definitionId="de.abg.jreichert.repositorytarget.dsl.TargetDefinition.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
@@ -306,33 +306,33 @@
 				style="push"
 				tooltip="Open Quick Outline">
 				<visibleWhen checkEnabled="false">
-					<reference definitionId="de.abg.jreichert.TargetDefinition.Editor.opened"/>
+					<reference definitionId="de.abg.jreichert.repositorytarget.dsl.TargetDefinition.Editor.opened"/>
 				</visibleWhen>
 			</command>
 		</menuContribution>
 	</extension>
-    <!-- quickfix marker resolution generator for de.abg.jreichert.TargetDefinition -->
+    <!-- quickfix marker resolution generator for de.abg.jreichert.repositorytarget.dsl.TargetDefinition -->
     <extension
             point="org.eclipse.ui.ide.markerResolution">
         <markerResolutionGenerator
-            class="de.abg.jreichert.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="de.abg.jreichert.ui.targetdefinition.check.fast">
+            class="de.abg.jreichert.repositorytarget.dsl.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="de.abg.jreichert.repositorytarget.dsl.ui.targetdefinition.check.fast">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
             </attribute>
         </markerResolutionGenerator>
         <markerResolutionGenerator
-            class="de.abg.jreichert.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="de.abg.jreichert.ui.targetdefinition.check.normal">
+            class="de.abg.jreichert.repositorytarget.dsl.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="de.abg.jreichert.repositorytarget.dsl.ui.targetdefinition.check.normal">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
             </attribute>
         </markerResolutionGenerator>
         <markerResolutionGenerator
-            class="de.abg.jreichert.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="de.abg.jreichert.ui.targetdefinition.check.expensive">
+            class="de.abg.jreichert.repositorytarget.dsl.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="de.abg.jreichert.repositorytarget.dsl.ui.targetdefinition.check.expensive">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
@@ -342,11 +342,11 @@
    	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
 		<handler 
-			class="de.abg.jreichert.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.DefaultRenameElementHandler"
+			class="de.abg.jreichert.repositorytarget.dsl.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.DefaultRenameElementHandler"
 			commandId="org.eclipse.xtext.ui.refactoring.RenameElement">
 			<activeWhen>
 				<reference
-					definitionId="de.abg.jreichert.TargetDefinition.Editor.opened">
+					definitionId="de.abg.jreichert.repositorytarget.dsl.TargetDefinition.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
@@ -358,7 +358,7 @@
                style="push">
             <visibleWhen checkEnabled="false">
                <reference
-                     definitionId="de.abg.jreichert.TargetDefinition.Editor.opened">
+                     definitionId="de.abg.jreichert.repositorytarget.dsl.TargetDefinition.Editor.opened">
                </reference>
             </visibleWhen>
          </command>
@@ -366,29 +366,29 @@
    </extension>
    <extension point="org.eclipse.ui.preferencePages">
 	    <page
-	        category="de.abg.jreichert.TargetDefinition"
-	        class="de.abg.jreichert.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
-	        id="de.abg.jreichert.TargetDefinition.refactoring"
+	        category="de.abg.jreichert.repositorytarget.dsl.TargetDefinition"
+	        class="de.abg.jreichert.repositorytarget.dsl.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
+	        id="de.abg.jreichert.repositorytarget.dsl.TargetDefinition.refactoring"
 	        name="Refactoring">
-	        <keywordReference id="de.abg.jreichert.ui.keyword_TargetDefinition"/>
+	        <keywordReference id="de.abg.jreichert.repositorytarget.dsl.ui.keyword_TargetDefinition"/>
 	    </page>
 	</extension>
 
   <extension point="org.eclipse.compare.contentViewers">
-    <viewer id="de.abg.jreichert.TargetDefinition.compare.contentViewers"
-            class="de.abg.jreichert.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+    <viewer id="de.abg.jreichert.repositorytarget.dsl.TargetDefinition.compare.contentViewers"
+            class="de.abg.jreichert.repositorytarget.dsl.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
             extensions="targetdef">
     </viewer>
   </extension>
   <extension point="org.eclipse.compare.contentMergeViewers">
-    <viewer id="de.abg.jreichert.TargetDefinition.compare.contentMergeViewers"
-            class="de.abg.jreichert.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+    <viewer id="de.abg.jreichert.repositorytarget.dsl.TargetDefinition.compare.contentMergeViewers"
+            class="de.abg.jreichert.repositorytarget.dsl.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
             extensions="targetdef" label="TargetDefinition Compare">
      </viewer>
   </extension>
   <extension point="org.eclipse.ui.editors.documentProviders">
-    <provider id="de.abg.jreichert.TargetDefinition.editors.documentProviders"
-            class="de.abg.jreichert.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+    <provider id="de.abg.jreichert.repositorytarget.dsl.TargetDefinition.editors.documentProviders"
+            class="de.abg.jreichert.repositorytarget.dsl.ui.TargetDefinitionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
             extensions="targetdef">
     </provider>
   </extension>

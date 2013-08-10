@@ -1,4 +1,4 @@
-grammar de.abg.jreichert.TargetDefinition hidden(WS, ML_COMMENT, SL_COMMENT)
+grammar de.abg.jreichert.repositorytarget.dsl.TargetDefinition hidden(WS, ML_COMMENT, SL_COMMENT)
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 generate targetDefinition "http://www.abg.de/jreichert/TargetDefinition"
 

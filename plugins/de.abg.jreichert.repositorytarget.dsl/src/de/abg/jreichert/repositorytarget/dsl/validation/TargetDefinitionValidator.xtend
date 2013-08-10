@@ -10,6 +10,9 @@ import org.eclipse.core.runtime.NullProgressMonitor
 import org.eclipse.xtext.validation.Check
 
 import static org.eclipse.xtext.validation.CheckType.*
+import de.abg.jreichert.repositorytarget.dsl.targetDefinition.Unit
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils
+import java.util.List
 
 class TargetDefinitionValidator extends AbstractTargetDefinitionValidator {
 	
@@ -60,6 +63,25 @@ class TargetDefinitionValidator extends AbstractTargetDefinitionValidator {
 			LOGGER.error(
 				"Out of memory: Please start your Eclipse with something like -Xmx1024m -Xms1024m -XX:MaxPermSize=512m",
 				ooe)
+		}
+	}
+	
+	@Check
+	def checkNoFeaturePosition(Unit unit) {
+		val unitNode = NodeModelUtils.findActualNodeFor(unit)
+		val children = unitNode.children.iterator.toList
+		val categoryIdNode = NodeModelUtils.findNodesForFeature(unit, TargetDefinitionPackage.Literals.UNIT__CATEGORY_ID).head
+		val noFeatureNode = NodeModelUtils.findNodesForFeature(unit, TargetDefinitionPackage.Literals.UNIT__NO_FEATURE).head
+		val noFeatureNodeIndex = children.indexOf(noFeatureNode)
+		if(noFeatureNodeIndex != -1) {
+			val versionNode = NodeModelUtils.findNodesForFeature(unit, TargetDefinitionPackage.Literals.UNIT__VERSION).head
+			val versionNodeIndex = children.indexOf(versionNode)
+			if(versionNodeIndex != -1 && noFeatureNodeIndex > versionNodeIndex) {
+				error('noFeature have to placed between categoryId and version', 
+											unit.eContainer, unit.eContainingFeature, 
+											(unit.eContainer.eGet(unit.eContainingFeature) as List<Unit>).indexOf(unit),
+											DEPRECATED_FEATURE_ORDER, categoryIdNode.text + " noFeature " + versionNode.text)
+			}
 		}
 	}
 }

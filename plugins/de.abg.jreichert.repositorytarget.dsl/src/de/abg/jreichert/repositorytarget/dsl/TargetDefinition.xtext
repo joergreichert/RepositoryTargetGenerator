@@ -15,7 +15,7 @@ Location:
 ;
 
 Unit:
-	categoryId=ID (noFeature?='noFeature')? (version=VERSION)? 
+	categoryId=ID ((noFeature?='noFeature')? & (version=VERSION)?) 
 ;
 
 terminal URL: 

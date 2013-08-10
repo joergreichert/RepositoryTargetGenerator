@@ -40,7 +40,7 @@ class TargetDefinitionFormatter extends AbstractDeclarativeFormatter {
 		
 		c.setLinewrap.before(locationAccess.unitAssignment_3)
 		c.setLinewrap.before(locationAccess.unitAssignment_4_1)
-		c.setNoLinewrap.between(unitAccess.categoryIdAssignment_0, unitAccess.versionAssignment_2)
+		c.setNoLinewrap.between(unitAccess.categoryIdAssignment_0, unitAccess.versionAssignment_1_1)
 		c.setNoSpace.before(locationAccess.commaKeyword_4_0);
 		c.setNoLinewrap.between(locationAccess.unitAssignment_4_1, locationAccess.commaKeyword_4_0);
 		c.setLinewrap.after(locationAccess.commaKeyword_4_0)

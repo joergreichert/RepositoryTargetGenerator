@@ -17,6 +17,7 @@ import org.eclipse.xtext.ui.editor.quickfix.Fix
 import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor
 import org.eclipse.xtext.validation.Issue
 import de.abg.jreichert.repositorytarget.dsl.ui.internal.TargetDefinitionActivator
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 
 /**
  * Custom quickfixes.
@@ -27,11 +28,12 @@ class TargetDefinitionQuickfixProvider extends DefaultQuickfixProvider {
 
 	@Fix(TargetDefinitionValidator::NOT_UPTODATE)
 	def fixVersion(Issue issue, IssueResolutionAcceptor acceptor) {
-		acceptor.accept(issue, 'Update version', 'Updates version.', null) [
+		val newVersion = issue.data.last
+		acceptor.accept(issue, 'Update version to ' + newVersion, 'Updates current version to ' + newVersion, null) [
 			element, context |
 			if(element instanceof Unit) {
 				val unit = element as Unit
-				unit.version = issue.data.last
+				unit.version = newVersion
 				removeMarker(unit, issue)
 			}
 		]
@@ -45,7 +47,7 @@ class TargetDefinitionQuickfixProvider extends DefaultQuickfixProvider {
 			val markerManager = (ResourcesPlugin.getWorkspace() as Workspace).getMarkerManager();
 			val markerList = <IMarker>newArrayList
 			markerManager.doFindMarkers(file, markerList, 
-				TargetDefinitionActivator.instance.bundle.symbolicName + ".check.expensive", 
+				TargetDefinitionActivator.instance.bundle.symbolicName + ".targetdefinition.check.expensive", 
 				true, IResource.DEPTH_INFINITE
 			)
 			val markers = markerList.filter[it.getAttribute(IMarker.CHAR_START) == issue.offset] 
@@ -53,5 +55,14 @@ class TargetDefinitionQuickfixProvider extends DefaultQuickfixProvider {
 		} else {
 			println(file + " does not exist.")
 		}
+	}
+	
+	@Fix(TargetDefinitionValidator::DEPRECATED_FEATURE_ORDER)
+	def fixNoFeatureOrder(Issue issue, IssueResolutionAcceptor acceptor) {
+		acceptor.accept(issue, 'Update position', 'Plaves noFeature between categoryId and version', null) [
+			context |
+				val xtextDocument = context.getXtextDocument();
+				xtextDocument.replace(issue.offset, issue.length, issue.data.last);
+		]
 	}
 }

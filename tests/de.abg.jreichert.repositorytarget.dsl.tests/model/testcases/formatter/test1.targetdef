@@ -21,7 +21,7 @@ TargetDefinition "Spray Target Platform - Eclipse 4.2"
 		org.eclipse.graphiti.sdk.plus.feature 0.9.1.v20120919-0732,
 		org.eclipse.emf.mwe2.language.sdk 2.3.0.v201206120758,
 		org.eclipse.emf.mwe2.runtime.sdk 2.3.0.v201206110920,
-		org.eclipse.swt 3.100.1.v4234e noFeature
+		org.eclipse.swt noFeature 3.100.1.v4234e
 	}
 
 	"SWTBot" http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site {
@@ -53,7 +53,7 @@ org.eclipse.emf.eef.sdk-feature 1.1.1.201206051542 , org.eclipse.gef.sdk
 org.eclipse.graphiti.sdk.plus.feature 0.9.1.v20120919-0732 ,
 org.eclipse.emf.mwe2.language.sdk 2.3.0.v201206120758 ,
 org.eclipse.emf.mwe2.runtime.sdk 2.3.0.v201206110920 , org.eclipse.swt
-3.100.1.v4234e noFeature } "SWTBot"
+noFeature 3.100.1.v4234e } "SWTBot"
 http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site {
 org.eclipse.swtbot.eclipse 2.0.5.20111003_1754-3676ac8-dev-e36 ,
 org.eclipse.swtbot.eclipse.gef 2.0.5.20111003_1754-3676ac8-dev-e36 ,

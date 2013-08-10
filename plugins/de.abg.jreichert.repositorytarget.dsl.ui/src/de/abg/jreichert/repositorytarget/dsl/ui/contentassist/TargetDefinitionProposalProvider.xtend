@@ -28,6 +28,8 @@ import org.eclipse.xtext.RuleCall
 import org.eclipse.xtext.common.ui.contentassist.TerminalsProposalProvider
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils
+import de.abg.jreichert.repositorytarget.dsl.targetDefinition.TargetDefinitionPackage
 
 /**
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#contentAssist on how to customize content assistant
@@ -58,12 +60,24 @@ class TargetDefinitionProposalProvider extends AbstractTargetDefinitionProposalP
 		if (location != null) {
 			val repositoryLocation = location.getRepositoryLocation()
 			if (repositoryLocation != null) {
+				val existingCategoryId = NodeModelUtils
+						.findNodesForFeature(location, TargetDefinitionPackage.Literals.LOCATION__UNIT)
+						.filter[it.offset + text.trim.length == context.offset]
+						.last?.text?.trim
 				var StyledString displayString = null
 				var ICompletionProposal proposal = null
 				try {
 					fill(repositoryLocation)
 					val ids = urlToCategoryIdsToVersions.get(repositoryLocation).keySet()
-					for (String id : ids) {
+					val filteredIds = 
+						if(existingCategoryId == null) 
+							ids.filter[length == replaceAll("\\s", "").length]
+						else {
+							ids
+								.filterWhitespaceContainingStrings
+								.filterStringThatStartsWith(existingCategoryId)
+						}
+					for (String id : filteredIds) {
 						displayString = new StyledString(id)
 						val index = id.indexOf(".feature.group")
 						val proposalString = 
@@ -72,7 +86,7 @@ class TargetDefinitionProposalProvider extends AbstractTargetDefinitionProposalP
 							} else {
 								id + " noFeature "
 							} 
-						proposal = doCreateProposal(proposalString, displayString, null, 0, context)
+						proposal = doCreateProposal(proposalString, displayString, null, 600, context)
 						acceptor.accept(proposal)
 					}
 				} catch (Exception exception) {
@@ -118,6 +132,9 @@ class TargetDefinitionProposalProvider extends AbstractTargetDefinitionProposalP
 			if (repositoryLocation != null) {
 				var categoryId = unit.getCategoryId()
 				if (categoryId != null) {
+					val existingVersion = NodeModelUtils
+							.findNodesForFeature(unit, TargetDefinitionPackage.Literals.UNIT__VERSION)
+							.last?.text					
 					var StyledString displayString = null
 					var ICompletionProposal proposal = null
 					try {
@@ -129,10 +146,18 @@ class TargetDefinitionProposalProvider extends AbstractTargetDefinitionProposalP
 								categoryId + ".feature.group"
 						val versions = urlToCategoryIdsToVersions.get(repositoryLocation).get(categoryId)
 						if (versions != null) {
-							for (String version : versions) {
+							val filteredVersions = 
+								if(existingVersion == null) 
+									versions.filterWhitespaceContainingStrings
+								else {
+									versions
+										.filterWhitespaceContainingStrings
+									 	.filterStringThatStartsWith(existingVersion)
+								}
+							for (String version : filteredVersions) {
 								if (version != null) {
 									displayString = new StyledString(version)
-									proposal = doCreateProposal(version, displayString, null, 0, context)
+									proposal = doCreateProposal(version, displayString, null, 600, context)
 									acceptor.accept(proposal)
 								}
 							}
@@ -147,6 +172,14 @@ class TargetDefinitionProposalProvider extends AbstractTargetDefinitionProposalP
 				}
 			}
 		}
+	}
+	
+	def private filterWhitespaceContainingStrings(Iterable<String> strings) {
+		strings.filter[length == replaceAll("\\s", "").length]
+	}
+
+	def private filterStringThatStartsWith(Iterable<String> strings, String start) {
+		strings.filter[startsWith(start)]
 	}
 
 	def private Unit getUnit(EObject model) {

@@ -1,2 +1,2 @@
 language: java
-script: cd releng/de.abg.jreichert.repositorytarget.distribution && mvn clean deploy -Pmodules-default,modules-assembly
+script: cd releng/de.abg.jreichert.repositorytarget.distribution && mvn clean -B -V deploy -Pmodules-default,modules-assembly

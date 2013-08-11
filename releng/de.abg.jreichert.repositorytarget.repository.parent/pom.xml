@@ -13,8 +13,8 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<platform-version-name>juno</platform-version-name>
-		<tycho-version>0.18.0</tycho-version>
+		<platform-version-name>kepler</platform-version-name>
+		<tycho-version>0.18.1</tycho-version>
 	</properties>
 
 	<build>

@@ -15,7 +15,6 @@
 	<properties>
 		<platform-version-name>kepler</platform-version-name>
 		<tycho-version>0.18.1</tycho-version>
-		<github.global.server>joergreichert-snapshots</github.global.server>
 		<distribution.dir>${basedir}/../../releng/de.abg.jreichert.repositorytarget.parent/target/repository</distribution.dir>
 	</properties>
 

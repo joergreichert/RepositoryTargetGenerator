@@ -11,10 +11,57 @@
 	<version>0.1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>repositorytarget</name>
+	
+	<properties>
+		<distribution.dir>${basedir}/../../releng/de.abg.jreichert.repositorytarget.parent/target/repository</distribution.dir>
+	</properties>
+	
 	<modules>
 		<module>../../releng/de.abg.jreichert.repositorytarget.targetplatform</module>
 		<module>../../releng/de.abg.jreichert.repositorytarget.repository.parent</module>
 	</modules>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.7</version>			
+				<configuration>
+					<skip>false</skip>
+					<altDeploymentRepository>internal.repo::default::file://${distribution.dir}</altDeploymentRepository>
+				</configuration>
+			</plugin>				
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>site-maven-plugin</artifactId>
+				<version>0.8</version>
+				<configuration>
+					<message>Maven artifacts for ${project.groupId}:${project.artifactId}:${project.version} ~${maven.build.timestamp}</message>
+					<noJekyll>true</noJekyll>
+					<outputDirectory>${distribution.dir}</outputDirectory>
+					<merge>true</merge>
+					<repositoryOwner>joergreichert</repositoryOwner>
+					<repositoryName>distributions</repositoryName>
+					<branch>refs/heads/gh-pages</branch>
+					<path>/snapshots</path>
+					<oauth2Token>${env.TOKEN}</oauth2Token>					
+					<includes>
+						<include>**/*</include>
+					</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>site</goal>
+						</goals>
+						<phase>deploy</phase>
+					</execution>
+				</executions>
+			</plugin>				
+		</plugins>
+	</build>	
+	
 	<profiles>
 		<profile>
 			<id>modules-default</id>
@@ -54,4 +101,17 @@
 			</modules>
 		</profile>
 	</profiles>
+	
+	<distributionManagement>
+		<repository>
+			<id>joergreichert-releases</id>
+			<name>joergreichert-releases</name>
+			<url>http://joergreichert.github.com/distributions/release</url>
+		</repository>
+		<snapshotRepository>
+			<id>joergreichert-snapshots</id>
+			<name>joergreichert-snapshots</name>
+			<url>http://joergreichert.github.com/distributions/snapshot</url>
+		</snapshotRepository>
+	</distributionManagement>	
 </project>

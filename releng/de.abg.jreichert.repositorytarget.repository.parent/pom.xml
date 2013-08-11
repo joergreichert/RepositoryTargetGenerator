@@ -15,6 +15,8 @@
 	<properties>
 		<platform-version-name>kepler</platform-version-name>
 		<tycho-version>0.18.1</tycho-version>
+		<github.global.server>joergreichert-snapshots</github.global.server>
+		<distribution.dir>${basedir}/../../releng/de.abg.jreichert.repositorytarget.parent/target/repository</distribution.dir>
 	</properties>
 
 	<build>
@@ -25,6 +27,42 @@
 				<version>${tycho-version}</version>
 				<extensions>true</extensions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.7</version>			
+				<configuration>
+					<skip>false</skip>
+					<altDeploymentRepository>internal.repo::default::file://${distribution.dir}</altDeploymentRepository>
+				</configuration>
+			</plugin>				
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>site-maven-plugin</artifactId>
+				<version>0.8</version>
+				<configuration>
+					<message>Maven artifacts for ${project.groupId}:${project.artifactId}:${project.version} ~${maven.build.timestamp}</message>
+					<noJekyll>true</noJekyll>
+					<outputDirectory>${distribution.dir}</outputDirectory>
+					<merge>true</merge>
+					<repositoryOwner>joergreichert</repositoryOwner>
+					<repositoryName>distributions</repositoryName>
+					<branch>refs/heads/gh-pages</branch>
+					<path>/snapshots</path>
+					<oauth2Token>${env.TOKEN}</oauth2Token>					
+					<includes>
+						<include>**/*</include>
+					</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>site</goal>
+						</goals>
+						<phase>deploy</phase>
+					</execution>
+				</executions>
+			</plugin>				
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
@@ -119,6 +157,19 @@
 		</pluginRepository>
 	</pluginRepositories>
 
+	<distributionManagement>
+		<repository>
+			<id>joergreichert-releases</id>
+			<name>joergreichert-releases</name>
+			<url>http://joergreichert.github.com/distributions/release</url>
+		</repository>
+		<snapshotRepository>
+			<id>joergreichert-snapshots</id>
+			<name>joergreichert-snapshots</name>
+			<url>http://joergreichert.github.com/distributions/snapshot</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
 	<licenses>
 		<license>
 			<name>Eclipse Public License v1.0</name>

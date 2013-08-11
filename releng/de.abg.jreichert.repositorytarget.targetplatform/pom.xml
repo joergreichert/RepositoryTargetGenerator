@@ -36,7 +36,7 @@
 				<configuration>
 					<message>Maven artifacts for ${project.groupId}:${project.artifactId}:${project.version} ~${maven.build.timestamp}</message>
 					<noJekyll>true</noJekyll>
-					<outputDirectory>${built.repo.dir}</outputDirectory>
+					<outputDirectory>${distribution.dir}</outputDirectory>
 					<merge>true</merge>
 					<repositoryOwner>joergreichert</repositoryOwner>
 					<repositoryName>distributions</repositoryName>

@@ -9,6 +9,7 @@
 	
 	<properties>
 		<tycho-version>0.18.1</tycho-version>
+		<distribution.dir>${basedir}/../../releng/de.abg.jreichert.repositorytarget.parent/target/repository</distribution.dir>
 	</properties>
 	
 	<build>
@@ -18,7 +19,49 @@
 				<artifactId>tycho-maven-plugin</artifactId>
 				<version>${tycho-version}</version>
 				<extensions>true</extensions>
-			</plugin>		
+			</plugin>	
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.7</version>			
+				<configuration>
+					<skip>false</skip>
+					<altDeploymentRepository>internal.repo::default::file://${distribution.dir}</altDeploymentRepository>
+				</configuration>
+			</plugin>				
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>site-maven-plugin</artifactId>
+				<version>0.8</version>
+				<configuration>
+					<noJekyll>true</noJekyll>
+					<repositoryOwner>joergreichert</repositoryOwner>
+					<includes>
+						<include>**/*</include>
+					</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>site</goal>
+						</goals>
+						<phase>deploy</phase>
+					</execution>
+				</executions>
+			</plugin>	
 		</plugins>
 	</build>
+	
+	<distributionManagement>
+		<repository>
+			<id>joergreichert-releases</id>
+			<name>joergreichert-releases</name>
+			<url>http://joergreichert.github.com/distributions/release</url>
+		</repository>
+		<snapshotRepository>
+			<id>joergreichert-snapshots</id>
+			<name>joergreichert-snapshots</name>
+			<url>http://joergreichert.github.com/distributions/snapshot</url>
+		</snapshotRepository>
+	</distributionManagement>	
 </project>

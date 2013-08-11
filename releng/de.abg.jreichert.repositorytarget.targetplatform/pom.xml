@@ -42,7 +42,8 @@
 					<repositoryOwner>joergreichert</repositoryOwner>
 					<repositoryName>distributions</repositoryName>
 					<branch>refs/heads/gh-pages</branch>
-					<path>/snapshots</path>					
+					<path>/snapshots</path>
+					<oauth2Token>${env.TOKEN}</oauth2Token>					
 					<includes>
 						<include>**/*</include>
 					</includes>

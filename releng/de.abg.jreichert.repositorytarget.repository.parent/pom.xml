@@ -7,61 +7,18 @@
 		<maven>3.0</maven>
 	</prerequisites>
 
-	<groupId>de.abg.jreichert.repositorytarget</groupId>
+	<parent>
+		<groupId>de.abg.jreichert.repositorytarget</groupId>
+		<artifactId>de.abg.jreichert.repositorytarget.config.parent</artifactId>
+		<version>0.1.0-SNAPSHOT</version>
+		<relativePath>../../releng/de.abg.jreichert.repositorytarget.config.parent/pom.xml</relativePath>
+	</parent>	
+	
 	<artifactId>de.abg.jreichert.repositorytarget.repository.parent</artifactId>
-	<version>0.1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
-
-	<properties>
-		<platform-version-name>kepler</platform-version-name>
-		<tycho-version>0.18.1</tycho-version>
-		<distribution.dir>${basedir}/../../releng/de.abg.jreichert.repositorytarget.parent/target/repository</distribution.dir>
-	</properties>
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-maven-plugin</artifactId>
-				<version>${tycho-version}</version>
-				<extensions>true</extensions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-deploy-plugin</artifactId>
-				<version>2.7</version>			
-				<configuration>
-					<skip>false</skip>
-					<altDeploymentRepository>internal.repo::default::file://${distribution.dir}</altDeploymentRepository>
-				</configuration>
-			</plugin>				
-			<plugin>
-				<groupId>com.github.github</groupId>
-				<artifactId>site-maven-plugin</artifactId>
-				<version>0.8</version>
-				<configuration>
-					<message>Maven artifacts for ${project.groupId}:${project.artifactId}:${project.version} ~${maven.build.timestamp}</message>
-					<noJekyll>true</noJekyll>
-					<outputDirectory>${distribution.dir}</outputDirectory>
-					<merge>true</merge>
-					<repositoryOwner>joergreichert</repositoryOwner>
-					<repositoryName>distributions</repositoryName>
-					<branch>refs/heads/gh-pages</branch>
-					<path>/snapshots</path>
-					<oauth2Token>${env.TOKEN}</oauth2Token>					
-					<includes>
-						<include>**/*</include>
-					</includes>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>site</goal>
-						</goals>
-						<phase>deploy</phase>
-					</execution>
-				</executions>
-			</plugin>				
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
@@ -122,83 +79,4 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>sonatype</id>
-			<url>http://repository.sonatype.org/content/groups/sonatype-public-grid/</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-		<pluginRepository>
-			<id>sonatype_snapshot</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-		<!-- Fornax Workflow Runner plugin -->
-		<pluginRepository>
-			<id>fornax</id>
-			<url>http://www.fornax-platform.org/m2/repository</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
-
-	<distributionManagement>
-		<repository>
-			<id>joergreichert-releases</id>
-			<name>joergreichert-releases</name>
-			<url>http://joergreichert.github.com/distributions/release</url>
-		</repository>
-		<snapshotRepository>
-			<id>joergreichert-snapshots</id>
-			<name>joergreichert-snapshots</name>
-			<url>http://joergreichert.github.com/distributions/snapshot</url>
-		</snapshotRepository>
-	</distributionManagement>
-	
-	<licenses>
-		<license>
-			<name>Eclipse Public License v1.0</name>
-			<comments>
-       All rights reserved.
-
-       This program and the accompanying materials are made
-       available under the terms of the Eclipse Public License v1.0
-       which accompanies this distribution, and is available at
-       http://www.eclipse.org/legal/epl-v10.htm
-      </comments>
-		</license>
-	</licenses>
-
-	<inceptionYear>2012</inceptionYear>
-	<issueManagement>
-		<system>GitHub Issue Tracker</system>
-		<url>https://github.com/joergreichert/RepositoryTargetGenerator/issues</url>
-	</issueManagement>
-	<organization>
-		<name>GitHub</name>
-		<url>https://github.com/joergreichert/RepositoryTargetGenerator</url>
-	</organization>
-	<scm>
-		<developerConnection>https://github.com/joergreichert/RepositoryTargetGenerator</developerConnection>
-		<url>https://github.com/joergreichert/RepositoryTargetGenerator</url>
-		<connection>https://github.com/joergreichert/RepositoryTargetGenerator</connection>
-	</scm>
-	<ciManagement>
-		<system>Cloudbees Jenkins</system>
-		<url>https://joergreichert.ci.cloudbees.com/</url>
-	</ciManagement>
 </project>

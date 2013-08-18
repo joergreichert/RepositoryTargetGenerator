@@ -23,7 +23,7 @@
 			<repository location="http://xtext-utils.eclipselabs.org.codespot.com/git.distribution/releases/unittesting-0.9.x"/>
 		</location>
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="org.xpect.sdk.feature.group" version="0.1.0.201308071738"/>
+			<unit id="org.xpect.sdk.feature.group" version="0.1.0.201308161707"/>
 			<repository location="http://www.xpect-tests.org/updatesite/nightly/"/>
 		</location>
 	</locations>

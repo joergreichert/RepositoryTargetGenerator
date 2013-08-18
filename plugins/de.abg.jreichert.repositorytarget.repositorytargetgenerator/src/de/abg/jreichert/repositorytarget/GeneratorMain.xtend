@@ -45,7 +45,8 @@ class GeneratorMain {
 	}
 	
 	def generate(String fileName, CharSequence fileContent) {
-		new File(fileName).parentFile?.mkdirs
+		val parentFile = new File(fileName).parentFile
+		if(parentFile != null) parentFile.mkdirs
 		val writer = new FileWriter(fileName)
 		writer.write(fileContent.toString)
 		writer.close

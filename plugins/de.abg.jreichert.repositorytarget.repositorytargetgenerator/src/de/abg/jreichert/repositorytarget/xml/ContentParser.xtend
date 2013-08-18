@@ -11,7 +11,7 @@ import static extension com.google.common.io.CharStreams.*
 
 class ContentParser {
 
-	def getContent(InputStream input) {
+	def String getContent(InputStream input) {
 		val buf = new BufferedReader(new InputStreamReader(input))
 		buf.readLines.join("\n")
 	}

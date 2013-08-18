@@ -14,7 +14,7 @@ class ContentJarParser extends ContentParser {
 		contents = getContents(url, localContents)
 	}
 
-	def getContents(String url, List<String> localContents) {
+	def List<String> getContents(String url, List<String> localContents) {
 		var contentFileName = "content"
 		if (existsXmlUrl(url.toUrl, contentFileName)) {
  			localContents.add(getXmlContent(url, contentFileName))

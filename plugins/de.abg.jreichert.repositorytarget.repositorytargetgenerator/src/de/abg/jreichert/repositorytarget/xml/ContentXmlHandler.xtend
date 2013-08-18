@@ -57,7 +57,7 @@ class ContentXmlHandler extends DefaultHandler {
 		if (localName.equals("unit")) {
 			id = atts.getValue("id")
 			if(expectedId != null) {
-				if(id?.startsWith(expectedId)) {
+				if(id != null && id.startsWith(expectedId)) {
 					register(atts)
 				}
 			} else {
@@ -68,7 +68,7 @@ class ContentXmlHandler extends DefaultHandler {
 	
 	def private register(Attributes atts) {
 		version = atts.getValue("version")
-		if(version?.filter) {
+		if(version != null && version.filter) {
 			if(!idToVersions.containsKey(id)) {
 				idToVersions.put(id, <String>newTreeSet([s1, s2 | compareStrings(s1, s2)]))
 			}

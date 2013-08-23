@@ -1,3 +1,4 @@
+<!doctype html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -17,53 +18,84 @@
 
   </head>
   <body>
-	<div id="header">
+      <div id="header">
         <nav>
           <li class="fork"><a href="https://github.com/joergreichert/RepositoryTargetGenerator">View On GitHub</a></li>
           <li class="downloads"><a href="https://github.com/joergreichert/RepositoryTargetGenerator/zipball/master">ZIP</a></li>
           <li class="downloads"><a href="https://github.com/joergreichert/RepositoryTargetGenerator/tarball/master">TAR</a></li>
           <li class="title">DOWNLOADS</li>
         </nav>
-	</div><!-- end header -->
+      </div><!-- end header -->
 
     <div class="wrapper">
 
       <section>
-	  
         <div id="title">
           <h1>Repository Target Generator</h1>
           <p>Editor and Generator for .target and category.xml</p>
           <hr>
           <span class="credits left">Project maintained by <a href="https://github.com/joergreichert">joergreichert</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
         </div>
 
-		<p>Update site: <a href="http://joergreichert.github.io/RepositoryTargetGenerator/updatesite/">http://joergreichert.github.io/RepositoryTargetGenerator/updatesite/</a></p>
-		
-		<p>After having defined the URL of a repository you get auto completion for the features resp. plug-ins contained in this P2 repository or update site. </p>
+        <h1>
+<a name="install" class="anchor" href="#install"><span class="octicon octicon-link"></span></a>Install</h1>
 
-		<p>Having a plug-in selected you can further trigger auto completion of the versions the selected element is available in.</p>
+<p>Update site: <a href="http://joergreichert.github.io/RepositoryTargetGenerator/updatesite/">http://joergreichert.github.io/RepositoryTargetGenerator/updatesite/</a></p>
 
-		<p><img src="https://raw.github.com/joergreichert/RepositoryTargetGenerator/master/wiki/TargetDefEditor.png" alt="DSL Editor" /></p>
+<h1>
+<a name="editing" class="anchor" href="#editing"><span class="octicon octicon-link"></span></a>Editing</h1>
 
-		<p>There is a context menu entry "Validate" to check the URLs, categoryIds and versions in the given target definition.</p>
+<h2>
+<a name="auto-completion" class="anchor" href="#auto-completion"><span class="octicon octicon-link"></span></a>Auto completion</h2>
 
-		<p><img src="images/validate.png" alt="validate entry context menu" /></p>
+<p>After having defined the URL of a repository you get auto completion for the features resp. plug-ins contained in this P2 repository or update site. </p>
 
-		<p>These validation take some time as the repositories have to be visited thus this process runs in background.</p>
+<p>Having a plug-in selected you can further trigger auto completion of the versions the selected element is available in.</p>
 
-		<p><img src="images/xtext_validation_background.png" alt="validation in progress" /></p>
+<p><img src="https://raw.github.com/joergreichert/RepositoryTargetGenerator/master/wiki/TargetDefEditor.png" alt="DSL Editor"></p>
 
-		<p>For non existing URIs, categoryIds and versions there are produced error markers, if there are newer versions there are warn markers created.</p>
+<h2>
+<a name="category-assignment" class="anchor" href="#category-assignment"><span class="octicon octicon-link"></span></a>Category assignment</h2>
 
-		<p><img src="images/marker.png" alt="created markers" /></p>
+<p>It is possible to define categories to be used to group the items in the generated category.xml.</p>
 
-		<p>For the warn markers there are offered quickfixes to update the current version with the last available one.</p>
+<p>You can then can assign one or more category to the units directly. Additionally you can also assign categories to the location, then these selection is applied to all units that don't have categories assigned directly.  </p>
 
-		<p><img src="images/marker_update_version.png" alt="proposed quickfix" /></p>
+<p><img src="https://raw.github.com/joergreichert/RepositoryTargetGenerator/master/wiki/categories.png" alt="Categories in DSL"></p>
 
-		<p>When saving the targetdef file a target file and a category.xml file are generated within the projects's src-gen folder. The name of the generated target file you can influence by specifying the target file name inside the targetdef file.</p>
+<p>In the generated category.xml you can see the items grouped by category.</p>
 
+<p><img src="https://raw.github.com/joergreichert/RepositoryTargetGenerator/master/wiki/categories_generated" alt="Categories generated"></p>
+
+<h2>
+<a name="versioning" class="anchor" href="#versioning"><span class="octicon octicon-link"></span></a>Versioning</h2>
+
+<p>As the category.xml is used to build P2 repositories but the actually resolution of the items is done against the target definition file you can set the version in category.xml to 0.0.0 so the latest available version in the target platform is used. If you want to specify for whatever reasion the exact version you can write "strictVersion" beside certain units or beside the location to apply strict versioning for all units of this repository.</p>
+
+<h1>
+<a name="validation" class="anchor" href="#validation"><span class="octicon octicon-link"></span></a>Validation</h1>
+
+<p>There is a context menu entry "Validate" to check the URLs, categoryIds and versions in the given target definition.</p>
+
+<p><img src="http://joergreichert.github.io/RepositoryTargetGenerator/images/validate.png" alt="Validate Button"></p>
+
+<p>These validation take some time as the repositories have to be visited thus this process runs in background.</p>
+
+<p><img src="http://joergreichert.github.io/RepositoryTargetGenerator/images/xtext_validation_background.png" alt="Validation in background"></p>
+
+<p>For non existing URIs, categoryIds and versions there are produced error markers, if there are newer versions there are warn markers created.</p>
+
+<p><img src="http://joergreichert.github.io/RepositoryTargetGenerator/images/marker.png" alt="Markers in the DSL editor"></p>
+
+<p>For the warn markers there are offered quickfixes to update the current version with the last available one.</p>
+
+<p><img src="http://joergreichert.github.io/RepositoryTargetGenerator/images/marker_update_version.png" alt="Quickfixes in the DSL editor"></p>
+
+<h1>
+<a name="generation" class="anchor" href="#generation"><span class="octicon octicon-link"></span></a>Generation</h1>
+
+<p>When saving the targetdef file a target file and a category.xml file are generated within the projects's src-gen folder. The name of the generated target file you can influence by specifying the target file name inside the targetdef file.</p>
       </section>
 
     </div>

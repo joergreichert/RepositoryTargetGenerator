@@ -3,12 +3,13 @@
  */
 package de.abg.jreichert.repositorytarget.dsl.generator
 
-import de.abg.jreichert.repositorytarget.definition.Target
 import de.abg.jreichert.repositorytarget.definition.Location
+import de.abg.jreichert.repositorytarget.definition.Target
 import de.abg.jreichert.repositorytarget.definition.Unit
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.generator.IGenerator
+import de.abg.jreichert.repositorytarget.definition.Category
 
 class TargetDefinitionGenerator implements IGenerator {
 	
@@ -38,11 +39,21 @@ class TargetDefinitionGenerator implements IGenerator {
 	
 	def Target create generatorTarget : new Target transformTarget(de.abg.jreichert.repositorytarget.dsl.targetDefinition.Target dslTarget) {
 		generatorTarget.name = dslTarget.name
+		dslTarget.categories.forEach[generatorTarget.categories.add(transformCategory)]
 		dslTarget.locations.forEach[generatorTarget.locations.add(transformLocation)]
+	}
+
+	def Category create new Category transformCategory(de.abg.jreichert.repositorytarget.dsl.targetDefinition.Category dslCategory) {
+		name = dslCategory.name
+		longName = dslCategory.longName
+		description = dslCategory.description
+		defaultCategory = dslCategory.^default
 	}
 	
 	def Location create generatorLocation : new Location transformLocation(de.abg.jreichert.repositorytarget.dsl.targetDefinition.Location dslLocation) {
 		generatorLocation.repositoryLocation = dslLocation.repositoryLocation 
+		generatorLocation.assignedLocationCategories = dslLocation.categories.map[name]
+		generatorLocation.strictVersion = dslLocation.strictVersion
 		dslLocation.unit.forEach[generatorLocation.units.add(transformUnit)]
 	}
 	
@@ -54,5 +65,7 @@ class TargetDefinitionGenerator implements IGenerator {
 		}
 		generatorUnit.version = dslUnit.version
 		generatorUnit.feature = !dslUnit.noFeature
+		generatorUnit.assignedUnitCategories = dslUnit.categories.map[name]
+		generatorUnit.strictVersion = dslUnit.strictVersion
 	}	
 }

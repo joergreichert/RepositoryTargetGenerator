@@ -2,17 +2,18 @@ package de.abg.jreichert.repositorytarget.dsl.validation
 
 import com.google.inject.Inject
 import de.abg.jreichert.repositorytarget.dsl.logic.ReadOutP2Repository
-import de.abg.jreichert.repositorytarget.xml.ContentXmlHandler
+import de.abg.jreichert.repositorytarget.dsl.targetDefinition.Category
 import de.abg.jreichert.repositorytarget.dsl.targetDefinition.Target
 import de.abg.jreichert.repositorytarget.dsl.targetDefinition.TargetDefinitionPackage
+import de.abg.jreichert.repositorytarget.dsl.targetDefinition.Unit
+import de.abg.jreichert.repositorytarget.xml.ContentXmlHandler
+import java.util.List
 import org.apache.log4j.Logger
 import org.eclipse.core.runtime.NullProgressMonitor
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.eclipse.xtext.validation.Check
 
 import static org.eclipse.xtext.validation.CheckType.*
-import de.abg.jreichert.repositorytarget.dsl.targetDefinition.Unit
-import org.eclipse.xtext.nodemodel.util.NodeModelUtils
-import java.util.List
 
 class TargetDefinitionValidator extends AbstractTargetDefinitionValidator {
 	
@@ -84,4 +85,35 @@ class TargetDefinitionValidator extends AbstractTargetDefinitionValidator {
 			}
 		}
 	}
+	
+	@Check
+	def checkNoMultipleCategoryNames(Target target) {
+		val nameToCategories = <String, List<Category>>newHashMap
+		target.categories.forEach[
+			val entry = nameToCategories.get(name)  
+			val categories = if(entry == null) newArrayList else entry 
+			categories.add(it)
+			nameToCategories.put(name, categories)
+			
+		]
+		nameToCategories.entrySet.filter[value.size > 1].map[value].forEach[
+			forEach[
+				error('Category name have to unique',
+					eContainer, eContainingFeature, 
+					(eContainer.eGet(eContainingFeature) as List<?>).indexOf(it))
+			]
+		]
+	}
+	
+	@Check
+	def checkNoMultipleDefaults(Target target) {
+		val defaultCategories = target.categories.filter[^default]
+		if(defaultCategories.size > 1) {
+			defaultCategories.forEach[
+				error('Only one category can be marked as default',
+					eContainer, eContainingFeature, 
+					(eContainer.eGet(eContainingFeature) as List<?>).indexOf(it))
+			]
+		}
+	}	
 }

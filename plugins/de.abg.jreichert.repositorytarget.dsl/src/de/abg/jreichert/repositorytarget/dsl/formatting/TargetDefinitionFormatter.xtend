@@ -32,34 +32,67 @@ class TargetDefinitionFormatter extends AbstractDeclarativeFormatter {
 		c.setLinewrap(2,2,2).before(targetAccess.targetFileKeyword_2_0)
 		c.setLinewrap(2,2,2).after(targetAccess.targetFileNameAssignment_2_2)
 
-		c.setLinewrap(2,2,2).around(targetAccess.locationsAssignment_3)
-		c.setIndentationIncrement.before(targetAccess.locationsAssignment_3);
-		c.setIndentationDecrement.after(targetAccess.locationsAssignment_3);
+		c.setIndentationIncrement.before(targetAccess.categoriesKeyword_3_0);
+		c.setLinewrap(2,2,2).before(targetAccess.categoriesKeyword_3_0)
+		c.setLinewrap.after(targetAccess.leftCurlyBracketKeyword_3_1)
+		c.setLinewrap(2,2,2).after(targetAccess.rightCurlyBracketKeyword_3_4)
+		c.setIndentationDecrement.after(targetAccess.rightCurlyBracketKeyword_3_4);
 
+		c.setLinewrap.before(targetAccess.categoriesAssignment_3_2)
+		c.setLinewrap.before(targetAccess.categoriesAssignment_3_3_1)
+		c.setNoLinewrap.before(categoryAccess.longNameAssignment_1)
+		c.setNoLinewrap.before(categoryAccess.descriptionKeyword_2_0)
+		c.setNoLinewrap.between(categoryAccess.descriptionKeyword_2_0, categoryAccess.descriptionSTRINGTerminalRuleCall_2_1_0)
+
+		c.setLinewrap(2,2,2).around(targetAccess.locationsAssignment_4)
+		c.setIndentationIncrement.before(targetAccess.locationsAssignment_4);
+		c.setIndentationDecrement.after(targetAccess.locationsAssignment_4);
+
+		c.setNoLinewrap.between(locationAccess.repositoryLocationURLTerminalRuleCall_1_0, locationAccess.categoryKeyword_2_0)
+		c.setNoLinewrap.between(locationAccess.repositoryLocationURLTerminalRuleCall_1_0, locationAccess.strictVersionStrictVersionKeyword_3_0)
+		c.setNoLinewrap.between(locationAccess.categoriesAssignment_2_2_0, locationAccess.strictVersionStrictVersionKeyword_3_0)
+		c.setNoLinewrap.between(locationAccess.rightParenthesisKeyword_2_2_1_3, locationAccess.strictVersionStrictVersionKeyword_3_0)
 		c.setNoLinewrap.between(locationAccess.nameAssignment_0, locationAccess.repositoryLocationAssignment_1)
+		c.setNoLinewrap.after(locationAccess.commaKeyword_2_2_1_2_0)
+		c.setNoLinewrap.before(locationAccess.categoriesCategoryCrossReference_2_2_0_0)
+		c.setNoLinewrap.before(locationAccess.categoriesCategoryCrossReference_2_2_1_1_0)
+		c.setNoLinewrap.before(locationAccess.categoriesCategoryCrossReference_2_2_1_2_1_0)
+
+		c.setNoLinewrap.between(unitAccess.versionAssignment_1_1, unitAccess.categoryKeyword_2_0)
+		c.setNoLinewrap.between(unitAccess.versionAssignment_1_1, unitAccess.strictVersionStrictVersionKeyword_3_0)
+		c.setNoLinewrap.between(unitAccess.categoryIdAssignment_0, unitAccess.categoryKeyword_2_0)
+		c.setNoLinewrap.between(unitAccess.categoryIdAssignment_0, unitAccess.strictVersionStrictVersionKeyword_3_0)
+		c.setNoLinewrap.between(unitAccess.categoriesAssignment_2_2_0, unitAccess.strictVersionStrictVersionKeyword_3_0)
+		c.setNoLinewrap.between(unitAccess.rightParenthesisKeyword_2_2_1_3, unitAccess.strictVersionStrictVersionKeyword_3_0)
+		c.setNoLinewrap.after(unitAccess.commaKeyword_2_2_1_2_0)
+		c.setNoLinewrap.before(unitAccess.categoriesCategoryCrossReference_2_2_0_0)
+		c.setNoLinewrap.before(unitAccess.categoriesCategoryCrossReference_2_2_1_1_0)
+		c.setNoLinewrap.before(unitAccess.categoriesCategoryCrossReference_2_2_1_2_1_0)
+		c.setLinewrap.after(locationAccess.unitAssignment_6_1)
 		
-		c.setLinewrap.before(locationAccess.unitAssignment_3)
-		c.setLinewrap.before(locationAccess.unitAssignment_4_1)
+		c.setLinewrap.before(locationAccess.unitAssignment_5)
+		c.setLinewrap.before(locationAccess.unitAssignment_6_1)
 		c.setNoLinewrap.between(unitAccess.categoryIdAssignment_0, unitAccess.versionAssignment_1_1)
-		c.setNoSpace.before(locationAccess.commaKeyword_4_0);
-		c.setNoLinewrap.between(locationAccess.unitAssignment_4_1, locationAccess.commaKeyword_4_0);
-		c.setLinewrap.after(locationAccess.commaKeyword_4_0)
+		c.setNoLinewrap.between(locationAccess.unitAssignment_6_1, locationAccess.commaKeyword_6_0);
+		c.setNoLinewrap.after(locationAccess.commaKeyword_2_2_1_2_0)
+
 	}
 
 	// see: http://blog.dietmar-stoll.de/2011/02/quickly-formatting-dsls-with-xtext.html
 	def private genericFormatting(FormattingConfig config) {
-		for (pair : findKeywordPairs("{", "}")) {
+		for (pair : findKeywordPairs('{', '}')) {
 			config.setSpace(" ").before(pair.getFirst());
 			config.setIndentation(pair.getFirst(), pair.getSecond());
-			config.setLinewrap(1).before(pair.getSecond());
+			config.setLinewrap.before(pair.getSecond());
+		}
+		
+		for (pair : findKeywordPairs('(', ')')) {
+			config.setSpace(" ").before(pair.getFirst());
+			config.setIndentation(pair.getFirst(), pair.getSecond());
+			config.setNoLinewrap.before(pair.getSecond());
 		}
 		
 		findKeywords("=").forEach[config.setSpace(" ").around(it)]
-		
-//		val allKeywords = GrammarUtil::getAllKeywords(grammar.getGrammar());
-//		val keywords = grammar.findKeywords(allKeywords)
-//		for (keyword : keywords) {
-//			config.setLinewrap().before(keyword);
-//		} 
+		findKeywords(",").forEach[config.setNoSpace().before(it)]
 	}
 }

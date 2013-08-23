@@ -5,17 +5,26 @@ generate targetDefinition "http://www.abg.de/jreichert/TargetDefinition"
 Target:
 	'TargetDefinition' name=STRING
 	('targetFile' '=' targetFileName=ID)?
+	('categories' '{'
+		categories+=Category (',' categories+=Category)*
+	'}')?	
 	locations+=Location*
 ;
 
+Category:
+	name=ID (longName=STRING)? ('description:' description=STRING)? (default?='default')?
+;
+
 Location:
-	(name=STRING)? repositoryLocation=URL '{'
+	(name=STRING)? repositoryLocation=URL ('category' '=' (categories+=[Category]|('('categories+=[Category] (',' categories+=[Category])* ')')))? (strictVersion?='strictVersion')? '{'
 		(unit+=Unit) (',' unit+=Unit)*
 	'}'
 ;
 
 Unit:
 	categoryId=ID ((noFeature?='noFeature')? & (version=VERSION)?) 
+		('category' '=' (categories+=[Category]|('('categories+=[Category] (',' categories+=[Category])* ')')))? 
+		(strictVersion?='strictVersion')?
 ;
 
 terminal URL: 

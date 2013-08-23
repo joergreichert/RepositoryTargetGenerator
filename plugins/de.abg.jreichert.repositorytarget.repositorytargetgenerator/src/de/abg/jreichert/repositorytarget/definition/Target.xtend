@@ -4,6 +4,7 @@ import java.util.List
 
 class Target {
    @Property private String name
+   @Property private List<Category> categories = newArrayList
    @Property private List<Location> locations = newArrayList
   
    def createLocation((Location) => void initializer) {
@@ -33,10 +34,8 @@ class Target {
 	def generateCategoryXml() '''
 		<?xml version="1.0" encoding="UTF-8"?>
 		<site>
-			«locations.map[generateCategoryXml].join»
-			<category-def name="3rdparty" label="Third Party">
-				<description>«name»</description>
-			</category-def>
+			«locations.map[generateCategoryXml(categories)].join»
+			«categories.map[generateCategoryXml].join»
 		</site>
 	'''    
 	
@@ -69,9 +68,28 @@ class Target {
 	'''
 }
 
+
+class Category {
+	@Property String name 
+	@Property String longName 
+	@Property String description 
+	@Property boolean defaultCategory
+
+	def generateCategoryXml() '''
+		<category-def name="«name»" «IF !longName.nullOrEmpty»label="«longName»"«ENDIF»>
+			«IF !description.nullOrEmpty»
+				<description>«description»</description>
+			«ENDIF»
+		</category-def>
+	'''	
+}
+
+
 class Location {
    @Property private List<Unit> units = newArrayList
    @Property private String repositoryLocation
+   @Property private List<String> assignedLocationCategories = newArrayList
+   @Property boolean strictVersion = false
 	
    def createUnit((Unit) => void initializer) {
       val unit = new Unit()
@@ -86,8 +104,8 @@ class Location {
 		</location>
 	'''
 	
-	def generateCategoryXml() '''
-		«units.map[generateCategoryXml].join»
+	def generateCategoryXml(List<Category> allCategories) '''
+		«units.map[it.generateCategoryXml(allCategories, assignedLocationCategories, this.strictVersion)].join»
 	''' 
 	
 	def generateFeatureXml() '''
@@ -100,10 +118,12 @@ class Unit {
 	@Property private String targetId = ""
 	@Property private String version = ""
 	@Property private String url = ""
-	@Property private String category = "3rdparty"
+	@Property private List<String> assignedUnitCategories = newArrayList
 	@Property private Boolean feature = true
 	@Property private Boolean includeInCategoryXml = true
 	@Property private Boolean includeInTarget = true
+	@Property boolean strictVersion = false
+	private String defaultCategory = "3rdparty"
 	
 	def String getTargetId() {
 		if(_targetId.nullOrEmpty && !_categoryId.nullOrEmpty && !_categoryId.endsWith("feature.group") && feature)
@@ -119,7 +139,7 @@ class Unit {
 	
 	def String getUrl() {
 		if(!categoryId.nullOrEmpty && !version.nullOrEmpty)
-			"features/" + categoryId + "_" + version + ".jar"
+			"features/" + categoryId + "_" + calculateVersion(version, strictVersion) + ".jar"
 		else ""	
 	}
 	
@@ -129,14 +149,34 @@ class Unit {
 		«ENDIF»
 	'''
 	
-	def generateCategoryXml() '''
+	def generateCategoryXml(List<Category> allCategories, List<String> assignedLocationCategories, boolean strictVersion) '''
+		«this.strictVersion = strictVersion»
 		«IF includeInCategoryXml»
-			<feature url="«url»" id="«categoryId»" version="«version»">
-				<category name="«category»"/>
-			</feature>
+			«FOR category : calculateCategory(allCategories, assignedLocationCategories, assignedUnitCategories)»
+				<feature url="«url»" id="«categoryId»" version="«calculateVersion(version, this.strictVersion)»">
+					<category name="«category»"/>
+				</feature>
+			«ENDFOR»
 		«ENDIF»
-    '''	
+    '''
+	
+	def private List<String> calculateCategory(List<Category> allCategories, List<String> assignedLocationCategories, List<String> assignedUnitCategories) {
+		if (assignedUnitCategories.empty) {
+			if(assignedLocationCategories.empty) {
+				val defaultCategory = allCategories.findFirst[it.defaultCategory]
+				if(defaultCategory != null) #[defaultCategory.name] else #[this.defaultCategory]  
+			} else {
+				assignedLocationCategories
+			}
+		} else {
+			assignedUnitCategories
+		}
+	}
     
+	def calculateVersion(String version, boolean strictVersion) {
+		if(!strictVersion) "0.0.0" else version
+	}
+	
     def generateFeatureXml() '''
 	   <includes
 	         id="«targetId»"

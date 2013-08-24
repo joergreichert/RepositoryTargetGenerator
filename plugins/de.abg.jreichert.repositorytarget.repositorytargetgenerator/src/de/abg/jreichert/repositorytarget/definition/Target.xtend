@@ -100,9 +100,13 @@ class Location {
 	def generateTarget() '''
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 			«units.map[generateTarget].join»
-			<repository location="«repositoryLocation»"/>
+			<repository location="«repositoryLocation.convertURI»"/>
 		</location>
 	'''
+	
+	def private convertURI(String uri) {
+		if(uri.startsWith("file://")) uri.replaceFirst("file://", "file:///") else uri
+	}
 	
 	def generateCategoryXml(List<Category> allCategories) '''
 		«units.map[it.generateCategoryXml(allCategories, assignedLocationCategories, this.strictVersion)].join»

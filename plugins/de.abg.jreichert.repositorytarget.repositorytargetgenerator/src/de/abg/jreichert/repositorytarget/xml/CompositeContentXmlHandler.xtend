@@ -28,8 +28,15 @@ class CompositeContentXmlHandler extends DefaultHandler {
 		if (localName.equals("child")) {
 			child = atts.getValue("location");
 			if (child != null) {
-				if (!child.startsWith("http")) {
-					child = location + child;
+				if (!child.contains("http://")) {
+					if(child.contains("file://")) {
+						child = child.replace("file://", "");
+					}
+					if(child.startsWith("jar:")) {
+						child = "jar:" + location.replace("file://", "file:") + child.replace("jar:", "");
+					} else {
+						child = location + child;
+					}
 				}
 				children.add(child);
 			}

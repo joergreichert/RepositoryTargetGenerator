@@ -1,0 +1,8 @@
+/* XPECT_SETUP de.abg.jreichert.repositorytarget.dsl.validation.TargetDefinitionValidationTest END_SETUP */
+TargetDefinition "Example"
+
+	targetFile = testdata
+
+	"Composite" file://testdata/updatesite/ {
+		de.abg.jreichert.repositorytarget.feature 0.1.0.201304242052
+	} 

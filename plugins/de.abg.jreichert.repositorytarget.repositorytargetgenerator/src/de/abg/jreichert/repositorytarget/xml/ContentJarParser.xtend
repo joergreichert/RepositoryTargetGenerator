@@ -1,17 +1,50 @@
 package de.abg.jreichert.repositorytarget.xml
 
+import java.io.File
+import java.io.FileInputStream
 import java.net.HttpURLConnection
 import java.net.JarURLConnection
 import java.net.URL
 import java.net.URLConnection
 import java.util.List
+import java.util.Map
 
 class ContentJarParser extends ContentParser {
+	private val Map<String, Long> locationToTimestamp;
 	private val List<String> contents;
 	
 	new(String url) {
+		val Map<String, Long> localMap = newHashMap
+		locationToTimestamp = getTimestamps(url, localMap)
 		val List<String> localContents = newArrayList
 		contents = getContents(url, localContents)
+	}
+
+	def Map<String, Long> getTimestamps(String url, Map<String, Long> localMap) {
+		var contentFileName = "content"
+		var lastModified = lastModifiedXmlUrl(url.toUrl, contentFileName)
+		if(lastModified > -1) {
+			localMap.put(url, lastModified)
+		} else {
+			lastModified = lastModifiedJarUrl(url.toUrl, contentFileName)
+			if(lastModified > -1) {
+				localMap.put(url, lastModified)
+			} else {
+				contentFileName = "compositeContent"
+				lastModified = lastModifiedXmlUrl(url.toUrl, contentFileName)
+				if(lastModified > -1) {
+					localMap.put(url, lastModified)
+				} else {
+					lastModified = lastModifiedJarUrl(url.toUrl, contentFileName)
+					localMap.put(url, lastModified)
+				}
+			}
+		}
+ 		localMap
+	}
+	
+	def Map<String, Long> getTimestamps(String url, Map<String, Long> localMap, String contentFileName) {
+		
 	}
 
 	def List<String> getContents(String url, List<String> localContents) {
@@ -55,9 +88,34 @@ class ContentJarParser extends ContentParser {
 
 	def getXmlContent(String url, String contentFileName) {
 		val xmlUrl = new URL(url.toUrl + contentFileName + ".xml")
-    	val connection = xmlUrl.openConnection()
-		val input = connection.inputStream
-		getContent(input)
+		if(xmlUrl.protocol == "file") {
+			val file = new File(xmlUrl.toURI.path).absoluteFile
+			if(file.exists && file.file) getContent(new FileInputStream(file)) 
+			else {
+				val newFile = new File(System.getProperty("user.dir") + "/" + xmlUrl.toString.replace("file://", ""))
+				if(newFile.exists && newFile.file) getContent(new FileInputStream(newFile)) 
+			} 
+		} else {
+			if(url.contains("file://")) {
+				val file = new File(xmlUrl.toURI.path.replace("jar:", ""))
+				val newXmlUrl = new URL("jar:" + file.absolutePath)
+				val connection = newXmlUrl.openConnection
+				val input = connection.inputStream
+				getContent(input)
+			} else {
+				val connection = xmlUrl.openConnection
+				val input = connection.inputStream
+				getContent(input)
+			}
+		}
+	}
+	
+	def lastModifiedXmlUrl(String url, String contentFileName) {
+		lastModified(url, contentFileName, "xml")
+	}
+
+	def lastModifiedJarUrl(String url, String contentFileName) {
+		lastModified(url, contentFileName, "jar")
 	}
 	
 	def existsXmlUrl(String url, String contentFileName) {
@@ -66,11 +124,30 @@ class ContentJarParser extends ContentParser {
 
 	def existsJarUrl(String url, String contentFileName) {
 		existsUrl(url, contentFileName, "jar")
+	}	
+
+	def boolean existsUrl(String url, String contentFileName, String fileExt) {
+		url.lastModified(contentFileName, fileExt) > -1
 	}
 
-	def existsUrl(String url, String contentFileName, String fileExt) {
+	def long lastModified(String url, String contentFileName, String fileExt) {
 		val contentUrl = new URL(url.toUrl + contentFileName + "." + fileExt);
-		contentUrl.openConnection.existsUrl
+		if(contentUrl.protocol == "file") {
+			val file = new File(contentUrl.toURI.path).absoluteFile
+			if(file.exists && file.file) file.lastModified 
+			else {
+				val newFile = new File(System.getProperty("user.dir") + "/" + contentUrl.toString.replace("file://", ""))
+				if(newFile.exists && newFile.file) newFile.lastModified else -1
+			} 
+		} else {
+			if(url.contains("file://")) {
+				val file = new File(contentUrl.toURI.path.replace("jar:", "")).absoluteFile
+				if(file.exists && file.file) file.lastModified else -1 
+			} else {
+				val conn = contentUrl.openConnection
+				if(conn.existsUrl) conn.lastModified else -1
+			}
+		}
 	}
 	
 	def private dispatch existsUrl(HttpURLConnection contentCon) {

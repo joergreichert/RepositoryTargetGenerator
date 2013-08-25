@@ -109,7 +109,7 @@ public class LocationManager {
 		Session session = SessionManager.getSessionFactory().openSession();
 		try {
 			Criteria criteria = session.createCriteria(Location.class);
-//			criteria.add(Restrictions.in("url", timestampsToFilter.keySet()));
+			criteria.add(Restrictions.in("_url", timestampsToFilter.keySet()));
 			result = toLocationList(criteria.list());
 			for(Location location : result) {
 				timestamps.put(location.getUrl(), location.getTimestamp());

@@ -11,5 +11,5 @@ Require-Bundle: org.eclipse.xtend.lib;bundle-version="2.3.0",
  org.eclipse.xtext;bundle-version="2.3.0",
  org.eclipse.xtext.ecore;bundle-version="2.3.0",
  de.abg.jreichert.repositorytarget.database;bundle-version="0.1.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-Vendor: Joerg Reichert
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7

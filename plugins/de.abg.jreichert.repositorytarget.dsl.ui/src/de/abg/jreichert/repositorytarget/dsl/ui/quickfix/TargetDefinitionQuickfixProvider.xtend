@@ -4,6 +4,7 @@
 package de.abg.jreichert.repositorytarget.dsl.ui.quickfix
 
 import de.abg.jreichert.repositorytarget.dsl.targetDefinition.Unit
+import de.abg.jreichert.repositorytarget.dsl.ui.internal.TargetDefinitionActivator
 import de.abg.jreichert.repositorytarget.dsl.validation.TargetDefinitionValidator
 import org.eclipse.core.internal.resources.Workspace
 import org.eclipse.core.resources.IMarker
@@ -16,8 +17,6 @@ import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider
 import org.eclipse.xtext.ui.editor.quickfix.Fix
 import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor
 import org.eclipse.xtext.validation.Issue
-import de.abg.jreichert.repositorytarget.dsl.ui.internal.TargetDefinitionActivator
-import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 
 /**
  * Custom quickfixes.

@@ -27,7 +27,7 @@ public class LocationManager {
 			e.printStackTrace();
 		} finally {
 			session.close();
-			SessionManager.shutdown();
+//			SessionManager.shutdown();
 		}
 		return result;
 	}
@@ -41,7 +41,7 @@ public class LocationManager {
 			e.printStackTrace();
 		} finally {
 			session.close();
-			SessionManager.shutdown();
+//			SessionManager.shutdown();
 		}
 		return (Location) result;
 	}	
@@ -56,7 +56,7 @@ public class LocationManager {
 			e.printStackTrace();
 		} finally {
 			session.close();
-			SessionManager.shutdown();
+//			SessionManager.shutdown();
 		}
 		return (Location) result;
 	}	
@@ -71,7 +71,7 @@ public class LocationManager {
 			e.printStackTrace();
 		} finally {
 			session.close();
-			SessionManager.shutdown();
+//			SessionManager.shutdown();
 		}
 	}
 	
@@ -89,7 +89,7 @@ public class LocationManager {
 			e.printStackTrace();
 		} finally {
 			session.close();
-			SessionManager.shutdown();
+//			SessionManager.shutdown();
 		}
 	}	
 	
@@ -109,7 +109,7 @@ public class LocationManager {
 		Session session = SessionManager.getSessionFactory().openSession();
 		try {
 			Criteria criteria = session.createCriteria(Location.class);
-			criteria.add(Restrictions.in("url", timestampsToFilter.keySet()));
+//			criteria.add(Restrictions.in("url", timestampsToFilter.keySet()));
 			result = toLocationList(criteria.list());
 			for(Location location : result) {
 				timestamps.put(location.getUrl(), location.getTimestamp());
@@ -118,7 +118,7 @@ public class LocationManager {
 			e.printStackTrace();
 		} finally {
 			session.close();
-			SessionManager.shutdown();
+//			SessionManager.shutdown();
 		}
 		return timestamps;
 	}

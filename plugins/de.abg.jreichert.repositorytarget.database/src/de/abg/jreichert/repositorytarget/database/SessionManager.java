@@ -22,7 +22,14 @@ public class SessionManager {
 					.setProperty("hibernate.dialect",
 							SQLiteDialect.class.getName())
 					.setProperty("hibernate.connection.driver_class",
-							org.sqlite.JDBC.class.getName());
+							org.sqlite.JDBC.class.getName())
+					.setProperty("hibernate.show_sql", "true")
+					.setProperty("hibernate.format_sql", "true")
+					.setProperty("hibernate.connection.username", "")
+					.setProperty("hibernate.connection.password", "")
+					.setProperty("hibernate.current_session_context_class", "thread")
+					.setProperty("hibernate.hbm2ddl.auto", "create");
+
 			if (Platform.isRunning()) {
 				IPath path = Activator.getDefault().getStateLocation()
 						.append("contents.db");
@@ -61,7 +68,7 @@ public class SessionManager {
 
 	public static final ThreadLocal<Session> session = new ThreadLocal<Session>();
 
-	public static Session currentSession() {
+	public static synchronized Session currentSession() {
 		Session s = (Session) session.get();
 		if (s == null) {
 			s = sessionFactory.openSession();
@@ -70,7 +77,7 @@ public class SessionManager {
 		return s;
 	}
 
-	public static void closeSession() {
+	public static synchronized void closeSession() {
 		Session s = (Session) session.get();
 		if (s != null)
 			s.close();

@@ -22,7 +22,7 @@ class Location {
 	@Property
 	Long timestamp = -1L
 
-	@Column(unique=true)
+	//@Column(unique=true)
 	@Property
 	String url
 

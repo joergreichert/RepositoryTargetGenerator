@@ -199,10 +199,22 @@ class ContentJarParser extends ContentParser {
       	val dbTimestamps = locationManager.getTimestamps(timestamps)
       	val dbIdToVersions = locationManager.getIdToVersions(timestamps)
       	contentHandler.idToVersion.putAll(dbIdToVersions)
-      	for(innerUrl : timestamps.entrySet.filter(entry|dbTimestamps.get(entry.key) < entry.value).map[key]) {
+      	for(innerUrl : timestamps.entrySet.filter(entry|
+      		checkDbTimestampOlderThanUrlTimestamp(dbTimestamps.get(entry.key), entry.value)
+      	).map[key]) {
 			contents += getInternalContents(innerUrl)
 		}
 		contents
+	}
+	
+	def private boolean checkDbTimestampOlderThanUrlTimestamp(Long dbTimestamp, Long remoteTimestamp) {
+		if(dbTimestamp == null) {
+			return true;
+		}
+		if(remoteTimestamp == null) {
+			return false;
+		}
+		return dbTimestamp < remoteTimestamp
 	}
 	
 	def private Map<String, Long> getTimestamps(String url) {

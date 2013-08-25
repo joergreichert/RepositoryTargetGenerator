@@ -33,6 +33,7 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<modules>
+				<module>../../plugins/de.abg.jreichert.repositorytarget.database</module>
 				<module>../../plugins/de.abg.jreichert.repositorytarget.repositorytargetgenerator</module>
 				<module>../../releng/de.abg.jreichert.repositorytarget.parent</module>
 				<module>../../plugins/de.abg.jreichert.repositorytarget.dsl</module>

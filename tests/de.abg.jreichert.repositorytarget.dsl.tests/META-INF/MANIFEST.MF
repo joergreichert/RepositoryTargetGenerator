@@ -10,7 +10,8 @@ Require-Bundle: de.abg.jreichert.repositorytarget.dsl,
  org.eclipse.core.runtime,
  org.eclipse.xtext.junit4,
  org.eclipse.ui.workbench;resolution:=optional,
- org.xpect.xtext.lib;bundle-version="0.1.0"
+ org.xpect.xtext.lib;bundle-version="0.1.0",
+ de.abg.jreichert.repositorytarget.database;bundle-version="0.1.0"
 Import-Package: org.apache.log4j,
  org.junit;version="4.5.0",
  org.junit.runner;version="4.5.0",

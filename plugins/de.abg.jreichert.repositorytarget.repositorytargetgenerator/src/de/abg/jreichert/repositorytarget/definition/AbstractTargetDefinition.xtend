@@ -16,8 +16,8 @@ abstract class AbstractTargetDefinition {
 	
 	def Target fillVersions(Target target, List<(Unit) => List<(String) => boolean>> unitFilters) {
 		for(l : target.locations) {
-			val parser = new ContentJarParser(l.repositoryLocation)
-			l.units.forEach[fillVersion(parser, filter(unitFilters))]			
+			val parser = new ContentJarParser()
+			l.units.forEach[fillVersion(parser, l.repositoryLocation, filter(unitFilters))]			
 		}
 		target
 	}
@@ -30,9 +30,9 @@ abstract class AbstractTargetDefinition {
 		list
 	}
 	
-	def fillVersion(Unit unit, ContentJarParser parser, List<(String) => boolean> filters) {
+	def fillVersion(Unit unit, ContentJarParser parser, String repositoryLocation, List<(String) => boolean> filters) {
 		if(unit.version.nullOrEmpty) {
-			unit.version = parser.parseVersionForId(unit.categoryId, filters)
+			unit.version = parser.parseVersionForId(repositoryLocation, unit.categoryId, filters)
 		}	
 	}
 

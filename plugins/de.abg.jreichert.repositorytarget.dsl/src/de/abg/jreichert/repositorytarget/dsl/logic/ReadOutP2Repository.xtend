@@ -10,8 +10,8 @@ class ReadOutP2Repository {
 	def execute(String repositoryLocation, ContentXmlHandler contentHandler, IProgressMonitor monitor) {
 		monitor.beginTask("Read out P2 repository metadata", 2)
 		monitor.subTask("Fetch contents")
-		val parser = new ContentJarParser(repositoryLocation)
-		val contents = parser.getContents()
+		val parser = new ContentJarParser()
+		val contents = parser.getContents(repositoryLocation, contentHandler)
 		monitor.worked(1)
 		monitor.subTask("Parse contents (this could take up to one minute)")
 		val subProgressMonitor = new SubProgressMonitor(monitor, 1)

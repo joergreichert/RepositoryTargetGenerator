@@ -1,5 +1,6 @@
 package de.abg.jreichert.repositorytarget.database;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -140,5 +141,65 @@ public class LocationManager {
 			}
 		}
 		return idToVersions;
+	}
+
+	public void save(Long timestamp, String locationURL, SortedMap<String,SortedSet<String>> idToVersions) {
+		SortedSet<String> versions = null;
+		Location location = getByURL(locationURL);
+		if(location == null) {
+			location = new Location();
+			location.setTimestamp(timestamp);
+			location.setUrl(locationURL);
+			saveLocation(location);
+			location = getByURL(locationURL);
+		}
+		SortedMap<String,SortedSet<String>> dbIdToVersions = new TreeMap<String,SortedSet<String>>();
+		for(Unit unit : location.getUnits()) {
+			versions = dbIdToVersions.get(unit.getName());
+			if(versions == null) {
+				versions = new TreeSet<String>();
+			}
+			versions.add(unit.getVersion());
+			dbIdToVersions.put(unit.getName(), versions);
+		}
+		Map<String, Unit> nameToUnit = new HashMap<String, Unit>();
+		for(Unit unit : location.getUnits()) {
+			nameToUnit.put(unit.getName(), unit);
+		}		
+		Unit unit = null;
+		for(Entry<String, SortedSet<String>> entry : idToVersions.entrySet()) {
+			if(!nameToUnit.keySet().contains(entry.getKey())) {
+				for(String version : entry.getValue()) {
+					unit = new Unit();
+					unit.setLocation(location);
+					unit.setName(entry.getKey());
+					unit.setVersion(version);
+					location.getUnits().add(unit);
+				}
+			}
+		}
+		for(Entry<String, SortedSet<String>> dbEntry : dbIdToVersions.entrySet()) {
+			versions = idToVersions.get(dbEntry.getKey());
+			if(versions == null) {
+				List<Unit> unitsToDelete = new ArrayList<Unit>();
+				for(Unit u : location.getUnits()) {
+					if(u.getName().equalsIgnoreCase(dbEntry.getKey())) {
+						unitsToDelete.add(u);
+					}
+				}
+				location.getUnits().removeAll(unitsToDelete);
+			} else {
+				List<Unit> unitsToDelete = new ArrayList<Unit>();
+				for(Unit u : location.getUnits()) {
+					for(String version : versions) {
+						if(u.getName().equalsIgnoreCase(dbEntry.getKey()) && u.getVersion() != null && u.getVersion().equals(version)) {
+							unitsToDelete.add(u);
+						}
+					}
+				}
+				location.getUnits().removeAll(unitsToDelete);
+			}
+		}
+		saveLocation(location);
 	}
 }

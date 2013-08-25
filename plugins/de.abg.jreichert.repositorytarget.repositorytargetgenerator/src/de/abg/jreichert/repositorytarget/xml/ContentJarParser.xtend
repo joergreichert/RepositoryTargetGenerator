@@ -183,6 +183,9 @@ class ContentJarParser extends ContentParser {
       	for(content : getContents(url, contentHandler)) {
 	      	parse(content, contentHandler)
       	}
+      	val locationManager = new LocationManager();
+      	val timestamps = getTimestamps(url)
+      	locationManager.save(timestamps.get(url), url, contentHandler.idToVersion) 
 		contentHandler
 	}
 	

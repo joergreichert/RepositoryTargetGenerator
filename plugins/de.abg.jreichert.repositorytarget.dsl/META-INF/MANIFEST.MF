@@ -18,7 +18,8 @@ Require-Bundle: org.eclipse.xtext;visibility:=reexport,
  org.antlr.runtime,
  org.eclipse.xtext.common.types,
  de.abg.jreichert.repositorytarget.repositorytargetgenerator;bundle-version="0.1.0";visibility:=reexport,
- org.eclipse.core.runtime
+ org.eclipse.core.runtime,
+ de.abg.jreichert.repositorytarget.database
 Import-Package: org.apache.log4j,
  org.eclipse.xtext.xbase.lib
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7

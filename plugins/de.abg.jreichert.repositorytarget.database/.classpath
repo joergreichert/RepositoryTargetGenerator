@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry including="**/*.java" kind="src" path="src"/>
 	<classpathentry including="**/*.java" kind="src" path="xtend-gen"/>
+	<classpathentry exported="true" kind="lib" path="lib/sqlite-jdbc-3.7.2.jar" sourcepath="D:/_maven_repo/org/xerial/sqlite-jdbc/3.7.2/sqlite-jdbc-3.7.2-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hibernate-entitymanager-4.2.4.Final.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/javax.persistence-2.0.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/javassist-3.12.1.GA.jar"/>
@@ -13,13 +14,12 @@
 	<classpathentry exported="true" kind="lib" path="lib/cglib-3.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/dom4j-1.6.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hibernate-commons-annotations-4.0.2.Final.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/hibernate-core-4.2.4.Final.jar" sourcepath="C:/_maven_repo/org/hibernate/hibernate-core/4.2.4.Final/hibernate-core-4.2.4.Final-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/hibernate-core-4.2.4.Final.jar" sourcepath="D:/_maven_repo/org/hibernate/hibernate-core/4.2.4.Final/hibernate-core-4.2.4.Final.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hibernate-ehcache-4.2.4.Final.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hibernate-jpa-2.0-api-1.0.1.Final.jar" sourcepath="C:/Users/Reichert/.m2/repository/org/hibernate/javax/persistence/hibernate-jpa-2.0-api/1.0.1.Final/hibernate-jpa-2.0-api-1.0.1.Final-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hibernate-validator-5.0.1.Final.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hibernatesqlite-1.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jta-1.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/sqlite-jdbc-3.6.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xml-apis-1.0.b2.jar"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>

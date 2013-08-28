@@ -14,30 +14,31 @@ import javax.persistence.OneToMany
 
 @Entity
 class Location {
+	
 	@Id
   	@GeneratedValue(strategy = GenerationType.AUTO)	
   	@Property
-	Long id = -1L
+	long id = 1L	
 
 	@Property
-	Long timestamp = -1L
+	long timestamp = -1L
 
-	//@Column(unique=true)
+	@Column(unique=true)
 	@Property
 	String url
 
 	@Property
 	@OneToMany(mappedBy="_location", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	Set<Unit> units
+	Set<Unit> units = <Unit>newHashSet
 }
 
 @Entity
 class Unit {
-
+	
 	@Id
   	@GeneratedValue(strategy = GenerationType.AUTO)	
   	@Property
-	Long id = -1L
+	Long id = null	
 
 	@Property
 	@ManyToOne
@@ -48,5 +49,23 @@ class Unit {
 	String name
 
 	@Property
-	String version
+	@OneToMany(mappedBy="_unit", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	Set<Version> versions = <Version>newHashSet
+}
+
+@Entity
+class Version {
+
+	@Id
+  	@GeneratedValue(strategy = GenerationType.AUTO)	
+  	@Property
+	Long id = null
+	
+	@Property
+	@ManyToOne
+	@JoinColumn(name="unit_id")  
+	Unit unit
+
+	@Property
+	String name
 }

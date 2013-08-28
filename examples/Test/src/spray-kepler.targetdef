@@ -39,7 +39,7 @@ TargetDefinition "Spray Target Platform - Eclipse 4.3"
 	}
 
 	"Xpect" http://www.xpect-tests.org/updatesite/nightly/ category = ( Xtext, Testing ) {
-		org.xpect.sdk 0.1.0.201308071738
+		org.xpect.sdk 0.1.0.201308231740
 	}
 
 	"Xtext utils" http://xtext-utils.eclipselabs.org.codespot.com/git.distribution/releases/unittesting-0.9.x category = Testing {

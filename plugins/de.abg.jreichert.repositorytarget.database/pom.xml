@@ -37,9 +37,9 @@
 									<outputDirectory>lib</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>com.applerao</groupId>
-									<artifactId>hibernatesqlite</artifactId>
-									<version>1.0</version>
+									<groupId>org.xerial</groupId>
+									<artifactId>sqlite-jdbc</artifactId>
+									<version>3.7.2</version>
 									<type>jar</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>lib</outputDirectory>

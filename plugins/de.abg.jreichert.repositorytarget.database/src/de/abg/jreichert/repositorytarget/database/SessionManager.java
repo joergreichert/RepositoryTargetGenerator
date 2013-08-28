@@ -19,6 +19,7 @@ public class SessionManager {
 			Configuration cfg = new Configuration()
 					.addAnnotatedClass(Location.class)
 					.addAnnotatedClass(Unit.class)
+					.addAnnotatedClass(Version.class)
 					.setProperty("hibernate.dialect",
 							SQLiteDialect.class.getName())
 					.setProperty("hibernate.connection.driver_class",
@@ -28,6 +29,7 @@ public class SessionManager {
 					.setProperty("hibernate.connection.username", "")
 					.setProperty("hibernate.connection.password", "")
 					.setProperty("hibernate.current_session_context_class", "thread")
+					.setProperty("connection.pool_size", "1")
 					.setProperty("hibernate.hbm2ddl.auto", "create");
 
 			if (Platform.isRunning()) {

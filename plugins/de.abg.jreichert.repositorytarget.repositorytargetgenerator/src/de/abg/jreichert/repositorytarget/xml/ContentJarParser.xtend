@@ -1,6 +1,7 @@
 package de.abg.jreichert.repositorytarget.xml
 
 import de.abg.jreichert.repositorytarget.database.LocationManager
+import de.abg.jreichert.repositorytarget.database.SessionManager
 import java.io.File
 import java.io.FileInputStream
 import java.net.HttpURLConnection
@@ -143,15 +144,15 @@ class ContentJarParser extends ContentParser {
 			if(file.exists && file.file) file.lastModified 
 			else {
 				val newFile = new File(System.getProperty("user.dir") + "/" + contentUrl.toString.replace("file://", ""))
-				if(newFile.exists && newFile.file) newFile.lastModified else -1
+				if(newFile.exists && newFile.file) newFile.lastModified else -1L
 			} 
 		} else {
 			if(url.contains("file://")) {
 				val file = new File(contentUrl.toURI.path.replace("jar:", "")).absoluteFile
-				if(file.exists && file.file) file.lastModified else -1 
+				if(file.exists && file.file) file.lastModified else -1L 
 			} else {
 				val conn = contentUrl.openConnection
-				if(conn.existsUrl) conn.lastModified else -1
+				if(conn.existsUrl) conn.lastModified else -1L
 			}
 		}
 	}
@@ -183,9 +184,6 @@ class ContentJarParser extends ContentParser {
       	for(content : getContents(url, contentHandler)) {
 	      	parse(content, contentHandler)
       	}
-      	val locationManager = new LocationManager();
-      	val timestamps = getTimestamps(url)
-      	locationManager.save(timestamps.get(url), url, contentHandler.idToVersion) 
 		contentHandler
 	}
 	
@@ -226,4 +224,18 @@ class ContentJarParser extends ContentParser {
 		}
 		locationToTimestamp
 	}	
+	
+	def save(String url, ContentXmlHandler contentHandler) {
+      	val timestamps = getTimestamps(url)
+      	val locationManager = new LocationManager();
+		locationManager.save(timestamps.get(url), url, contentHandler.idToVersion) 
+	}
+	
+	def beginSession() {
+		SessionManager.sessionFactory.openStatelessSession
+	}
+	
+	def endSession() {
+		SessionManager.closeSession;
+	}
 }

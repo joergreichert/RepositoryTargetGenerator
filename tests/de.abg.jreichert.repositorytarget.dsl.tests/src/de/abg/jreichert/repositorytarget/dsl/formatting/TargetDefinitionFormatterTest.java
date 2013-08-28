@@ -40,7 +40,7 @@ public class TargetDefinitionFormatterTest {
 			r = formatter.format(rootNode, rootNode.getOffset(),
 					rootNode.getTotalLength());
 		}
-		String formatted = r.getFormattedText().replaceAll("\\r\\b", "\n")
+		String formatted = r.getFormattedText().replaceAll("\r\n", "\n")
 				+ getEnding();
 		expectation.assertEquals(formatted);
 	}

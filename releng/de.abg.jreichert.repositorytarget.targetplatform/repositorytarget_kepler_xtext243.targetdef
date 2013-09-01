@@ -1,16 +1,19 @@
 TargetDefinition "Repository Target Generator - Eclipse 4.3, Xtext/Xtend 2.4.2"
 
-	targetFile = repositorytarget_kepler_xtext242
+	targetFile = repositorytarget_kepler_xtext243
 
 	"Eclipse Kepler" http://download.eclipse.org/releases/kepler {
 		org.eclipse.sdk 4.3.0.v20130605-2000,
 		org.eclipse.pde 3.9.0.v20130605-2000,
-		org.eclipse.emf.sdk 2.9.0.v20130610-0406,
-		org.eclipse.xtext.sdk 2.4.2.v201306120542,
-		org.eclipse.xtend.sdk 2.4.2.v201306120542,
-		org.eclipse.emf.mwe2.language.sdk 2.4.0.v201306110940,
-		org.eclipse.emf.mwe2.runtime.sdk 2.4.0.v201306110341
+		org.eclipse.emf.sdk 2.9.0.v20130610-0406
 	}
+	
+	"Xtext & Xtend" http://download.eclipse.org/modeling/tmf/xtext/updates/composite/nightly/ {
+		org.eclipse.xtext.sdk 2.4.3.v201308291441,
+		org.eclipse.xtend.sdk 2.4.3.v201308291441,
+		org.eclipse.emf.mwe2.language.sdk 2.4.0.v201308291456,
+		org.eclipse.emf.mwe2.runtime.sdk 2.4.0.v201308230823
+	}	
 
 	"Xtext ANTLR" http://download.itemis.com/updates/releases/2.0.0/ {
 		de.itemis.xtext.antlr.sdk 2.0.0.v201108011202,

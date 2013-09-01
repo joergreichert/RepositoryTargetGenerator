@@ -7,11 +7,20 @@
 			<unit id="org.eclipse.sdk.feature.group" version="4.3.0.v20130605-2000"/>
 			<unit id="org.eclipse.pde.feature.group" version="3.9.0.v20130605-2000"/>
 			<unit id="org.eclipse.emf.sdk.feature.group" version="2.9.0.v20130610-0406"/>
+			<!--
 			<unit id="org.eclipse.xtext.sdk.feature.group" version="2.4.2.v201306120542"/>
 			<unit id="org.eclipse.xtend.sdk.feature.group" version="2.4.2.v201306120542"/>
 			<unit id="org.eclipse.emf.mwe2.language.sdk.feature.group" version="2.4.0.v201306110940"/>
 			<unit id="org.eclipse.emf.mwe2.runtime.sdk.feature.group" version="2.4.0.v201306110341"/>
+			-->
 			<repository location="http://download.eclipse.org/releases/kepler"/>
+		</location>
+		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+			<unit id="org.eclipse.xtext.sdk.feature.group" version="2.4.3.v201308291441"/>
+			<unit id="org.eclipse.xtend.sdk.feature.group" version="2.4.3.v201308291441"/>
+			<unit id="org.eclipse.emf.mwe2.language.sdk.feature.group" version="2.4.0.v201308291456"/>
+			<unit id="org.eclipse.emf.mwe2.runtime.sdk.feature.group" version="2.4.0.v201308230823"/>
+			<repository location="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/nightly/"/>
 		</location>
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<unit id="de.itemis.xtext.antlr.sdk.feature.group" version="2.0.0.v201108011202"/>
@@ -23,7 +32,7 @@
 			<repository location="http://xtext-utils.eclipselabs.org.codespot.com/git.distribution/releases/unittesting-0.9.x"/>
 		</location>
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="org.xpect.sdk.feature.group" version="0.1.0.201308161707"/>
+			<unit id="org.xpect.sdk.feature.group" version="0.1.0.201308231740"/>
 			<repository location="http://www.xpect-tests.org/updatesite/nightly/"/>
 		</location>
 	</locations>

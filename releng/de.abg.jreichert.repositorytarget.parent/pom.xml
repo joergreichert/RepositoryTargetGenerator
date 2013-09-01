@@ -8,13 +8,13 @@
 	<prerequisites>
 		<maven>3.0</maven>
 	</prerequisites>
-	
+
 	<parent>
 		<groupId>de.abg.jreichert.repositorytarget</groupId>
 		<artifactId>de.abg.jreichert.repositorytarget.config.parent</artifactId>
 		<version>0.1.0-SNAPSHOT</version>
 		<relativePath>../../releng/de.abg.jreichert.repositorytarget.config.parent/pom.xml</relativePath>
-	</parent>	
+	</parent>
 
 	<groupId>de.abg.jreichert.repositorytarget</groupId>
 	<artifactId>de.abg.jreichert.repositorytarget.parent</artifactId>
@@ -25,7 +25,7 @@
 		<maven-resources-plugin.version>2.6</maven-resources-plugin.version>
 		<maven-antrun-plugin.version>1.7</maven-antrun-plugin.version>
 		<maven-install-plugin.version>2.4</maven-install-plugin.version>
-		<maven-surefire-plugin.version>2.14</maven-surefire-plugin.version>
+		<maven-surefire-plugin.version>2.16</maven-surefire-plugin.version>
 		<maven-scm-plugin.version>1.8.1</maven-scm-plugin.version>
 		<maven-assembly-plugin.version>2.4</maven-assembly-plugin.version>
 		<maven-release-plugin.version>2.4.1</maven-release-plugin.version>
@@ -35,67 +35,20 @@
 		<build-helper-maven-plugin.version>1.8</build-helper-maven-plugin.version>
 		<eclipse-signing-maven-plugin.version>1.0.5</eclipse-signing-maven-plugin.version>
 		<fornax-oaw-m2-plugin.version>3.4.0</fornax-oaw-m2-plugin.version>
-		<xtend-maven-plugin.version>2.4.2</xtend-maven-plugin.version>
-		<xtend-library.version>2.4.2</xtend-library.version>
+		<xtend-maven-plugin.version>2.4.3-SNAPSHOT</xtend-maven-plugin.version>
+		<xtend-library.version>2.4.3-SNAPSHOT</xtend-library.version>
 		<jacoco-maven-plugin.version>0.6.3.201306030806</jacoco-maven-plugin.version>
 		<junit-version>4.11</junit-version>
-		<local-build-platform.version>[3.8,4.3)</local-build-platform.version>		
+		<local-build-platform.version>[3.8,4.3)</local-build-platform.version>
 		<ui.test.vmargs></ui.test.vmargs>
 		<coverageAgent></coverageAgent>
 		<it.coverage.argLine></it.coverage.argLine>
+		<RTG-local-targetrepository>file:../../releng/de.abg.jreichert.repositorytarget.repository/target/repository</RTG-local-targetrepository>
 	</properties>
 
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>target-platform-configuration</artifactId>
-				<version>${tycho-version}</version>
-				<configuration>
-					<resolver>p2</resolver>
-					<pomDependencies>consider</pomDependencies>
-					<target>
-						<artifact>
-							<groupId>de.abg.jreichert.repositorytarget</groupId>
-							<artifactId>de.abg.jreichert.repositorytarget.targetplatform</artifactId>
-							<version>${project.version}</version>
-						</artifact>
-					</target>
-					<environments>
-						<environment>
-							<os>win32</os>
-							<ws>win32</ws>
-							<arch>x86</arch>
-						</environment>
-						<environment>
-							<os>win32</os>
-							<ws>win32</ws>
-							<arch>x86_64</arch>
-						</environment>
-						<environment>
-							<os>macosx</os>
-							<ws>cocoa</ws>
-							<arch>x86_64</arch>
-						</environment>
-						<environment>
-							<os>macosx</os>
-							<ws>cocoa</ws>
-							<arch>x86</arch>
-						</environment>
-						<environment>
-							<os>linux</os>
-							<ws>gtk</ws>
-							<arch>x86</arch>
-						</environment>
-						<environment>
-							<os>linux</os>
-							<ws>gtk</ws>
-							<arch>x86_64</arch>
-						</environment>
-					</environments>
-				</configuration>
-			</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-source-plugin</artifactId>
@@ -202,8 +155,8 @@
 					<artifactId>maven-checkstyle-plugin</artifactId>
 					<version>${maven-checkstyle-plugin.version}</version>
 					<configuration>
-						<excludes>**BusinessDomainDsl**,**org/eclipse.**,**/internal/**,**antlr**:**/parseTree**:**Abstract**RuntimeModule**,**SetupGenerated**,**Abstract**Validator**,
-							**GrammarAccess**,**Abstract**UiModule**,**Abstract**ProposalProvider**,**/mm/**,**/shapes/shapes/**,**/styles/styles/**:**Abstract**SemanticSequencer**</excludes>
+						<excludes>**org/eclipse.**:**/internal/**:**antlr**:**/parseTree**:**Abstract**RuntimeModule**:**SetupGenerated**:**Abstract**Validator**:
+							**GrammarAccess**:**Abstract**UiModule**:**Abstract**ProposalProvider**:**/mm/**:**/shapes/shapes/**:**/styles/styles/**:**Abstract**SemanticSequencer**</excludes>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -228,8 +181,10 @@
 					<artifactId>maven-pmd-plugin</artifactId>
 					<version>${maven-pmd-plugin}</version>
 					<configuration>
-						<excludes>**BusinessDomainDsl**,**org/eclipse.**,**/internal/**,**antlr**:**/parseTree**:**Abstract**RuntimeModule**,**SetupGenerated**,**Abstract**Validator**,
-							**GrammarAccess**,**Abstract**UiModule**,**Abstract**ProposalProvider**,**/mm/**,**/shapes/shapes/**,**/styles/styles/**:**Abstract**SemanticSequencer**</excludes>
+						<excludeRoots>
+							<excludeRoot>src-gen</excludeRoot>
+							<excludeRoot>xtend-gen</excludeRoot>
+						</excludeRoots>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -294,6 +249,126 @@
 		</pluginManagement>
 	</build>
 	<profiles>
+		<profile>
+			<id>local-build</id>
+			<activation>
+				<property>
+					<name>local-build</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>target-platform-configuration</artifactId>
+						<version>${tycho-version}</version>
+						<configuration>
+							<resolver>p2</resolver>
+							<pomDependencies>consider</pomDependencies>
+							<environments>
+								<environment>
+									<os>win32</os>
+									<ws>win32</ws>
+									<arch>x86</arch>
+								</environment>
+								<environment>
+									<os>win32</os>
+									<ws>win32</ws>
+									<arch>x86_64</arch>
+								</environment>
+								<environment>
+									<os>macosx</os>
+									<ws>cocoa</ws>
+									<arch>x86_64</arch>
+								</environment>
+								<environment>
+									<os>macosx</os>
+									<ws>cocoa</ws>
+									<arch>x86</arch>
+								</environment>
+								<environment>
+									<os>linux</os>
+									<ws>gtk</ws>
+									<arch>x86</arch>
+								</environment>
+								<environment>
+									<os>linux</os>
+									<ws>gtk</ws>
+									<arch>x86_64</arch>
+								</environment>
+							</environments>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+			<repositories>
+				<repository>
+					<id>RTG-dependencies</id>
+					<layout>p2</layout>
+					<url>${RTG-local-targetrepository}</url>
+				</repository>
+			</repositories>
+		</profile>
+		<profile>
+			<id>remote-build</id>
+			<activation>
+				<property>
+					<name>!local-build</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>target-platform-configuration</artifactId>
+						<version>${tycho-version}</version>
+						<configuration>
+							<resolver>p2</resolver>
+							<pomDependencies>consider</pomDependencies>
+							<target>
+								<artifact>
+									<groupId>de.abg.jreichert.repositorytarget</groupId>
+									<artifactId>de.abg.jreichert.repositorytarget.targetplatform</artifactId>
+									<version>${project.version}</version>
+								</artifact>
+							</target>
+							<environments>
+								<environment>
+									<os>win32</os>
+									<ws>win32</ws>
+									<arch>x86</arch>
+								</environment>
+								<environment>
+									<os>win32</os>
+									<ws>win32</ws>
+									<arch>x86_64</arch>
+								</environment>
+								<environment>
+									<os>macosx</os>
+									<ws>cocoa</ws>
+									<arch>x86_64</arch>
+								</environment>
+								<environment>
+									<os>macosx</os>
+									<ws>cocoa</ws>
+									<arch>x86</arch>
+								</environment>
+								<environment>
+									<os>linux</os>
+									<ws>gtk</ws>
+									<arch>x86</arch>
+								</environment>
+								<environment>
+									<os>linux</os>
+									<ws>gtk</ws>
+									<arch>x86_64</arch>
+								</environment>
+							</environments>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 		<profile>
 			<id>skip-ui-tests</id>
 			<activation>

@@ -23,13 +23,9 @@
 			<repository location="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/nightly/"/>
 		</location>
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="de.itemis.xtext.antlr.sdk.feature.group" version="2.0.0.v201108011202"/>
-			<unit id="de.itemis.xtext.antlr.feature.feature.group" version="2.0.0.v201108011202"/>
-			<repository location="http://download.itemis.com/updates/releases/2.0.0/"/>
-		</location>
-		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="org.eclipselabs.xtext.utils.unittesting.feature.feature.group" version="0.9.3.201204261440"/>
-			<repository location="http://xtext-utils.eclipselabs.org.codespot.com/git.distribution/releases/unittesting-0.9.x"/>
+			<unit id="de.itemis.xtext.antlr.sdk.feature.group" version="2.1.0.v201308291703"/>
+			<unit id="de.itemis.xtext.antlr.feature.feature.group" version="2.1.0.v201308291703"/>
+			<repository location="http://download.itemis.com/updates/releases/2.1.0/"/>
 		</location>
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<unit id="org.xpect.sdk.feature.group" version="0.1.0.201308231740"/>

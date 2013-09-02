@@ -22,7 +22,7 @@ abstract class AbstractTargetDefinition {
 		target
 	}
 	
-	def filter(Unit unit, List<(Unit) => List<(String) => boolean>> unitFilters) {
+	def List<(String) => boolean> filter(Unit unit, List<(Unit) => List<(String) => boolean>> unitFilters) {
 		val list = <(String) => boolean>newArrayList
 		for(f : unitFilters) {
 			list.addAll(f.apply(unit))

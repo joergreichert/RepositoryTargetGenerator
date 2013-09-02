@@ -157,14 +157,6 @@
 									<outputDirectory>lib</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.xerial</groupId>
-									<artifactId>sqlite-jdbc</artifactId>
-									<version>3.6.0</version>
-									<type>jar</type>
-									<overWrite>false</overWrite>
-									<outputDirectory>lib</outputDirectory>
-								</artifactItem>
-								<artifactItem>
 									<groupId>xml-apis</groupId>
 									<artifactId>xml-apis</artifactId>
 									<version>1.0.b2</version>

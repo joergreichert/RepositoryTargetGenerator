@@ -101,7 +101,7 @@
 					<artifactId>maven-resources-plugin</artifactId>
 					<version>${maven-resources-plugin.version}</version>
 					<configuration>
-						<encoding>UTRF-8</encoding>
+						<encoding>UTF-8</encoding>
 					</configuration>
 				</plugin>
 				<plugin>

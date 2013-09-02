@@ -6,21 +6,21 @@ import java.util.regex.Pattern
 
 class TargetFilter {
 	
-	def unitFilters() {
+	def List<(Unit)=>List<(String)=>boolean>> unitFilters() {
 		val list = sdkFilter()
 		list.addAll(pdeFilter())
 		list
 	}
 
-	def sdkFilter() {
+	def List<(Unit)=>List<(String)=>boolean>> sdkFilter() {
 		unitFilters("org.eclipse.sdk.feature.group", "\\d+\\.\\d+\\.\\d+\\.v\\d{8}-\\d{4}-.*")
 	}
 	
-	def pdeFilter() {
+	def List<(Unit)=>List<(String)=>boolean>>  pdeFilter() {
 		unitFilters("org.eclipse.pde.feature.group", "3.8.\\d+\\.v\\d{8}-\\d{4}-.*")
 	}
 	
-	def unitFilters(String expectedTargetId, String versionRegex) {
+	def List<(Unit) => List<(String) => boolean>> unitFilters(String expectedTargetId, String versionRegex) {
 		val versionPattern = Pattern::compile(versionRegex)
 		val (String) => boolean filterVersion = [ versionPattern.matcher(it).matches ]
 		val versionFilters = newArrayList(filterVersion)

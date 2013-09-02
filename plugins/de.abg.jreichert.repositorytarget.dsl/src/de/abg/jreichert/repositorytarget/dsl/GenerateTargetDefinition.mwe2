@@ -33,6 +33,7 @@ Workflow {
     	pathTestProject = "../../tests/${projectName}.tests"
     	projectNameRt = projectName
     	projectNameUi = "${projectName}.ui"
+    	encoding = "UTF-8"
     	language = auto-inject {
     		uri = grammarURI
     

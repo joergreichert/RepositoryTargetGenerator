@@ -30,7 +30,6 @@ class ContentJarParserTest {
 	}
 
 	@Test
-	@Ignore 
 	def void testParsingLocal() {
 		val contentJarParser = new ContentJarParser()
 		val contentHandler = new ContentXmlHandler;
@@ -777,6 +776,7 @@ class ContentJarParserTest {
 	}
 
 	@Test
+	@Ignore("runs to long in remote build")
 	def void testParsingRemoteComposite() {
 		val contentHandler = new ContentXmlHandler()
 		val monitor = new NullProgressMonitor

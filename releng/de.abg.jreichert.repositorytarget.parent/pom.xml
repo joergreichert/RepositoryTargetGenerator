@@ -35,8 +35,8 @@
 		<build-helper-maven-plugin.version>1.8</build-helper-maven-plugin.version>
 		<eclipse-signing-maven-plugin.version>1.0.5</eclipse-signing-maven-plugin.version>
 		<fornax-oaw-m2-plugin.version>3.4.0</fornax-oaw-m2-plugin.version>
-		<xtend-maven-plugin.version>2.4.3-SNAPSHOT</xtend-maven-plugin.version>
-		<xtend-library.version>2.4.3-SNAPSHOT</xtend-library.version>
+		<xtend-maven-plugin.version>2.4.3</xtend-maven-plugin.version>
+		<xtend-library.version>2.4.3</xtend-library.version>
 		<jacoco-maven-plugin.version>0.6.3.201306030806</jacoco-maven-plugin.version>
 		<junit-version>4.11</junit-version>
 		<local-build-platform.version>[3.8,4.3)</local-build-platform.version>

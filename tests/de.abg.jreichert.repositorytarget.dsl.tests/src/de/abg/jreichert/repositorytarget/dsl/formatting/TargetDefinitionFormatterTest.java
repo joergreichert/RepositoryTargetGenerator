@@ -40,15 +40,21 @@ public class TargetDefinitionFormatterTest {
 			r = formatter.format(rootNode, rootNode.getOffset(),
 					rootNode.getTotalLength());
 		}
-		String formatted = r.getFormattedText()
-				.replaceAll("\\r\\n", "\n")
-				.replaceAll("\\r\\b", "\n")
-				+ getEnding();
+		String formatted = r.getFormattedText();
+		if(!isWindowsEnding()) {
+			formatted = formatted.replaceAll("\r\n", "\n");
+		}
+		formatted = formatted.replaceAll("\r\b", "\n");
+		formatted = formatted + getEnding();
 		expectation.assertEquals(formatted);
 	}
 
 	private String getEnding() {
+		return isWindowsEnding() ? "\r" : "";
+	}
+	
+	private boolean isWindowsEnding() {
 		String ls = System.getProperty("line.separator");
-		return !"\r\n".equals(ls) ? "\r" : "";
+		return "\r\n".equals(ls);
 	}
 }

@@ -8,11 +8,11 @@ TargetDefinition "Repository Target Generator - Eclipse 4.3, Xtext/Xtend 2.4.2"
 		org.eclipse.emf.sdk 2.9.0.v20130610-0406
 	}
 	
-	"Xtext & Xtend" http://download.eclipse.org/modeling/tmf/xtext/updates/composite/nightly/ {
-		org.eclipse.xtext.sdk 2.4.3.v201308291441,
-		org.eclipse.xtend.sdk 2.4.3.v201308291441,
-		org.eclipse.emf.mwe2.language.sdk 2.4.0.v201308291456,
-		org.eclipse.emf.mwe2.runtime.sdk 2.4.0.v201308230823
+	"Xtext & Xtend" http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/ {
+		org.eclipse.xtext.sdk 2.4.3.v201309030823,
+		org.eclipse.xtend.sdk 2.4.3.v201309030823,
+		org.eclipse.emf.mwe2.language.sdk 2.4.1.v201309030840,
+		org.eclipse.emf.mwe2.runtime.sdk 2.4.1.v201309030422
 	}	
 
 	"Xtext ANTLR" http://download.itemis.com/updates/releases/2.1.0/ {

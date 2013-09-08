@@ -1,5 +1,7 @@
 package de.abg.jreichert.repositorytarget.xml
 
+import com.google.common.collect.ArrayListMultimap
+import com.google.common.collect.ListMultimap
 import de.abg.jreichert.repositorytarget.database.LocationManager
 import de.abg.jreichert.repositorytarget.database.SessionManager
 import java.io.File
@@ -14,26 +16,27 @@ import java.util.Map
 class ContentJarParser extends ContentParser {
 	private var Map<String, Long> locationToTimestamp = null;
 	
-	def private Map<String, Long> getInternalTimestamps(String url) {
+	def private Map<String, Long> getInternalTimestamps(String urlStr) {
 		val Map<String, Long> localMap = newHashMap
 		var contentFileName = "content"
-		var lastModified = lastModifiedXmlUrl(url.toUrl, contentFileName)
+		val url = urlStr.toUrl
+		var lastModified = lastModifiedXmlUrl(url, contentFileName)
 		if(lastModified > -1) {
-			localMap.put(url, lastModified)
+			localMap.put(urlStr, lastModified)
 		} else {
-			lastModified = lastModifiedJarUrl(url.toUrl, contentFileName)
+			lastModified = lastModifiedJarUrl(url, contentFileName)
 			if(lastModified > -1) {
-				localMap.put(url, lastModified)
+				localMap.put(urlStr, lastModified)
 			} else {
 				contentFileName = "compositeContent"
-				lastModified = lastModifiedXmlUrl(url.toUrl, contentFileName)
+				lastModified = lastModifiedXmlUrl(url, contentFileName)
 				if(lastModified > -1) {
-					localMap.put(url, lastModified)
+					localMap.put(urlStr, lastModified)
 	 				val compositeContent = getXmlContent(url, contentFileName)
 	 				localMap.putAll(parseTimestamps(compositeContent, url))
 				} else {
-					lastModified = lastModifiedJarUrl(url.toUrl, contentFileName)
-					localMap.put(url, lastModified)
+					lastModified = lastModifiedJarUrl(url, contentFileName)
+					localMap.put(urlStr, lastModified)
 	 				val compositeContent = getJarContent(url, contentFileName)
 	 				localMap.putAll(parseTimestamps(compositeContent, url))
 				}
@@ -42,21 +45,22 @@ class ContentJarParser extends ContentParser {
  		localMap
 	}
 	
-	def private List<String> getInternalContents(String url) {
-		val List<String> localContents = newArrayList
+	def private ListMultimap<String, String> getInternalContents(String urlStr) {
+		val ListMultimap<String, String> localContents = ArrayListMultimap.create
 		var contentFileName = "content"
-		if (existsXmlUrl(url.toUrl, contentFileName)) {
- 			localContents.add(getXmlContent(url, contentFileName))
-		} else if (existsJarUrl(url.toUrl, contentFileName)) {
- 			localContents.add(getJarContent(url, contentFileName))
+		val url = urlStr.toUrl
+		if (existsXmlUrl(url, contentFileName)) {
+ 			localContents.put(urlStr, getXmlContent(url, contentFileName))
+		} else if (existsJarUrl(url, contentFileName)) {
+ 			localContents.put(urlStr, getJarContent(url, contentFileName))
 		} else {
 			contentFileName = "compositeContent"
-			if (existsXmlUrl(url.toUrl, contentFileName)) {
+			if (existsXmlUrl(url, contentFileName)) {
  				val compositeContent = getXmlContent(url, contentFileName)
- 				localContents += parseContents(compositeContent, url)
-			} else if (existsJarUrl(url.toUrl, contentFileName)) {
+ 				localContents.putAll(parseContents(compositeContent, url))
+			} else if (existsJarUrl(url, contentFileName)) {
  				val compositeContent = getJarContent(url, contentFileName)
- 				localContents += parseContents(compositeContent, url)
+ 				localContents.putAll(parseContents(compositeContent, url))
 			} else {
 				throw new IllegalArgumentException("For " + url + " no content.xml could be found.")				
 			}
@@ -65,10 +69,10 @@ class ContentJarParser extends ContentParser {
 	}
 	
 	def private parseContents(String compositeContent, String parentLocation) {
-		val List<String> localContents = newArrayList
+		val ListMultimap<String, String> localContents = ArrayListMultimap.create
 		val locations = parseLocations(compositeContent, parentLocation)
  		for(location : locations) {
- 			localContents.addAll(getInternalContents(location))
+ 			localContents.putAll(getInternalContents(location))
  		}
  		localContents
 	}
@@ -172,17 +176,17 @@ class ContentJarParser extends ContentParser {
 	}
 	
 	def parseVersionForId(String url, String id, List<(String) => boolean> filters) {
-		getParsedContent(url, id, filters).version
+		getParsedContent(url, id, filters).getVersion(url)
 	}
 	
 	def parseVersionsForId(String url, String id, List<(String) => boolean> filters) {
-		getParsedContent(url, id, filters).versions
+		getParsedContent(url, id, filters).getVersions(url)
 	}
 	
 	def private getParsedContent(String url, String id, List<(String) => boolean> filters) {
-      	val contentHandler = new ContentXmlHandler(id, filters);
-      	for(content : getContents(url, contentHandler)) {
-	      	parse(content, contentHandler)
+      	val contentHandler = new ContentXmlHandler(url, id, filters);
+      	for(Map.Entry<String, String> entry : getContents(url, contentHandler).entries) {
+	      	parse(entry.value, contentHandler)
       	}
 		contentHandler
 	}
@@ -193,17 +197,17 @@ class ContentJarParser extends ContentParser {
 		contentHandler.locations
 	}
 	
-	def List<String> getContents(String url, ContentXmlHandler contentHandler) {
-		val List<String> contents = newArrayList;
-      	val timestamps = getTimestamps(url)
+	def ListMultimap<String, String> getContents(String url, ContentXmlHandler contentHandler) {
+		val ListMultimap<String, String> contents = ArrayListMultimap.create
+      	val urlToTimestamps = getTimestamps(url)
       	val locationManager = new LocationManager();
-      	val dbTimestamps = locationManager.getTimestamps(timestamps)
-      	val dbIdToVersions = locationManager.getIdToVersions(timestamps)
-      	contentHandler.idToVersion.putAll(dbIdToVersions)
-      	for(innerUrl : timestamps.entrySet.filter(entry|
-      		checkDbTimestampOlderThanUrlTimestamp(dbTimestamps.get(entry.key), entry.value)
+      	val urlToDbTimestamps = locationManager.getTimestamps(urlToTimestamps)
+      	val urlToDbIdToVersions = locationManager.getUrlToIdToVersions(urlToTimestamps)
+      	contentHandler.urlToIdToVersion.putAll(urlToDbIdToVersions)
+      	for(innerUrl : urlToTimestamps.entrySet.filter(entry|
+      		checkDbTimestampOlderThanUrlTimestamp(urlToDbTimestamps.get(entry.key), entry.value)
       	).map[key]) {
-			contents += getInternalContents(innerUrl)
+			contents.putAll(getInternalContents(innerUrl))
 		}
 		contents
 	}
@@ -228,7 +232,9 @@ class ContentJarParser extends ContentParser {
 	def save(String url, ContentXmlHandler contentHandler) {
       	val timestamps = getTimestamps(url)
       	val locationManager = new LocationManager();
-		locationManager.save(timestamps.get(url), url, contentHandler.idToVersion) 
+      	for(entry : contentHandler.urlToIdToVersion.entrySet) {
+			locationManager.save(timestamps.get(entry.key), entry.key, entry.value) 
+      	}
 	}
 	
 	def beginSession() {

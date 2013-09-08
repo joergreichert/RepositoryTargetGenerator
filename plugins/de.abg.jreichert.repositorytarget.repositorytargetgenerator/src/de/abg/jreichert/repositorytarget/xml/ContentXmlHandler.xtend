@@ -1,24 +1,33 @@
 package de.abg.jreichert.repositorytarget.xml
 
 import java.util.List
+import java.util.Set
 import java.util.SortedMap
 import java.util.SortedSet
 import org.xml.sax.Attributes
 import org.xml.sax.SAXException
 import org.xml.sax.helpers.DefaultHandler
-import java.util.Set
 
 class ContentXmlHandler extends DefaultHandler {
 
 	private String id;
-	private SortedMap<String, SortedSet<String>> idToVersions = newTreeMap([s1, s2 | compareStrings(s1, s2)])
+	private SortedMap<String, SortedMap<String, SortedSet<String>>> urlToIdToVersions = newTreeMap([s1, s2 | compareStrings(s1, s2)])
 	private String version;
+	private String url;
 	private String expectedId;
 	private List<(String) => boolean> filters;
-	
-	new(String expectedId, List<(String) => boolean> filters) {
-		this(filters)
+
+	new(String url, String expectedId, List<(String) => boolean> filters) {
+		this(url, filters)
 		this.expectedId = expectedId
+	}
+	
+	def setUrl(String url) {
+		this.url = url
+	}
+	
+	def getUrl() {
+		url
 	}
 	
 	def private compareStrings(String s1, String s2) {
@@ -35,16 +44,18 @@ class ContentXmlHandler extends DefaultHandler {
 		}
 	}
 	
-	new(String expectedId) {
-		this()
+	new(String url, String expectedId) {
+		this(url)
 		this.expectedId = expectedId
 	}
 	
-	new() {
+	new(String url) {
+		setUrl(url)
 		filters = <(String) => boolean>newArrayList
 	}
 	
-	new(List<(String) => boolean> filters) {
+	new(String url, List<(String) => boolean> filters) {
+		this(url)
 		this.filters = filters
 	}
 
@@ -54,20 +65,26 @@ class ContentXmlHandler extends DefaultHandler {
 
 	override startElement(String uri, String localName, String qName,
 			Attributes atts) throws SAXException {
-		if (localName.equals("unit")) {
-			id = atts.getValue("id")
-			if(expectedId != null) {
-				if(id != null && id.startsWith(expectedId)) {
-					register(atts)
+		if(getUrl != null) {
+			if (localName.equals("unit")) {
+				id = atts.getValue("id")
+				if(expectedId != null) {
+					if(id != null && id.startsWith(expectedId)) {
+						register(getUrl, atts)
+					}
+				} else {
+					register(getUrl, atts)
 				}
-			} else {
-				register(atts)
 			}
 		}
 	}
 	
-	def private register(Attributes atts) {
+	def private register(String uri, Attributes atts) {
 		version = atts.getValue("version")
+		var idToVersions = urlToIdToVersions.get(uri)
+		if(idToVersions == null) {
+			idToVersions = <String, SortedSet<String>>newTreeMap[s1, s2 | compareStrings(s1, s2)]
+		}
 		if(version != null && version.filter) {
 			if(!idToVersions.containsKey(id)) {
 				idToVersions.put(id, <String>newTreeSet([s1, s2 | compareStrings(s1, s2)]))
@@ -75,6 +92,7 @@ class ContentXmlHandler extends DefaultHandler {
 			if(!version.nullOrEmpty) {
 				idToVersions.get(id).add(version)
 			}
+			urlToIdToVersions.put(uri, idToVersions)
 		}
 	}
 	
@@ -86,20 +104,20 @@ class ContentXmlHandler extends DefaultHandler {
 		passed
 	}
 
-	def SortedMap<String, SortedSet<String>> getIdToVersion() {
-		idToVersions		
+	def SortedMap<String, SortedMap<String, SortedSet<String>>> getUrlToIdToVersion() {
+		urlToIdToVersions		
 	}
 	
-	def Set<String> getIds() {
-		idToVersions.keySet		
+	def Set<String> getIds(String url) {
+		urlToIdToVersions.get(url)?.keySet		
 	}
 	
-	def SortedSet<String> getVersions() {
-		if(expectedId != null) expectedId.versions else createEmptySortedSet
+	def SortedSet<String> getVersions(String url) {
+		if(url != null && expectedId != null) url.getVersions(id) else createEmptySortedSet
 	}
 	
-	def SortedSet<String> getVersions(String id) {
-		if(id != null) idToVersions.getNullSafe(id) else createEmptySortedSet
+	def SortedSet<String> getVersions(String url, String id) {
+		if(url != null && id != null) urlToIdToVersions.get(url)?.getNullSafe(id) else createEmptySortedSet
 	}	
 	
 	def private getNullSafe(SortedMap<String, SortedSet<String>> map, String key) {
@@ -113,12 +131,12 @@ class ContentXmlHandler extends DefaultHandler {
 		<String>newTreeSet([s1, s2 | compareStrings(s1, s2)])
 	}
 	
-	def String getVersion(String id) {
-		id.versions.version
+	def String getVersion(String url, String id) {
+		url.getVersions(id).version
 	}
 	
-	def String getVersion() {
-		versions.version
+	def String getVersion(String url) {
+		url.versions.version
 	}
 	
 	def private String getVersion(SortedSet<String> versions) {

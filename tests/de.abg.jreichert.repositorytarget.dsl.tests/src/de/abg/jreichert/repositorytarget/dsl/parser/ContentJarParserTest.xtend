@@ -33,7 +33,9 @@ class ContentJarParserTest {
 	def void testParsingLocal() {
 		val contentJarParser = new ContentJarParser()
 		val contentHandler = new ContentXmlHandler;
-		val result = contentJarParser.getContents("file://testdata/updatesite/", contentHandler)
+		val urlResult = contentJarParser.getContents("file://testdata/updatesite/", contentHandler)
+		assertEquals("expected url count", 2, urlResult.size)
+		val result = urlResult.entries
 		assertEquals("expected content count", 3, result.size)
 		assertEquals("expected content count at pos 1", content_1.toString.replace("\r\n", "\n"), result.get(0))
 		assertEquals("expected content count at pos 2", content_2.toString.replace("\r\n", "\n"), result.get(1))
@@ -792,7 +794,8 @@ class ContentJarParserTest {
 		val readOutP2Repository = new ReadOutP2Repository
 		val url = "file://testdata/updatesite/"
 		readOutP2Repository.execute(url, contentHandler, monitor)
-		val idVersionPairs = contentHandler.idToVersion
+		val urlToIdVersionPairs = contentHandler.urlToIdToVersion
+		val idVersionPairs = urlToIdVersionPairs.get(url)
 		assertEquals("expected idVersionPairs count", 7, idVersionPairs.size)
 		for(entry : idVersionPairs.entrySet) {
 			println("key: " + entry.key + ", value: " + entry.value)

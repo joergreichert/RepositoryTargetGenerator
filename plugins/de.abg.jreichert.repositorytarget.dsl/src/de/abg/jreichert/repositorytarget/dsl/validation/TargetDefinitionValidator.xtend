@@ -28,12 +28,13 @@ class TargetDefinitionValidator extends AbstractTargetDefinitionValidator {
 	@Check(value=EXPENSIVE)
 	def checkUpToDate(Target target) {
 		try {
-			val contentHandler = new ContentXmlHandler()
 			val monitor = new NullProgressMonitor
 			for(location : target.locations) {
 				try {
+					val contentHandler = new ContentXmlHandler(location.repositoryLocation)
 					readOutP2Repository.execute(location.repositoryLocation, contentHandler, monitor)
-					val idVersionPairs = contentHandler.idToVersion
+					val urlToIdVersionPairs = contentHandler.urlToIdToVersion
+					val idVersionPairs = urlToIdVersionPairs.get(location.repositoryLocation)
 					for(unit : location.unit) {
 						val foundUnitVersions = idVersionPairs.get(
 							if(unit.noFeature) unit.categoryId else unit.categoryId + ".feature.group" 

@@ -2,7 +2,6 @@ package de.abg.jreichert.repositorytarget.database
 
 import java.util.Set
 import javax.persistence.CascadeType
-import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.FetchType
 import javax.persistence.GeneratedValue
@@ -23,7 +22,7 @@ class Location {
 	@Property
 	long timestamp = -1L
 
-	@Column(unique=true)
+	//@Column(unique=true)
 	@Property
 	String url
 

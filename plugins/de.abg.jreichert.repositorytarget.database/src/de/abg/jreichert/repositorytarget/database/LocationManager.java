@@ -2,6 +2,7 @@ package de.abg.jreichert.repositorytarget.database;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -106,7 +107,7 @@ public class LocationManager {
 		Session session = SessionManager.currentSession();
 		try {
 			Criteria criteria = session.createCriteria(Location.class);
-			criteria.add(Restrictions.in("_url", timestampsToFilter.keySet()));
+			//criteria.add(Restrictions.in("_url", timestampsToFilter.keySet()));
 			result = toLocationList(criteria.list());
 			for (Location location : result) {
 				timestamps.put(location.getUrl(), location.getTimestamp());
@@ -117,14 +118,19 @@ public class LocationManager {
 		return timestamps;
 	}
 
-	public SortedMap<String, SortedSet<String>> getIdToVersions(
+	public SortedMap<String, SortedMap<String, SortedSet<String>>> getUrlToIdToVersions(
 			Map<String, Long> timestampsToFilter) {
-		SortedMap<String, SortedSet<String>> idToVersions = new TreeMap<String, SortedSet<String>>();
+		SortedMap<String, SortedMap<String, SortedSet<String>>> urlToIdToVersions = new TreeMap<String, SortedMap<String, SortedSet<String>>>();
 		Map<String, Long> locationToTimestamp = getTimestamps(timestampsToFilter);
 		Location location = null;
 		SortedSet<String> versions = null;
+		SortedMap<String, SortedSet<String>> idToVersions;
 		for (Entry<String, Long> entry : locationToTimestamp.entrySet()) {
 			location = getByURL(entry.getKey());
+			idToVersions = urlToIdToVersions.get(entry.getKey());
+			if(idToVersions == null) {
+				idToVersions = new TreeMap<String, SortedSet<String>>();
+			}
 			for (Unit unit : location.getUnits()) {
 				versions = idToVersions.get(unit.getName());
 				if (versions == null) {
@@ -135,18 +141,22 @@ public class LocationManager {
 				}
 				idToVersions.put(unit.getName(), versions);
 			}
+			urlToIdToVersions.put(entry.getKey(), idToVersions);
 		}
-		return idToVersions;
+		return urlToIdToVersions;
 	}
 
 	public void save(Long timestamp, String locationURL,
 			SortedMap<String, SortedSet<String>> idToVersions) {
 		SortedSet<String> versions = new TreeSet<String>();
-		;
 		Location location = getByURL(locationURL);
 		if (location == null) {
 			location = new Location();
-			location.setTimestamp(timestamp);
+			if(timestamp == null) {
+				location.setTimestamp(new Date().getTime());
+			} else {
+				location.setTimestamp(timestamp);
+			}
 			location.setUrl(locationURL);
 		}
 		SortedMap<String, SortedSet<String>> dbIdToVersions = new TreeMap<String, SortedSet<String>>();

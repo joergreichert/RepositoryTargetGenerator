@@ -119,7 +119,7 @@ class TargetDefinitionProposalProvider extends AbstractTargetDefinitionProposalP
 				val shell = Display::getDefault().getActiveShell()
 				val dialog = new ProgressMonitorDialog(shell)
 				dialog.run(true, true, runnable)
-				urlToCategoryIdsToVersions.put(repositoryLocation, contentHandler.getIdToVersion())
+				urlToCategoryIdsToVersions.putAll(contentHandler.getUrlToIdToVersion())
 			}
 		}
 	}

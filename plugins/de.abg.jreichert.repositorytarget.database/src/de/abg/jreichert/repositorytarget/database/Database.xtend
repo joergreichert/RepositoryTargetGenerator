@@ -27,6 +27,15 @@ class Location {
 	String url
 
 	@Property
+	@ManyToOne
+	@JoinColumn(name="location_id")  
+	Location parentLocation
+
+	@Property
+	@OneToMany(mappedBy="_parentLocation", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	Set<Location> aggregatedLocations = <Location>newHashSet
+
+	@Property
 	@OneToMany(mappedBy="_location", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	Set<Unit> units = <Unit>newHashSet
 }

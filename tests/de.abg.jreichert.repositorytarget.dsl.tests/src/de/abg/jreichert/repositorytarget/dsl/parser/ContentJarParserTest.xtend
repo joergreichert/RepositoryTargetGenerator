@@ -31,15 +31,16 @@ class ContentJarParserTest {
 
 	@Test
 	def void testParsingLocal() {
+		val url = "file://testdata/updatesite/"
 		val contentJarParser = new ContentJarParser()
-		val contentHandler = new ContentXmlHandler;
-		val urlResult = contentJarParser.getContents("file://testdata/updatesite/", contentHandler)
-		assertEquals("expected url count", 2, urlResult.size)
+		val contentHandler = new ContentXmlHandler(url);
+		val urlResult = contentJarParser.getContents(url, contentHandler)
+		assertEquals("expected url count", 3, urlResult.size)
 		val result = urlResult.entries
 		assertEquals("expected content count", 3, result.size)
-		assertEquals("expected content count at pos 1", content_1.toString.replace("\r\n", "\n"), result.get(0))
-		assertEquals("expected content count at pos 2", content_2.toString.replace("\r\n", "\n"), result.get(1))
-		assertEquals("expected content count at pos 3", content_3.toString.replace("\r\n", "\n"), result.get(2))
+		assertEquals("expected content count at pos 1", content_1.toString.replace("\r\n", "\n"), result.get(0).value.toString)
+		assertEquals("expected content count at pos 2", content_2.toString.replace("\r\n", "\n"), result.get(1).value.toString)
+		assertEquals("expected content count at pos 3", content_3.toString.replace("\r\n", "\n"), result.get(2).value.toString)
 	}
 	
 	def content_1() '''
@@ -771,37 +772,61 @@ class ContentJarParserTest {
 	@Test
 	@Ignore
 	def void testParsingRemoteCompositeContent() {
+		val url = "http://download.eclipse.org/releases/kepler"
 		val contentJarParser = new ContentJarParser()
-		val contentHandler = new ContentXmlHandler;
-		val result = contentJarParser.getContents("http://download.eclipse.org/releases/kepler", contentHandler)
+		val contentHandler = new ContentXmlHandler(url);
+		val result = contentJarParser.getContents(url, contentHandler)
 		assertEquals("expected content count", 3, result.size)
 	}
 
 	@Test
 	@Ignore("runs to long in remote build")
 	def void testParsingRemoteComposite() {
-		val contentHandler = new ContentXmlHandler()
+		val url = "http://download.eclipse.org/releases/kepler"
+		val contentHandler = new ContentXmlHandler(url)
 		val monitor = new NullProgressMonitor
 		val readOutP2Repository = new ReadOutP2Repository
-		val url = "http://download.eclipse.org/releases/kepler"
 		readOutP2Repository.execute(url, contentHandler, monitor)
 	}
 
 	@Test
 	def void testParsingContent() {
-		val contentHandler = new ContentXmlHandler()
+		val url = "file://testdata/updatesite/"
+		val contentHandler = new ContentXmlHandler(url)
 		val monitor = new NullProgressMonitor
 		val readOutP2Repository = new ReadOutP2Repository
-		val url = "file://testdata/updatesite/"
 		readOutP2Repository.execute(url, contentHandler, monitor)
 		val urlToIdVersionPairs = contentHandler.urlToIdToVersion
-		val idVersionPairs = urlToIdVersionPairs.get(url)
-		assertEquals("expected idVersionPairs count", 7, idVersionPairs.size)
-		for(entry : idVersionPairs.entrySet) {
+		val expectedURL1 = "file://testdata/updatesite/de.abg.jreichert.repositorytarget.updatesite-0.1.0.201204242252/"
+		val expectedURL2 = "jar:file:testdata/updatesite/de.abg.jreichert.repositorytarget.updatesite-0.1.0.201211111542.zip!/"
+		assertEquals(expectedURL1, contentHandler.urlToIdToVersion.keySet.head)
+		assertEquals(expectedURL2, contentHandler.urlToIdToVersion.keySet.last)
+		val idVersionPairs1 = urlToIdVersionPairs.get(expectedURL1)
+		assertNotNull("idVersionPairs1", idVersionPairs1)
+		assertEquals("expected idVersionPairs 1 count", 6, idVersionPairs1.size)
+		for(entry : idVersionPairs1.entrySet) {
 			println("key: " + entry.key + ", value: " + entry.value)
 		}
 		
+		val idVersionPairs2 = urlToIdVersionPairs.get(expectedURL2)
+		assertNotNull("idVersionPairs2", idVersionPairs2)
+		assertNotNull("idVersionPairs2", idVersionPairs2)
+		assertEquals("expected idVersionPairs 2 count", 6, idVersionPairs2.size)
+		for(entry : idVersionPairs2.entrySet) {
+			println("key: " + entry.key + ", value: " + entry.value)
+		}
 //		assertEquals("expected idVersionPair keys", "[201211111547.repositorytarget, 201304242052.repositorytarget, de.abg.jreichert.repositorytarget.dsl, de.abg.jreichert.repositorytarget.dsl.ui, de.abg.jreichert.repositorytarget.feature.feature.group, de.abg.jreichert.repositorytarget.feature.feature.jar, de.abg.jreichert.repositorytarget.repositorytargetgenerator]", idVersionPairs.keySet.toString)
+	}
+
+	@Test
+	def void testCaching() {
+		val url = "file://testdata/updatesite/"
+		val contentHandler1 = new ContentXmlHandler(url)
+		val monitor = new NullProgressMonitor
+		val readOutP2Repository = new ReadOutP2Repository
+		readOutP2Repository.execute(url, contentHandler1, monitor)
+		val contentHandler2 = new ContentXmlHandler(url)
+		readOutP2Repository.execute(url, contentHandler2, monitor)
 	}
 	
 	@After

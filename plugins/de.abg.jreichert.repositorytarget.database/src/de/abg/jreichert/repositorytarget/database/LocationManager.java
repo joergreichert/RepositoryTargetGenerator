@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
@@ -223,6 +224,29 @@ public class LocationManager {
 				}
 			}
 			saveLocation(location);
+		}
+	}
+	
+	public void save(String parentLocationStr, Long parentLocationTimestamp, Set<String> aggregatedLocationStrs) {
+		Location parentLocation = getByURL(parentLocationStr);
+		if(parentLocation == null) {
+			parentLocation = new Location();
+			if(parentLocationTimestamp == null) {
+				parentLocation.setTimestamp(new Date().getTime());
+			} else {
+				parentLocation.setTimestamp(parentLocationTimestamp);
+			}
+			parentLocation.setUrl(parentLocationStr);
+		}
+		if(parentLocation != null) {
+			Location aggregatedLocation = null;
+			for(String aggregatedLocationStr : aggregatedLocationStrs) {
+				aggregatedLocation = getByURL(aggregatedLocationStr);
+				if(aggregatedLocation != null) {
+					parentLocation.getAggregatedLocations().add(aggregatedLocation);
+				}
+			}
+			saveLocation(parentLocation);
 		}
 	}
 }

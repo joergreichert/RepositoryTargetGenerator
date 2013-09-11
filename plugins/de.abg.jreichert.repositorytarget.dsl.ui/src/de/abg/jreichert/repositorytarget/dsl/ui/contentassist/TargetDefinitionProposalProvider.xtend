@@ -114,7 +114,7 @@ class TargetDefinitionProposalProvider extends AbstractTargetDefinitionProposalP
 	def private void fill(String repositoryLocation) throws InvocationTargetException, InterruptedException {
 		if (repositoryLocation != null) {
 			if (urlToCategoryIdsToVersions.get(repositoryLocation) == null) {
-				val contentHandler = new ContentXmlHandler()
+				val contentHandler = new ContentXmlHandler(repositoryLocation)
 				val runnable = new ReadOutP2RepositoryRunnable(repositoryLocation, contentHandler, readOutP2Repository)
 				val shell = Display::getDefault().getActiveShell()
 				val dialog = new ProgressMonitorDialog(shell)

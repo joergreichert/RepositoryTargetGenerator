@@ -230,10 +230,13 @@ class ContentJarParser extends ContentParser {
 	}	
 	
 	def save(String url, ContentXmlHandler contentHandler) {
-      	val timestamps = getTimestamps(url)
+      	val urlToTimestamps = getTimestamps(url)
       	val locationManager = new LocationManager();
       	for(entry : contentHandler.urlToIdToVersion.entrySet) {
-			locationManager.save(timestamps.get(entry.key), entry.key, entry.value) 
+			locationManager.save(urlToTimestamps.get(entry.key), entry.key, entry.value) 
+      	}
+      	if(urlToTimestamps.get(url) == null) {
+			locationManager.save(url, urlToTimestamps.get(url), urlToTimestamps.keySet) 
       	}
 	}
 	

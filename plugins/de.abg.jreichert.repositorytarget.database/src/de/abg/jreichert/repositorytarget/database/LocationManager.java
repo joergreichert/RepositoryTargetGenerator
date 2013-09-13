@@ -111,7 +111,7 @@ public class LocationManager {
 			//criteria.add(Restrictions.in("_url", timestampsToFilter.keySet()));
 			result = toLocationList(criteria.list());
 			for (Location location : result) {
-				timestamps.put(location.getUrl(), location.getTimestamp());
+				timestamps.put(location.getUrl(), Long.valueOf(location.getTimestamp()));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -154,9 +154,9 @@ public class LocationManager {
 		if (location == null) {
 			location = new Location();
 			if(timestamp == null) {
-				location.setTimestamp(new Date().getTime());
+				location.setTimestamp(String.valueOf(new Date().getTime()));
 			} else {
-				location.setTimestamp(timestamp);
+				location.setTimestamp(String.valueOf(timestamp));
 			}
 			location.setUrl(locationURL);
 		}
@@ -232,9 +232,9 @@ public class LocationManager {
 		if(parentLocation == null) {
 			parentLocation = new Location();
 			if(parentLocationTimestamp == null) {
-				parentLocation.setTimestamp(new Date().getTime());
+				parentLocation.setTimestamp(String.valueOf(new Date().getTime()));
 			} else {
-				parentLocation.setTimestamp(parentLocationTimestamp);
+				parentLocation.setTimestamp(String.valueOf(parentLocationTimestamp));
 			}
 			parentLocation.setUrl(parentLocationStr);
 		}

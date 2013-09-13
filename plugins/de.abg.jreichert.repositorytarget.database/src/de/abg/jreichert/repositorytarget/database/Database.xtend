@@ -20,7 +20,7 @@ class Location {
 	long id = 1L	
 
 	@Property
-	long timestamp = -1L
+	String timestamp = null
 
 	//@Column(unique=true)
 	@Property

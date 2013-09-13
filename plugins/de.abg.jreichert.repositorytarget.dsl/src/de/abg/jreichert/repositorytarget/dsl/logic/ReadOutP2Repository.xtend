@@ -40,5 +40,6 @@ class ReadOutP2Repository {
 			subProgressMonitor.worked(i)
 			i = i + 1
 		}
+		parser.save(repositoryLocation, contentHandler)
 	}
 }

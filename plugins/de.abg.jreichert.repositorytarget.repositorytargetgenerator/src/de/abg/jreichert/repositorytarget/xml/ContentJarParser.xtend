@@ -21,16 +21,16 @@ class ContentJarParser extends ContentParser {
 		var contentFileName = "content"
 		val url = urlStr.toUrl
 		var lastModified = lastModifiedXmlUrl(url, contentFileName)
-		if(lastModified > -1) {
+		if(lastModified.longValue > -1) {
 			localMap.put(urlStr, lastModified)
 		} else {
 			lastModified = lastModifiedJarUrl(url, contentFileName)
-			if(lastModified > -1) {
+			if(lastModified.longValue > -1) {
 				localMap.put(urlStr, lastModified)
 			} else {
 				contentFileName = "compositeContent"
 				lastModified = lastModifiedXmlUrl(url, contentFileName)
-				if(lastModified > -1) {
+				if(lastModified.longValue > -1) {
 					localMap.put(urlStr, lastModified)
 	 				val compositeContent = getXmlContent(url, contentFileName)
 	 				localMap.putAll(parseTimestamps(compositeContent, url))
@@ -138,25 +138,25 @@ class ContentJarParser extends ContentParser {
 	}	
 
 	def private boolean existsUrl(String url, String contentFileName, String fileExt) {
-		url.lastModified(contentFileName, fileExt) > -1
+		url.lastModified(contentFileName, fileExt).longValue > -1
 	}
 
-	def private long lastModified(String url, String contentFileName, String fileExt) {
+	def private Long lastModified(String url, String contentFileName, String fileExt) {
 		val contentUrl = new URL(url.toUrl + contentFileName + "." + fileExt);
 		if(contentUrl.protocol == "file") {
 			val file = new File(contentUrl.toURI.path).absoluteFile
-			if(file.exists && file.file) file.lastModified 
+			if(file.exists && file.file) Long.valueOf(file.lastModified) 
 			else {
 				val newFile = new File(System.getProperty("user.dir") + "/" + contentUrl.toString.replace("file://", ""))
-				if(newFile.exists && newFile.file) newFile.lastModified else -1L
+				if(newFile.exists && newFile.file) Long.valueOf(newFile.lastModified) else Long.valueOf(-1L)
 			} 
 		} else {
 			if(url.contains("file://")) {
 				val file = new File(contentUrl.toURI.path.replace("jar:", "")).absoluteFile
-				if(file.exists && file.file) file.lastModified else -1L 
+				if(file.exists && file.file) Long.valueOf(file.lastModified) else Long.valueOf(-1L) 
 			} else {
 				val conn = contentUrl.openConnection
-				if(conn.existsUrl) conn.lastModified else -1L
+				if(conn.existsUrl) Long.valueOf(conn.lastModified) else Long.valueOf(-1L)
 			}
 		}
 	}
@@ -235,7 +235,7 @@ class ContentJarParser extends ContentParser {
       	for(entry : contentHandler.urlToIdToVersion.entrySet) {
 			locationManager.save(urlToTimestamps.get(entry.key), entry.key, entry.value) 
       	}
-      	if(urlToTimestamps.get(url) == null) {
+      	if(urlToTimestamps.get(url) != null) {
 			locationManager.save(url, urlToTimestamps.get(url), urlToTimestamps.keySet) 
       	}
 	}

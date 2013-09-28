@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -23,11 +24,7 @@ public class LocationManager {
 	public Location getById(Long id) {
 		Object result = null;
 		Session session = SessionManager.currentSession();
-		try {
-			result = session.get(Location.class, id);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		result = session.get(Location.class, id);
 		return (Location) result;
 	}
 
@@ -38,12 +35,12 @@ public class LocationManager {
 		try {
 			tx = session.beginTransaction();
 			Serializable id = session.save(location);
-			result = getById((Long) id);
 			tx.commit();
+			result = getById((Long) id);
 		} catch (Exception e) {
 			if (tx != null)
 				tx.rollback();
-			e.printStackTrace();
+			throw e;
 		}
 		return (Location) result;
 	}
@@ -51,13 +48,9 @@ public class LocationManager {
 	public Location getByURL(String url) {
 		Object result = null;
 		Session session = SessionManager.currentSession();
-		try {
-			Criteria criteria = session.createCriteria(Location.class);
-			criteria.add(Restrictions.eq("_url", url));
-			result = criteria.uniqueResult();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		Criteria criteria = session.createCriteria(Location.class).add(
+				Restrictions.eq("_url", url));
+		result = criteria.uniqueResult();
 		return (Location) result;
 	}
 
@@ -71,7 +64,7 @@ public class LocationManager {
 		} catch (Exception e) {
 			if (tx != null)
 				tx.rollback();
-			e.printStackTrace();
+			throw e;
 		}
 	}
 
@@ -81,7 +74,7 @@ public class LocationManager {
 		try {
 			tx = session.beginTransaction();
 			Criteria criteria = session.createCriteria(Location.class);
-			List<Location> locations = toLocationList(criteria.list());
+			Set<Location> locations = toLocationList(criteria.list());
 			for (Location location : locations) {
 				session.delete(location);
 			}
@@ -89,13 +82,18 @@ public class LocationManager {
 		} catch (Exception e) {
 			if (tx != null)
 				tx.rollback();
-			e.printStackTrace();
+			throw e;
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	private List<Location> toLocationList(List<?> result) {
-		return (List<Location>) result;
+	private Set<Location> toLocationList(List<?> result) {
+		Set<Location> set = new HashSet<Location>();
+		for (Object obj : result) {
+			if (obj instanceof Location) {
+				set.add((Location) obj);
+			}
+		}
+		return set;
 	}
 
 	public Map<String, Long> getTimestamps() {
@@ -104,17 +102,16 @@ public class LocationManager {
 
 	public Map<String, Long> getTimestamps(Map<String, Long> timestampsToFilter) {
 		Map<String, Long> timestamps = new HashMap<String, Long>();
-		List<Location> result = null;
 		Session session = SessionManager.currentSession();
-		try {
-			Criteria criteria = session.createCriteria(Location.class);
-			//criteria.add(Restrictions.in("_url", timestampsToFilter.keySet()));
-			result = toLocationList(criteria.list());
-			for (Location location : result) {
-				timestamps.put(location.getUrl(), Long.valueOf(location.getTimestamp()));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		Criteria criteria = session.createCriteria(Location.class);
+		if (timestampsToFilter.size() > 0) {
+			criteria = criteria.add(Restrictions.in("_url",
+					timestampsToFilter.keySet()));
+		}
+		Set<Location> result = toLocationList(criteria.list());
+		for (Location location : result) {
+			timestamps.put(location.getUrl(),
+					Long.valueOf(location.getTimestamp()));
 		}
 		return timestamps;
 	}
@@ -129,7 +126,7 @@ public class LocationManager {
 		for (Entry<String, Long> entry : locationToTimestamp.entrySet()) {
 			location = getByURL(entry.getKey());
 			idToVersions = urlToIdToVersions.get(entry.getKey());
-			if(idToVersions == null) {
+			if (idToVersions == null) {
 				idToVersions = new TreeMap<String, SortedSet<String>>();
 			}
 			for (Unit unit : location.getUnits()) {
@@ -147,103 +144,159 @@ public class LocationManager {
 		return urlToIdToVersions;
 	}
 
-	public void save(Long timestamp, String locationURL,
+	public void saveLocation(Long timestamp, String locationURL,
 			SortedMap<String, SortedSet<String>> idToVersions) {
 		SortedSet<String> versions = new TreeSet<String>();
-		Location location = getByURL(locationURL);
-		if (location == null) {
-			location = new Location();
-			if(timestamp == null) {
-				location.setTimestamp(String.valueOf(new Date().getTime()));
-			} else {
-				location.setTimestamp(String.valueOf(timestamp));
-			}
-			location.setUrl(locationURL);
-		}
-		SortedMap<String, SortedSet<String>> dbIdToVersions = new TreeMap<String, SortedSet<String>>();
+		Location location = getOrInitLocation(timestamp, locationURL);
 		if (location != null) {
-			for (Unit unit : location.getUnits()) {
-				versions = dbIdToVersions.get(unit.getName());
-				if (versions == null) {
-					versions = new TreeSet<String>();
-				}
-				for (Version version : unit.getVersions()) {
-					versions.add(version.getName());
-				}
-				dbIdToVersions.put(unit.getName(), versions);
-			}
-			Map<String, Unit> nameToUnit = new HashMap<String, Unit>();
-			for (Unit unit : location.getUnits()) {
-				nameToUnit.put(unit.getName(), unit);
-			}
-			Unit unit = null;
-			Version version = null;
-			for (Entry<String, SortedSet<String>> entry : idToVersions
-					.entrySet()) {
-				if (!nameToUnit.keySet().contains(entry.getKey())) {
-					unit = new Unit();
-					unit.setLocation(location);
-					unit.setName(entry.getKey());
-					for (String versionStr : entry.getValue()) {
-						version = new Version();
-						version.setName(versionStr);
-						version.setUnit(unit);
-						unit.getVersions().add(version);
-					}
-					location.getUnits().add(unit);
-				}
-			}
+			fillUnits(idToVersions, location);
+			SortedMap<String, SortedSet<String>> dbIdToVersions = fillDbIdToVersions(location);
 			for (Entry<String, SortedSet<String>> dbEntry : dbIdToVersions
 					.entrySet()) {
 				versions = idToVersions.get(dbEntry.getKey());
 				if (versions == null) {
-					List<Unit> unitsToDelete = new ArrayList<Unit>();
-					for (Unit u : location.getUnits()) {
-						if (u.getName().equalsIgnoreCase(dbEntry.getKey())) {
-							unitsToDelete.add(u);
-						}
-					}
-					location.getUnits().removeAll(unitsToDelete);
+					removeUnits(location, dbEntry);
 				} else {
-					List<Unit> unitsToDelete = new ArrayList<Unit>();
-					List<Version> versionsToDelete = new ArrayList<Version>();
-					for (Unit u : location.getUnits()) {
-						for (String versionStr : versions) {
-							if (u.getName().equalsIgnoreCase(dbEntry.getKey())) {
-								unitsToDelete.add(u);
-								for (Version v : u.getVersions()) {
-									if (versionStr
-											.equalsIgnoreCase(v.getName())) {
-										versionsToDelete.add(v);
-									}
-								}
-							}
-						}
-					}
-					location.getUnits().removeAll(unitsToDelete);
+					removeVersions(location, dbEntry, versions);
 				}
 			}
 			saveLocation(location);
 		}
 	}
-	
-	public void save(String parentLocationStr, Long parentLocationTimestamp, Set<String> aggregatedLocationStrs) {
-		Location parentLocation = getByURL(parentLocationStr);
-		if(parentLocation == null) {
-			parentLocation = new Location();
-			if(parentLocationTimestamp == null) {
-				parentLocation.setTimestamp(String.valueOf(new Date().getTime()));
-			} else {
-				parentLocation.setTimestamp(String.valueOf(parentLocationTimestamp));
+
+	private void removeVersions(Location location,
+			Entry<String, SortedSet<String>> dbEntry, SortedSet<String> newVersions) {
+		List<Unit> unitsToDelete = new ArrayList<Unit>();
+		for (Unit u : location.getUnits()) {
+			if (u.getName().equalsIgnoreCase(dbEntry.getKey())) {
+				List<Version> versionsToDelete = new ArrayList<Version>();
+				boolean exists = false;
+				for (Version v : u.getVersions()) {
+					for (String newVersion : newVersions) {
+						if (v.getName().equalsIgnoreCase(newVersion)) {
+							exists = true;
+							break;
+						}
+					}
+					if(!exists) {
+						versionsToDelete.add(v);
+					}
+				}
+				u.getVersions().removeAll(versionsToDelete);
+				if (u.getVersions().size() == 0) {
+					unitsToDelete.add(u);
+				}
 			}
-			parentLocation.setUrl(parentLocationStr);
 		}
-		if(parentLocation != null) {
+		location.getUnits().removeAll(unitsToDelete);
+	}
+
+	private void removeUnits(Location location,
+			Entry<String, SortedSet<String>> dbEntry) {
+		List<Unit> unitsToDelete = new ArrayList<Unit>();
+		for (Unit u : location.getUnits()) {
+			if (u.getName().equalsIgnoreCase(dbEntry.getKey())) {
+				unitsToDelete.add(u);
+			}
+		}
+		location.getUnits().removeAll(unitsToDelete);
+	}
+
+	private void fillUnits(SortedMap<String, SortedSet<String>> idToVersions,
+			Location location) {
+		Map<String, Unit> nameToUnit = fillNameToUnit(location);
+		Unit unit = null;
+		for (Entry<String, SortedSet<String>> entry : idToVersions.entrySet()) {
+			if ((unit = nameToUnit.get(entry.getKey())) == null) {
+				unit = new Unit();
+				unit.setLocation(location);
+				unit.setName(entry.getKey());
+				fillVersions(unit, entry);
+				location.getUnits().add(unit);
+			} else {
+				fillVersions(unit, entry);
+			}
+		}
+	}
+
+	private void fillVersions(Unit unit, Entry<String, SortedSet<String>> entry) {
+		Version version;
+		for (String versionStr : entry.getValue()) {
+			if (findVersion(unit.getVersions(), versionStr) == null) {
+				version = new Version();
+				version.setName(versionStr);
+				version.setUnit(unit);
+				unit.getVersions().add(version);
+			}
+		}
+	}
+
+	private Version findVersion(Set<Version> versions, String versionStr) {
+		for (Version version : versions) {
+			if (versionStr.equalsIgnoreCase(version.getName())) {
+				return version;
+			}
+		}
+		return null;
+	}
+
+	private Map<String, Unit> fillNameToUnit(Location location) {
+		Map<String, Unit> nameToUnit = new HashMap<String, Unit>();
+		for (Unit unit : location.getUnits()) {
+			nameToUnit.put(unit.getName(), unit);
+		}
+		return nameToUnit;
+	}
+
+	private SortedMap<String, SortedSet<String>> fillDbIdToVersions(
+			Location location) {
+		SortedSet<String> versions;
+		SortedMap<String, SortedSet<String>> dbIdToVersions = new TreeMap<String, SortedSet<String>>();
+		for (Unit unit : location.getUnits()) {
+			versions = dbIdToVersions.get(unit.getName());
+			if (versions == null) {
+				versions = new TreeSet<String>();
+			}
+			for (Version version : unit.getVersions()) {
+				versions.add(version.getName());
+			}
+			dbIdToVersions.put(unit.getName(), versions);
+		}
+		return dbIdToVersions;
+	}
+
+	private Location getOrInitLocation(Long timestamp, String locationURL) {
+		Location location = getByURL(locationURL);
+		if (location == null) {
+			location = new Location();
+			setTimestamp(timestamp, location);
+			location.setUrl(locationURL);
+		} else {
+			setTimestamp(timestamp, location);
+		}
+		return location;
+	}
+
+	private void setTimestamp(Long timestamp, Location location) {
+		if (timestamp == null) {
+			location.setTimestamp(String.valueOf(new Date().getTime()));
+		} else {
+			location.setTimestamp(String.valueOf(timestamp));
+		}
+	}
+
+	public void saveCompositeLocation(String parentLocationStr,
+			Long parentLocationTimestamp, Set<String> aggregatedLocationStrs) {
+		Location parentLocation = getOrInitLocation(parentLocationTimestamp,
+				parentLocationStr);
+		if (parentLocation != null) {
 			Location aggregatedLocation = null;
-			for(String aggregatedLocationStr : aggregatedLocationStrs) {
+			for (String aggregatedLocationStr : aggregatedLocationStrs) {
 				aggregatedLocation = getByURL(aggregatedLocationStr);
-				if(aggregatedLocation != null) {
-					parentLocation.getAggregatedLocations().add(aggregatedLocation);
+				if (aggregatedLocation != null) {
+					aggregatedLocation.setParentLocation(parentLocation);
+					parentLocation.getAggregatedLocations().add(
+							aggregatedLocation);
 				}
 			}
 			saveLocation(parentLocation);

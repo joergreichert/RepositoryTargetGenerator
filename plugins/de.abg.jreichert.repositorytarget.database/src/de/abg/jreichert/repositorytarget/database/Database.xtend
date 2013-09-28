@@ -10,14 +10,23 @@ import javax.persistence.Id
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
 import javax.persistence.OneToMany
+import org.hibernate.annotations.Sort
 
 @Entity
 class Location {
 	
+	new() {
+		
+	}
+	
+	new(Location parentLocation) {
+		this.parentLocation = parentLocation
+	}
+	
 	@Id
   	@GeneratedValue(strategy = GenerationType.AUTO)	
   	@Property
-	long id = 1L	
+	Long id = 1L	
 
 	@Property
 	String timestamp = null
@@ -33,15 +42,46 @@ class Location {
 
 	@Property
 	@OneToMany(mappedBy="_parentLocation", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	Set<Location> aggregatedLocations = <Location>newHashSet
+	@Sort
+	Set<Location> aggregatedLocations = <Location>newTreeSet[a,b|a.url.compareTo(b.url)]
 
 	@Property
 	@OneToMany(mappedBy="_location", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	Set<Unit> units = <Unit>newHashSet
+	@Sort
+	Set<Unit> units = <Unit>newTreeSet[a,b|a.name.compareTo(b.name)]
+	
+	override String toString() {
+		'''
+			location (
+				parentLocationId=«parentLocation?.id», 
+				id=«id», 
+				timestamp=«timestamp»
+				url=«url»
+				units (
+					«FOR unit : units.sortBy[id]»
+						«unit.toString»
+					«ENDFOR»
+				)
+				aggregatedLocations (
+					«FOR aggregatedLocation : aggregatedLocations.sortBy[id]»
+						«aggregatedLocation.toString»
+					«ENDFOR»
+				)
+			)
+		'''
+	}	
 }
 
 @Entity
 class Unit {
+	
+	new() {
+		
+	}
+	
+	new(Location location) {
+		this._location = location
+	}
 	
 	@Id
   	@GeneratedValue(strategy = GenerationType.AUTO)	
@@ -58,11 +98,35 @@ class Unit {
 
 	@Property
 	@OneToMany(mappedBy="_unit", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	Set<Version> versions = <Version>newHashSet
+	@Sort
+	Set<Version> versions = <Version>newTreeSet[a,b|a.name.compareTo(b.name)]
+	
+	override String toString() {
+		'''
+			unit (
+				locationId=«location?.id», 
+				id=«id», 
+				name=«name»
+				versions (
+					«FOR version : versions.sortBy[id]»
+						«version.toString»
+					«ENDFOR»
+				) 
+			)
+		'''
+	}	
 }
 
 @Entity
 class Version {
+	
+	new() {
+		
+	}
+	
+	new(Unit unit) {
+		this._unit = unit
+	}	
 
 	@Id
   	@GeneratedValue(strategy = GenerationType.AUTO)	
@@ -76,4 +140,8 @@ class Version {
 
 	@Property
 	String name
+	
+	override String toString() {
+		'''version ( unitId=«unit?.id», id=«id», name=«name» )'''
+	}
 }

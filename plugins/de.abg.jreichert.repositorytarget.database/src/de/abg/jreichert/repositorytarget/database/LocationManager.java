@@ -214,6 +214,8 @@ public class LocationManager {
 				fillVersions(unit, entry);
 				location.getUnits().add(unit);
 			} else {
+				unit.setLocation(location);
+				unit.setName(entry.getKey());
 				fillVersions(unit, entry);
 			}
 		}

@@ -24,8 +24,8 @@ public class SessionManager {
 							SQLiteDialect.class.getName())
 					.setProperty("hibernate.connection.driver_class",
 							org.sqlite.JDBC.class.getName())
-					.setProperty("hibernate.show_sql", "true")
-					.setProperty("hibernate.format_sql", "true")
+					.setProperty("hibernate.show_sql", "false")
+					.setProperty("hibernate.format_sql", "false")
 					.setProperty("hibernate.connection.username", "")
 					.setProperty("hibernate.connection.password", "")
 					.setProperty("hibernate.current_session_context_class", "thread")

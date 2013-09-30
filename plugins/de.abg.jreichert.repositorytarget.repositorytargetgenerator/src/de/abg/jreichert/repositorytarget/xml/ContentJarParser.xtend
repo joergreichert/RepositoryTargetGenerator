@@ -223,7 +223,7 @@ class ContentJarParser extends ContentParser {
 	}
 	
 	def private Map<String, Long> getTimestamps(String url) {
-		if(locationToTimestamp == null) {
+		if(locationToTimestamp == null || !locationToTimestamp.keySet.contains(url)) {
 			locationToTimestamp = getInternalTimestamps(url)
 		}
 		locationToTimestamp

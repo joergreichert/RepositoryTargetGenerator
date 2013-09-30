@@ -50,30 +50,51 @@ class TargetDefinitionValidator extends AbstractTargetDefinitionValidator {
 	}
 
 	def checkLocation(SortedMap<String, SortedMap<String, SortedSet<String>>> urlToIdVersionPairs, Location location) {
-//		val idVersionPairs = urlToIdVersionPairs.get(location.repositoryLocation)
+		val foundUnits = <Unit>newArrayList
+		val notFoundUnits = <Unit>newArrayList
+		val foundUnitVersions = <Unit>newArrayList
+		val notFoundUnitVersionsMap = <Unit, SortedSet<String>>newHashMap
+		val foundRecentUnitVersions = <Unit>newArrayList
+		val notRecentUnitVersionsMap = <Unit, List<String>>newHashMap
 		for(idVersionPairs : urlToIdVersionPairs.entrySet) {
 			if (idVersionPairs.value != null) {
 				for (unit : location.unit) {
-					val foundUnitVersions = idVersionPairs.value.get(
+					val localFoundUnitVersions = idVersionPairs.value.get(
 						if(unit.noFeature) unit.categoryId else unit.categoryId + ".feature.group"
 					)
-					if (foundUnitVersions == null || foundUnitVersions.size == 0) {
-						error('unit does not exist in location anymore', unit,
-							TargetDefinitionPackage.Literals.UNIT__CATEGORY_ID)
+					if (localFoundUnitVersions == null || localFoundUnitVersions.size == 0) {
+						notFoundUnits.add(unit)
 					} else {
-						if (!foundUnitVersions.contains(unit.version)) {
-							error('version does not exist for unit anymore', unit,
-								TargetDefinitionPackage.Literals.UNIT__VERSION, NOT_UPTODATE, foundUnitVersions)
+						foundUnits.add(unit)
+						if (!localFoundUnitVersions.contains(unit.version)) {
+							notFoundUnitVersionsMap.put(unit, localFoundUnitVersions)
 						} else {
-							val newerVersions = foundUnitVersions.tailSet(unit.version).tail.sort
+							foundUnitVersions.add(unit)
+							val newerVersions = localFoundUnitVersions.tailSet(unit.version).tail.sort
 							if (newerVersions.size > 0) {
-								warning('unit does not use the latest version ' + newerVersions, unit,
-									TargetDefinitionPackage.Literals.UNIT__VERSION, NOT_UPTODATE, newerVersions.toList)
+								notRecentUnitVersionsMap.put(unit, newerVersions)
+							} else {
+								foundRecentUnitVersions.add(unit)
 							}
 						}
 					}
 				}
 			}
+		}
+		notFoundUnits.removeAll(foundUnits)
+		for(unit : notFoundUnits) {
+			error('unit does not exist in location anymore', unit,
+				TargetDefinitionPackage.Literals.UNIT__CATEGORY_ID)
+		}
+		foundUnitVersions.forEach[notFoundUnitVersionsMap.remove(it)]
+		for(notFoundUnitVersion : notFoundUnitVersionsMap.entrySet) {
+			error('version does not exist for unit anymore', notFoundUnitVersion.key,
+				TargetDefinitionPackage.Literals.UNIT__VERSION, NOT_UPTODATE, notFoundUnitVersion.value)
+		}
+		foundRecentUnitVersions.forEach[notRecentUnitVersionsMap.remove(it)]
+		for(notRecentUnitVersion : notRecentUnitVersionsMap.entrySet) {
+			warning('unit does not use the latest version ' + notRecentUnitVersion.value, notRecentUnitVersion.key,
+				TargetDefinitionPackage.Literals.UNIT__VERSION, NOT_UPTODATE, notRecentUnitVersion.value.toList)
 		}
 	}
 

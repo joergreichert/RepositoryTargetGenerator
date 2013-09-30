@@ -52,7 +52,7 @@ class TargetDefinitionQuickfixProvider extends DefaultQuickfixProvider {
 			val markers = markerList.filter[it.getAttribute(IMarker.CHAR_START) == issue.offset] 
 			markers.forEach[delete]
 		} else {
-			println(file + " does not exist.")
+			System::err.println(file + " does not exist.")
 		}
 	}
 	

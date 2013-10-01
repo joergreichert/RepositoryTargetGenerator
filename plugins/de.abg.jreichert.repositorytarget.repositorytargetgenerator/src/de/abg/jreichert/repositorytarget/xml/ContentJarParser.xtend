@@ -12,6 +12,7 @@ import java.net.URL
 import java.net.URLConnection
 import java.util.List
 import java.util.Map
+import de.abg.jreichert.repositorytarget.activeannotations.LogExecutionTime
 
 class ContentJarParser extends ContentParser {
 	private var Map<String, Long> locationToTimestamp = null;
@@ -199,6 +200,7 @@ class ContentJarParser extends ContentParser {
 		contentHandler.locations
 	}
 	
+	@LogExecutionTime
 	def Map<String, String> getContents(String url, ContentXmlHandler contentHandler) {
 		val ListMultimap<String, String> contents = ArrayListMultimap.create
       	val urlToTimestamps = getTimestamps(url)

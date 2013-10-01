@@ -50,7 +50,7 @@ public class TargetDefinitionFormatterTest {
 	}
 
 	private String getEnding() {
-		return !isWindowsEnding() ? "\r" : "";
+		return isWindowsEnding() ? "" : /*"\r"*/"";
 	}
 	
 	private boolean isWindowsEnding() {

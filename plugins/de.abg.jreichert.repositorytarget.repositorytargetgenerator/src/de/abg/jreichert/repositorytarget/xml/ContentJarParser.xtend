@@ -31,11 +31,13 @@ class ContentJarParser extends ContentParser {
 				contentFileName = "compositeContent"
 				lastModified = lastModifiedXmlUrl(url, contentFileName)
 				if(lastModified.longValue > -1) {
-					localMap.put(urlStr, lastModified)
+					// ignore time stamp of composite update site
+					// localMap.put(urlStr, lastModified)
 	 				val compositeContent = getXmlContent(url, contentFileName)
 	 				localMap.putAll(parseTimestamps(compositeContent, url))
 				} else {
-					lastModified = lastModifiedJarUrl(url, contentFileName)
+					// ignore time stamp of composite update site
+					// lastModified = lastModifiedJarUrl(url, contentFileName)
 					localMap.put(urlStr, lastModified)
 	 				val compositeContent = getJarContent(url, contentFileName)
 	 				localMap.putAll(parseTimestamps(compositeContent, url))
@@ -185,7 +187,7 @@ class ContentJarParser extends ContentParser {
 	
 	def private getParsedContent(String url, String id, List<(String) => boolean> filters) {
       	val contentHandler = new ContentXmlHandler(url, id, filters);
-      	for(Map.Entry<String, String> entry : getContents(url, contentHandler).entries) {
+      	for(Map.Entry<String, String> entry : getContents(url, contentHandler).entrySet) {
 	      	parse(entry.value, contentHandler)
       	}
 		contentHandler
@@ -197,7 +199,7 @@ class ContentJarParser extends ContentParser {
 		contentHandler.locations
 	}
 	
-	def ListMultimap<String, String> getContents(String url, ContentXmlHandler contentHandler) {
+	def Map<String, String> getContents(String url, ContentXmlHandler contentHandler) {
 		val ListMultimap<String, String> contents = ArrayListMultimap.create
       	val urlToTimestamps = getTimestamps(url)
       	val locationManager = new LocationManager();
@@ -209,7 +211,11 @@ class ContentJarParser extends ContentParser {
       	).map[key]) {
 			contents.putAll(getInternalContents(innerUrl))
 		}
-		contents
+		val map = <String, String>newHashMap
+		for(entry : contents.entries) {
+			map.put(entry.key, entry.value)
+		}
+		map
 	}
 	
 	def private boolean checkDbTimestampOlderThanUrlTimestamp(Long dbTimestamp, Long remoteTimestamp) {

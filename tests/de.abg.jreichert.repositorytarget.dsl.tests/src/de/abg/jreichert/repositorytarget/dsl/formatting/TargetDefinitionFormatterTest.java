@@ -41,7 +41,7 @@ public class TargetDefinitionFormatterTest {
 					rootNode.getTotalLength());
 		}
 		String formatted = r.getFormattedText();
-		if(!isWindowsEnding()) {
+		if(isWindowsEnding()) {
 			formatted = formatted.replaceAll("\r\n", "\n");
 		}
 		formatted = formatted.replaceAll("\r\b", "\n");
@@ -50,7 +50,7 @@ public class TargetDefinitionFormatterTest {
 	}
 
 	private String getEnding() {
-		return isWindowsEnding() ? "\r" : "";
+		return !isWindowsEnding() ? "\r" : "";
 	}
 	
 	private boolean isWindowsEnding() {

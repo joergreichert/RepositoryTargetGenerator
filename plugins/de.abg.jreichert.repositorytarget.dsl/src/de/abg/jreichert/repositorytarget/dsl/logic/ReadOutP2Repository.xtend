@@ -28,7 +28,7 @@ class ReadOutP2Repository {
 		val subProgressMonitor = new SubProgressMonitor(monitor, 1)
 		subProgressMonitor.beginTask("Read out P2 repository metadata", contents.size())
 		var int i = 0
-		for (Map.Entry<String, String> entry : contents.entries) {
+		for (Map.Entry<String, String> entry : contents.entrySet) {
 			subProgressMonitor.subTask("Parsing file " + i)
 			try {
 				contentHandler.setUrl(entry.key)

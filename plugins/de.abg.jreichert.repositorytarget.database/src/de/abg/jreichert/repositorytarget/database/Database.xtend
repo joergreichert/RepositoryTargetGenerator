@@ -26,7 +26,7 @@ class Location {
 	@Id
   	@GeneratedValue(strategy = GenerationType.AUTO)	
   	@Property
-	Long id = 1L	
+	Long id = null	
 
 	@Property
 	String timestamp = null

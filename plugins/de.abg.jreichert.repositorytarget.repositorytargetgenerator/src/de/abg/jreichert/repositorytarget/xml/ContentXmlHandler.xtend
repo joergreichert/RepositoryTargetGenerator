@@ -11,7 +11,7 @@ import org.xml.sax.helpers.DefaultHandler
 class ContentXmlHandler extends DefaultHandler {
 
 	private String id;
-	private SortedMap<String, SortedMap<String, SortedSet<String>>> urlToIdToVersions = newTreeMap([s1, s2 | compareStrings(s1, s2)])
+	private SortedMap<String, SortedMap<String, SortedSet<String>>> localUrlToIdToVersions = newTreeMap([s1, s2 | compareStrings(s1, s2)])
 	private String version;
 	private String url;
 	private String expectedId;
@@ -79,12 +79,17 @@ class ContentXmlHandler extends DefaultHandler {
 		}
 	}
 	
+	def getIdToVersions(String uri) {
+		localUrlToIdToVersions.get(uri)
+	}
+
+	def addIdToVersions(String uri, SortedMap<String, SortedSet<String>> idToVersions) {
+		localUrlToIdToVersions.put(uri, idToVersions)
+	}
+	
 	def private register(String uri, Attributes atts) {
 		version = atts.getValue("version")
-		var idToVersions = urlToIdToVersions.get(uri)
-		if(idToVersions == null) {
-			idToVersions = <String, SortedSet<String>>newTreeMap[s1, s2 | compareStrings(s1, s2)]
-		}
+		var idToVersions = getIdToVersions(uri) ?: <String, SortedSet<String>>newTreeMap[s1, s2 | compareStrings(s1, s2)]
 		if(version != null && version.filter) {
 			if(!idToVersions.containsKey(id)) {
 				idToVersions.put(id, <String>newTreeSet([s1, s2 | compareStrings(s1, s2)]))
@@ -92,7 +97,7 @@ class ContentXmlHandler extends DefaultHandler {
 			if(!version.nullOrEmpty) {
 				idToVersions.get(id).add(version)
 			}
-			urlToIdToVersions.put(uri, idToVersions)
+			addIdToVersions(uri, idToVersions)
 		}
 	}
 	
@@ -105,11 +110,11 @@ class ContentXmlHandler extends DefaultHandler {
 	}
 
 	def SortedMap<String, SortedMap<String, SortedSet<String>>> getUrlToIdToVersion() {
-		urlToIdToVersions		
+		localUrlToIdToVersions		
 	}
 	
 	def Set<String> getIds(String url) {
-		urlToIdToVersions.get(url)?.keySet		
+		getIdToVersions(url)?.keySet		
 	}
 	
 	def SortedSet<String> getVersions(String url) {
@@ -117,7 +122,7 @@ class ContentXmlHandler extends DefaultHandler {
 	}
 	
 	def SortedSet<String> getVersions(String url, String id) {
-		if(url != null && id != null) urlToIdToVersions.get(url)?.getNullSafe(id) else createEmptySortedSet
+		if(url != null && id != null) getIdToVersions(url)?.getNullSafe(id) else createEmptySortedSet
 	}	
 	
 	def private getNullSafe(SortedMap<String, SortedSet<String>> map, String key) {

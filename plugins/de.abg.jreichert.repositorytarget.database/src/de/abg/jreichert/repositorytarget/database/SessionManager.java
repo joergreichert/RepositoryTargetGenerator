@@ -3,7 +3,9 @@ package de.abg.jreichert.repositorytarget.database;
 import java.io.File;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -29,8 +31,7 @@ public class SessionManager {
 					.setProperty("hibernate.connection.username", "")
 					.setProperty("hibernate.connection.password", "")
 					.setProperty("hibernate.current_session_context_class", "thread")
-					.setProperty("connection.pool_size", "1")
-					.setProperty("hibernate.hbm2ddl.auto", "create");
+					.setProperty("connection.pool_size", "1");
 
 			if (Platform.isRunning()) {
 				IPath path = Activator.getDefault().getStateLocation()
@@ -39,12 +40,18 @@ public class SessionManager {
 				if (!file.exists()) {
 					file.getParentFile().mkdirs();
 					file.createNewFile();
+					// http://stackoverflow.com/a/1689769
+					// validate, update, create, create-drop
+					cfg = cfg.setProperty("hibernate.hbm2ddl.auto", "create");
+				} else {
+					cfg = cfg.setProperty("hibernate.hbm2ddl.auto", "update");
 				}
 				cfg = cfg.setProperty("hibernate.connection.url",
 						"jdbc:sqlite:" + path.toOSString());
 			} else {
 				File file = new File(System.getProperty("user.dir")
 						+ "/contents.db");
+				cfg = cfg.setProperty("hibernate.hbm2ddl.auto", "create");
 				if (!file.exists()) {
 					file.createNewFile();
 				}
@@ -56,7 +63,8 @@ public class SessionManager {
 					.applySettings(cfg.getProperties()).buildServiceRegistry();
 			sessionFactory = cfg.buildSessionFactory(serviceRegistry);
 		} catch (Exception e) {
-			e.printStackTrace();
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e.getMessage(), e));
+			throw new RuntimeException(e);
 		}
 	}
 

@@ -17,6 +17,7 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.eclipse.xtext.validation.Check
 
 import static org.eclipse.xtext.validation.CheckType.*
+import de.abg.jreichert.repositorytarget.activeannotations.LogExecutionTime
 
 class TargetDefinitionValidator extends AbstractTargetDefinitionValidator {
 
@@ -29,7 +30,8 @@ class TargetDefinitionValidator extends AbstractTargetDefinitionValidator {
 	private ReadOutP2Repository readOutP2Repository
 
 	@Check(value=EXPENSIVE)
-	def checkUpToDate(Target target) {
+	@LogExecutionTime
+	def void checkUpToDate(Target target) {
 		try {
 			val monitor = new NullProgressMonitor
 			for (location : target.locations) {
@@ -49,7 +51,7 @@ class TargetDefinitionValidator extends AbstractTargetDefinitionValidator {
 		}
 	}
 
-	def checkLocation(SortedMap<String, SortedMap<String, SortedSet<String>>> urlToIdVersionPairs, Location location) {
+	def void checkLocation(SortedMap<String, SortedMap<String, SortedSet<String>>> urlToIdVersionPairs, Location location) {
 		val foundUnits = <Unit>newArrayList
 		val notFoundUnits = <Unit>newArrayList
 		val foundUnitVersions = <Unit>newArrayList

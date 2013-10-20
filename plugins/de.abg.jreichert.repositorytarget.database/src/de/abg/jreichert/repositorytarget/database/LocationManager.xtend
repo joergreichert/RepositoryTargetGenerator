@@ -40,7 +40,7 @@ class LocationManager {
 
 	def getByURL(String url) {
 		val session = SessionManager::currentSession
-		val criteria = session.createCriteria(Location).add(Restrictions::eq('_url', url))
+		val criteria = session.createCriteria(Location).add(Restrictions::eq('url', url))
 		criteria.uniqueResult as Location
 	}
 
@@ -85,7 +85,9 @@ class LocationManager {
 		val session = SessionManager::currentSession
 		var criteria = session.createCriteria(Location)
 		if (timestampsToFilter.size > 0) {
-			criteria = criteria.add(Restrictions::in('_url', timestampsToFilter.keySet))
+			// TODO for later
+			//ConditionalCriteriaBuilder.criteriaFor(Location).withProperty(LocationLiterals.url()).in(timestampsToFilter.keySet).buildSingle()
+			criteria = criteria.add(Restrictions::in('url', timestampsToFilter.keySet))
 		}
 		val result = toLocationList(criteria.list)
 		result.forEach[timestamps.put(url, Long::valueOf(timestamp))]
@@ -227,4 +229,9 @@ class LocationManager {
 			saveLocation(parentLocation)
 		}
 	}
+	
+	def saveVersion(String uri, String id, String version) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}
+	
 }

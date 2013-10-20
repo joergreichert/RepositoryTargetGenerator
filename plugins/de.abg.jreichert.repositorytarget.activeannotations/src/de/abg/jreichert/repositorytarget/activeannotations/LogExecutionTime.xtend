@@ -1,5 +1,7 @@
 package de.abg.jreichert.repositorytarget.activeannotations
 
+import java.lang.annotation.ElementType
+import java.lang.annotation.Target
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import org.eclipse.xtend.lib.macro.AbstractMethodProcessor
@@ -10,11 +12,13 @@ import org.eclipse.xtend.lib.macro.declaration.MethodDeclaration
 import org.eclipse.xtend.lib.macro.declaration.MutableMethodDeclaration
 import org.eclipse.xtend.lib.macro.declaration.Visibility
 
+@Target(ElementType.METHOD)
 @Active(DurationProcessor)
 annotation LogExecutionTime {
 }
 
 class DurationProcessor extends AbstractMethodProcessor {
+	private extension AnnotationExtensions = new AnnotationExtensions
 
 	override doTransform(MutableMethodDeclaration method, extension TransformationContext context) {
 
@@ -72,11 +76,6 @@ class DurationProcessor extends AbstractMethodProcessor {
 
 	def private String fqnCalendar(CompilationContext compilationContext, TransformationContext transformationContext) {
 		fqnClass(compilationContext, transformationContext, Calendar)
-	}
-
-	def private String fqnClass(CompilationContext compilationContext, TransformationContext transformationContext,
-		Class<?> clazz) {
-		compilationContext.toJavaCode(transformationContext.newTypeReference(clazz))
 	}
 
 	def private newMethodName(MethodDeclaration it) {

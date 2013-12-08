@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.6"?>
 
-<target includeMode="feature" name="Repository Target Generator - Eclipse 4.3, Xtext/Xtend 2.4.2" sequenceNumber="67">
+<target includeMode="feature" name="Repository Target Generator - Eclipse 4.3.1, Xtext/Xtend 2.5.0" sequenceNumber="67">
 	<locations>
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<unit id="org.eclipse.sdk.feature.group" version="4.3.1.v20130911-1000"/>
@@ -29,7 +29,7 @@
 	<environment>
 		<nl>en</nl>
 	</environment>
-	<targetJRE path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<targetJRE path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<launcherArgs>
 		<vmArgs>-Xmx512m -XX:MaxPermSize=128m</vmArgs>
 	</launcherArgs>

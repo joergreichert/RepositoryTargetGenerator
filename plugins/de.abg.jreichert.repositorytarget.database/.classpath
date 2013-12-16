@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry including="**/*.java" kind="src" path="src"/>
-	<classpathentry including="**/*.java" kind="src" path="xtend-gen"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="xtend-gen"/>
 	<classpathentry exported="true" kind="lib" path="lib/sqlite-jdbc-3.7.2.jar" sourcepath="D:/_maven_repo/org/xerial/sqlite-jdbc/3.7.2/sqlite-jdbc-3.7.2-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hibernate-entitymanager-4.2.4.Final.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/javax.persistence-2.0.0.jar"/>

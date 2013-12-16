@@ -14,8 +14,12 @@
 	<packaging>eclipse-plugin</packaging>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>${project.build.directory}/xtend-gen</directory>
+			</resource>
+		</resources>
 		<plugins>
-			
 			<plugin>
 				<groupId>org.eclipse.xtend</groupId>
 				<artifactId>xtend-maven-plugin</artifactId>

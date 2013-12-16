@@ -4,15 +4,16 @@ import org.eclipse.emf.mwe.utils.*
 import org.eclipse.xtext.generator.*
 import org.eclipse.xtext.ui.generator.*
 
-var grammarURI = "classpath:/de/abg/jreichert/repositorytarget/dsl/TargetDefinition.xtext"
 var fileExtensions = "targetdef"
 var projectName = "de.abg.jreichert.repositorytarget.dsl"
-var runtimeProject = "../${projectName}"
+var grammarURI = "platform:/resource/${projectName}/src/de/abg/jreichert/repositorytarget/dsl/TargetDefinition.xtext"
+var runtimeProject = "../../plugins/${projectName}"
 var generateXtendStub = true
+var encoding = "UTF-8"
 
 Workflow {
     bean = StandaloneSetup {
-    	scanClassPath = true
+    	resourceSet = org.eclipse.xtext.resource.XtextResourceSet:theResourceSet {}
     	platformUri = "${runtimeProject}/.."
     }
 
@@ -34,11 +35,12 @@ Workflow {
     	pathTestProject = "../../tests/${projectName}.tests"
     	projectNameRt = projectName
     	projectNameUi = "${projectName}.ui"
-    	encoding = "UTF-8"
+		encoding = encoding
     	language = auto-inject {
+    		forcedResourceSet = theResourceSet
     		uri = grammarURI
     		fragment = grammarAccess.GrammarAccessFragment auto-inject {}
-    		fragment = ecore.EMFGeneratorFragment auto-inject {}
+    		fragment = ecore.EMFGeneratorFragment auto-inject {  javaModelDirectory = "../${projectName}/src-gen"  }
     		fragment = serializer.SerializerFragment auto-inject {  generateStub = false  }
     		fragment = resourceFactory.ResourceFactoryFragment auto-inject {}
     		fragment = parser.antlr.XtextAntlrGeneratorFragment auto-inject {}
@@ -59,4 +61,3 @@ Workflow {
     	}
     }
 }
-

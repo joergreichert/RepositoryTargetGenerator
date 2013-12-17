@@ -9,16 +9,14 @@
 		<relativePath>../../releng/de.abg.jreichert.repositorytarget.parent/pom.xml</relativePath>
 	</parent>
 
-	<groupId>de.abg.jreichert.repositorytarget</groupId>
 	<artifactId>de.abg.jreichert.repositorytarget.dsl</artifactId>
-	<version>0.1.0-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
-	
+
 	<properties>
 		<skip.mwe2>false</skip.mwe2>
 		<mwe2.relative.path>src/de/abg/jreichert/repositorytarget/dsl/GenerateTargetDefinition.mwe2</mwe2.relative.path>
 	</properties>
-	
+
 	<build>
 		<plugins>
 			<plugin>

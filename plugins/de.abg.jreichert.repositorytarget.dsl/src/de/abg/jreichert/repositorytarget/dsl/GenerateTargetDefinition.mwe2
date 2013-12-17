@@ -8,35 +8,28 @@ var fileExtensions = "targetdef"
 var projectName = "de.abg.jreichert.repositorytarget.dsl"
 var grammarURI = "platform:/resource/${projectName}/src/de/abg/jreichert/repositorytarget/dsl/TargetDefinition.xtext"
 var runtimeProject = "../../plugins/${projectName}"
+var testProject = "../../tests/${projectName}.tests"
 var generateXtendStub = true
 var encoding = "UTF-8"
 
 Workflow {
     bean = StandaloneSetup {
     	resourceSet = org.eclipse.xtext.resource.XtextResourceSet:theResourceSet {}
-    	platformUri = "${runtimeProject}/.."
+		platformUri = "${runtimeProject}/.."
     }
 
-    component = DirectoryCleaner {
-    	directory = "${runtimeProject}/model"
-    }
-    
-    component = DirectoryCleaner {
-    	directory = "${runtimeProject}/src-gen"
-    }
-    
-    component = DirectoryCleaner {
-    	directory = "${runtimeProject}.ui/src-gen"
-    }
-    
+	component = DirectoryCleaner {  directory = "${runtimeProject}/src-gen"     }
+	component = DirectoryCleaner {  directory = "${runtimeProject}/model"       }
+	component = DirectoryCleaner {  directory = "${runtimeProject}.ui/src-gen"  }
+
     component = Generator {
     	pathRtProject = runtimeProject
     	pathUiProject = "${runtimeProject}.ui"
-    	pathTestProject = "../../tests/${projectName}.tests"
+    	pathTestProject = "${testProject}"
     	projectNameRt = projectName
     	projectNameUi = "${projectName}.ui"
 		encoding = encoding
-    	language = auto-inject {
+		language = auto-inject {
     		forcedResourceSet = theResourceSet
     		uri = grammarURI
     		fragment = grammarAccess.GrammarAccessFragment auto-inject {}

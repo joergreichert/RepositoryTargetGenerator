@@ -5,12 +5,12 @@ Bundle-SymbolicName: de.abg.jreichert.repositorytarget.activeannotations
 Bundle-Version: 0.1.0.qualifier
 Bundle-Vendor: Joerg Reichert
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Require-Bundle: org.eclipse.xtend.lib;bundle-version="2.3.0",
- org.eclipse.xtext.generator;bundle-version="2.3.0",
- org.eclipse.xtext;bundle-version="2.3.0",
- org.eclipse.xtext.ecore;bundle-version="2.3.0",
+Require-Bundle: org.eclipse.xtend.lib;bundle-version="[2.5.0,2.6.0)",
+ org.eclipse.xtext.generator;bundle-version="[2.5.0,2.6.0)",
+ org.eclipse.xtext;bundle-version="[2.5.0,2.6.0)",
+ org.eclipse.xtext.ecore;bundle-version="[2.5.0,2.6.0)",
  org.junit;bundle-version="4.5.0",
- org.eclipse.xtend.standalone;bundle-version="2.4.3"
+ org.eclipse.xtend.standalone;bundle-version="[2.5.0,2.6.0)"
 Bundle-ClassPath: .,
  lib/antlr-2.7.7.jar,
  lib/asm-1.5.3.jar,

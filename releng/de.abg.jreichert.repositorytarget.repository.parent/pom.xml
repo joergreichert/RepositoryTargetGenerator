@@ -2,7 +2,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<!-- Tycho requires Maven 3 -->
 	<prerequisites>
 		<maven>3.0</maven>
 	</prerequisites>
@@ -12,7 +11,7 @@
 		<artifactId>de.abg.jreichert.repositorytarget.config.parent</artifactId>
 		<version>0.1.0-SNAPSHOT</version>
 		<relativePath>../../releng/de.abg.jreichert.repositorytarget.config.parent/pom.xml</relativePath>
-	</parent>	
+	</parent>
 	
 	<artifactId>de.abg.jreichert.repositorytarget.repository.parent</artifactId>
 	<packaging>pom</packaging>
@@ -70,7 +69,6 @@
 		</plugins>
 		<pluginManagement>
 			<plugins>
-				<!-- TYCHO -->
 				<plugin>
 					<groupId>org.eclipse.tycho</groupId>
 					<artifactId>tycho-p2-repository-plugin</artifactId>

@@ -18,7 +18,7 @@
 	<name>Repository Target Generator</name>
 	
 	<properties>
-		<distribution.dir>${basedir}/../../releng/de.abg.jreichert.repositorytarget.parent/target/repository</distribution.dir>
+		<distribution.dir>${project.basedir}/../../releng/de.abg.jreichert.repositorytarget.parent/target/repository</distribution.dir>
 	</properties>
 	
 	<modules>

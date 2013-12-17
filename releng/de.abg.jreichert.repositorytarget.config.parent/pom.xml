@@ -27,7 +27,7 @@
 		<ui.test.vmargs></ui.test.vmargs>
 		<coverageAgent></coverageAgent>
 		<it.coverage.argLine></it.coverage.argLine>
-		<distribution.dir>${basedir}/../../releng/de.abg.jreichert.repositorytarget.parent/target/repository</distribution.dir>
+		<distribution.dir>${project.basedir}/../../releng/de.abg.jreichert.repositorytarget.parent/target/repository</distribution.dir>
 	</properties>
 	
 	<modules>
@@ -44,7 +44,52 @@
 				<configuration>
 					<filesets>
 						<fileset>
-							<directory>xtend-gen</directory>
+							<directory>${project.basedir}/src-gen</directory>
+							<includes>
+								<include>**</include>
+							</includes>
+							<excludes>
+								<exclude>.gitignore</exclude>
+							</excludes>
+						</fileset>
+						<fileset>
+							<directory>${project.basedir}/xtend-gen</directory>
+							<includes>
+								<include>**</include>
+							</includes>
+							<excludes>
+								<exclude>.gitignore</exclude>
+							</excludes>
+						</fileset>
+						<fileset>
+							<directory>${project.basedir}/../${project.artifactId}.ui/src-gen</directory>
+							<includes>
+								<include>**</include>
+							</includes>
+							<excludes>
+								<exclude>.gitignore</exclude>
+							</excludes>
+						</fileset>
+						<fileset>
+							<directory>${project.basedir}/../${project.artifactId}.ui/xtend-gen</directory>
+							<includes>
+								<include>**</include>
+							</includes>
+							<excludes>
+								<exclude>.gitignore</exclude>
+							</excludes>
+						</fileset>
+						<fileset>
+							<directory>${project.basedir}/../../tests/${project.artifactId}.tests/src-gen</directory>
+							<includes>
+								<include>**</include>
+							</includes>
+							<excludes>
+								<exclude>.gitignore</exclude>
+							</excludes>
+						</fileset>
+						<fileset>
+							<directory>${project.basedir}/../../tests/${project.artifactId}.tests/xtend-gen</directory>
 							<includes>
 								<include>**</include>
 							</includes>
@@ -154,17 +199,6 @@
 			</releases>
 			<snapshots>
 				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-		<!-- Fornax Workflow Runner plugin -->
-		<pluginRepository>
-			<id>fornax</id>
-			<url>http://www.fornax-platform.org/m2/repository</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>

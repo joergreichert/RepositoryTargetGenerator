@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<appender class="org.apache.log4j.ConsoleAppender" name="default">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param value="%-4r [%t] %-5p %c %x - %m%n" name="ConversionPattern" />
+		</layout>
+	</appender>
+	<appender class="org.eclipse.xtext.logging.EclipseLogAppender"
+		name="eclipse">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param value="%c %x - %m%n" name="ConversionPattern" />
+		</layout>
+	</appender>
+	<logger name="org.eclipse">
+		<level value="warn" />
+	</logger>
+	<logger name="org.eclipse.xtext">
+		<level value="warn" />
+	</logger>
+	<logger name="org.eclipse.xtext.ui.editor.contentassist.antlr.internal">
+		<level value="warn" />
+	</logger>
+	<logger name="org.eclipse.xtext.ui.editor.outline">
+		<level value="warn" />
+	</logger>
+	<root>
+		<level value="debug" />
+		<appender-ref ref="default" />
+	</root>
+</log4j:configuration>

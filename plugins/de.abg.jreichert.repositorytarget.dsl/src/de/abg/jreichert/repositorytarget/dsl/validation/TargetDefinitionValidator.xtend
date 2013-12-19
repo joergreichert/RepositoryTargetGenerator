@@ -59,12 +59,12 @@ class TargetDefinitionValidator extends AbstractTargetDefinitionValidator {
 		val foundRecentUnitVersions = <Unit>newArrayList
 		val notRecentUnitVersionsMap = <Unit, List<String>>newHashMap
 		for(idVersionPairs : urlToIdVersionPairs.entrySet) {
-			if (idVersionPairs.value != null) {
+			if (idVersionPairs.value !== null) {
 				for (unit : location.unit) {
 					val localFoundUnitVersions = idVersionPairs.value.get(
 						if(unit.noFeature) unit.categoryId else unit.categoryId + ".feature.group"
 					)
-					if (localFoundUnitVersions == null || localFoundUnitVersions.size == 0) {
+					if (localFoundUnitVersions === null || localFoundUnitVersions.size == 0) {
 						notFoundUnits.add(unit)
 					} else {
 						foundUnits.add(unit)
@@ -127,7 +127,7 @@ class TargetDefinitionValidator extends AbstractTargetDefinitionValidator {
 		val nameToCategories = <String, List<Category>>newHashMap
 		target.categories.forEach [
 			val entry = nameToCategories.get(name)
-			val categories = if(entry == null) newArrayList else entry
+			val categories = if(entry === null) newArrayList else entry
 			categories.add(it)
 			nameToCategories.put(name, categories)
 		]

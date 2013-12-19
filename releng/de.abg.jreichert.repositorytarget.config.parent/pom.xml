@@ -22,9 +22,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven-clean-plugin.version>2.5</maven-clean-plugin.version>
 		<maven-deploy-plugin.version>2.7</maven-deploy-plugin.version>
-		<github-site-maven-plugin.version>0.9</github-site-maven-plugin.version>
 		<local-build-platform.version>[3.8,4.3)</local-build-platform.version>
-		<github.global.server>github</github.global.server>
 		<xtend-library.version>2.5.0</xtend-library.version>
 		<ui.test.vmargs></ui.test.vmargs>
 		<coverageAgent></coverageAgent>
@@ -101,28 +99,6 @@
 						</fileset>
 					</filesets>
 				</configuration>
-<!--
-				<executions>
-					<execution>
-						<id>clean-repository</id>
-						<phase>deploy</phase>
-						<goals>
-							<goal>clean</goal>
-						</goals>
-						<configuration>
-							<excludeDefaultDirectories>true</excludeDefaultDirectories>
-							<filesets>
-								<fileset>
-									<directory>${distribution.dir}/de/abg/jreichert/repositorytarget/${project.artifactId}</directory>
-									<includes>
-										<include>**/*</include>
-									</includes>
-								</fileset>
-							</filesets>
-						</configuration>
-					</execution>
-				</executions>
--->
 			</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
@@ -136,33 +112,6 @@
 					<skip>false</skip>
 					<altDeploymentRepository>internal.repo::default::file://${distribution.dir}</altDeploymentRepository>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>com.github.github</groupId>
-				<artifactId>site-maven-plugin</artifactId>
-				<version>${github-site-maven-plugin.version}</version>
-				<configuration>
-					<message>Maven artifacts for ${project.groupId}:${project.artifactId}:${project.version} ${maven.build.timestamp}</message>
-					<noJekyll>true</noJekyll>
-					<outputDirectory>${distribution.dir}</outputDirectory>
-					<merge>false</merge>
-					<repositoryOwner>joergreichert</repositoryOwner>
-					<repositoryName>distributions</repositoryName>
-					<branch>refs/heads/master</branch>
-					<path>snapshots</path>
-					<oauth2Token>${env.CI_CF_TOKEN}</oauth2Token>
-					<includes>
-						<include>**/*</include>
-					</includes>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>site</goal>
-						</goals>
-						<phase>deploy</phase>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 		<pluginManagement>

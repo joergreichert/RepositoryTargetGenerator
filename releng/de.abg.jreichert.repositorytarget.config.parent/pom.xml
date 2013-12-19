@@ -99,6 +99,7 @@
 						</fileset>
 					</filesets>
 				</configuration>
+<!--
 				<executions>
 					<execution>
 						<id>clean-repository</id>
@@ -119,6 +120,7 @@
 						</configuration>
 					</execution>
 				</executions>
+-->
 			</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
@@ -157,8 +159,7 @@
 						<message>Maven artifacts for ${project.groupId}:${project.artifactId}:${project.version} ~${maven.build.timestamp}</message>
 						<noJekyll>true</noJekyll>
 						<outputDirectory>${distribution.dir}</outputDirectory>
-						<merge>true</merge>
-						<dryRun>false</dryRun>
+						<merge>false</merge>
 						<repositoryOwner>joergreichert</repositoryOwner>
 						<repositoryName>distributions</repositoryName>
 						<branch>refs/heads/master</branch>

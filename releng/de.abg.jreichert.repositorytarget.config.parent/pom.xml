@@ -22,14 +22,16 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven-clean-plugin.version>2.5</maven-clean-plugin.version>
 		<maven-deploy-plugin.version>2.7</maven-deploy-plugin.version>
-		<github-site-maven-plugin.version>0.8</github-site-maven-plugin.version>
-		<local-build-platform.version>[3.8,4.3)</local-build-platform.version>		
+		<github-site-maven-plugin.version>0.9</github-site-maven-plugin.version>
+		<local-build-platform.version>[3.8,4.3)</local-build-platform.version>
+		<github.global.server>github</github.global.server>
+		<xtend-library.version>2.5.0</xtend-library.version>
 		<ui.test.vmargs></ui.test.vmargs>
 		<coverageAgent></coverageAgent>
 		<it.coverage.argLine></it.coverage.argLine>
 		<distribution.dir>${project.basedir}/../../releng/de.abg.jreichert.repositorytarget.parent/target/repository</distribution.dir>
 	</properties>
-	
+
 	<modules>
 		<module>../../releng/de.abg.jreichert.repositorytarget.distribution</module>
 	</modules>
@@ -134,7 +136,34 @@
 					<skip>false</skip>
 					<altDeploymentRepository>internal.repo::default::file://${distribution.dir}</altDeploymentRepository>
 				</configuration>
-			</plugin>			
+			</plugin>
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>site-maven-plugin</artifactId>
+				<version>${github-site-maven-plugin.version}</version>
+				<configuration>
+					<message>Maven artifacts for ${project.groupId}:${project.artifactId}:${project.version} ${maven.build.timestamp}</message>
+					<noJekyll>true</noJekyll>
+					<outputDirectory>${distribution.dir}</outputDirectory>
+					<merge>false</merge>
+					<repositoryOwner>joergreichert</repositoryOwner>
+					<repositoryName>distributions</repositoryName>
+					<branch>refs/heads/master</branch>
+					<path>snapshots</path>
+					<oauth2Token>${env.CI_CF_TOKEN}</oauth2Token>
+					<includes>
+						<include>**/*</include>
+					</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>site</goal>
+						</goals>
+						<phase>deploy</phase>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -151,37 +180,21 @@
 					<artifactId>maven-clean-plugin</artifactId>
 					<version>${maven-clean-plugin.version}</version>
 				</plugin>
-				<plugin>
-					<groupId>com.github.github</groupId>
-					<artifactId>site-maven-plugin</artifactId>
-					<version>${github-site-maven-plugin.version}</version>
-					<configuration>
-						<message>Maven artifacts for ${project.groupId}:${project.artifactId}:${project.version} ~${maven.build.timestamp}</message>
-						<noJekyll>true</noJekyll>
-						<outputDirectory>${distribution.dir}</outputDirectory>
-						<merge>false</merge>
-						<repositoryOwner>joergreichert</repositoryOwner>
-						<repositoryName>distributions</repositoryName>
-						<branch>refs/heads/master</branch>
-						<path>snapshots</path>
-						<oauth2Token>${env.CI_CF_TOKEN}</oauth2Token>
-						<includes>
-							<include>**/*</include>
-						</includes>
-					</configuration>
-					<executions>
-						<execution>
-							<goals>
-								<goal>site</goal>
-							</goals>
-							<phase>deploy</phase>
-						</execution>
-					</executions>
-				</plugin>		
 			</plugins>
 		</pluginManagement>
 	</build>
-	
+
+	<repositories>
+		<repository>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>central</id>
+			<name>Maven Repository Switchboard</name>
+			<url>http://repo1.maven.org/maven2/</url>
+		</repository>
+	</repositories>
+
 	<pluginRepositories>
 		<pluginRepository>
 			<id>sonatype</id>

@@ -38,6 +38,8 @@
 		<xtext-version>2.5.0</xtext-version>
 		<jacoco-maven-plugin.version>0.6.3.201306030806</jacoco-maven-plugin.version>
 		<junit-version>4.11</junit-version>
+		<maven-jxr-plugin.version>2.3</maven-jxr-plugin.version>
+		<maven-project-info-reports-plugin.version>2.7</maven-project-info-reports-plugin.version>
 		<local-build-platform.version>[3.8,4.3)</local-build-platform.version>
 		<java-compile-version>1.7</java-compile-version>
 		<maven.compiler.source>1.7</maven.compiler.source>
@@ -305,6 +307,11 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jxr-plugin</artifactId>
 				<version>${maven-jxr-plugin.version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>${maven-project-info-reports-plugin.version}</version>
 			</plugin>
 		</plugins>
 	</reporting>

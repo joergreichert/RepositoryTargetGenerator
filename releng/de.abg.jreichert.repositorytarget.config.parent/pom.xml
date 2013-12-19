@@ -157,8 +157,8 @@
 						<message>Maven artifacts for ${project.groupId}:${project.artifactId}:${project.version} ~${maven.build.timestamp}</message>
 						<noJekyll>true</noJekyll>
 						<outputDirectory>${distribution.dir}</outputDirectory>
-						<merge>false</merge>
-						<!-- dryRun>true</dryRun -->
+						<merge>true</merge>
+						<dryRun>false</dryRun>
 						<repositoryOwner>joergreichert</repositoryOwner>
 						<repositoryName>distributions</repositoryName>
 						<branch>refs/heads/master</branch>

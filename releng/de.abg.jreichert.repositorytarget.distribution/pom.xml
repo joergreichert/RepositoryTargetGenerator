@@ -39,6 +39,7 @@
 				<module>../../releng/de.abg.jreichert.repositorytarget.parent</module>
 				<module>../../plugins/de.abg.jreichert.repositorytarget.dsl</module>
 				<module>../../plugins/de.abg.jreichert.repositorytarget.dsl.ui</module>
+				<module>../../plugins/de.abg.jreichert.repositorytarget.transform</module>
 				<module>../../tests/de.abg.jreichert.repositorytarget.dsl.tests</module>
 			</modules>
 		</profile>

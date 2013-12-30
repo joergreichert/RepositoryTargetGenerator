@@ -63,7 +63,11 @@ public class SessionManager {
 					.applySettings(cfg.getProperties()).buildServiceRegistry();
 			sessionFactory = cfg.buildSessionFactory(serviceRegistry);
 		} catch (Exception e) {
-			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e.getMessage(), e));
+			Activator
+					.getDefault()
+					.getLog()
+					.log(new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(),
+							e.getMessage(), e));
 			throw new RuntimeException(e);
 		}
 	}
@@ -76,10 +80,10 @@ public class SessionManager {
 		getSessionFactory().close();
 	}
 
-	public static final ThreadLocal<Session> session = new ThreadLocal<Session>();
+	public static final ThreadLocal<Session> session = new ThreadLocal<>();
 
 	public static synchronized Session currentSession() {
-		Session s = (Session) session.get();
+		Session s = session.get();
 		if (s == null) {
 			s = sessionFactory.openSession();
 			session.set(s);
@@ -88,7 +92,7 @@ public class SessionManager {
 	}
 
 	public static synchronized void closeSession() {
-		Session s = (Session) session.get();
+		Session s = session.get();
 		if (s != null)
 			s.close();
 		session.set(null);

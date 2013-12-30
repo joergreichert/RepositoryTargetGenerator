@@ -26,7 +26,7 @@ class AnnotationExtensions {
 				it.context = context
 				it.annotationClass = type
 			]
-		) != null
+		) !== null
 	}	
 	
 	def <T> findAnnotationWithValue(extension AnnotationValueSearch<T> annotationValueSearch) {

@@ -91,10 +91,10 @@ class EntityLiteralTest {
 				
 				File 3 : MyClass2Literal.java
 				
-				import de.abg.jreichert.repositorytarget.activeannotations.IPropertyLiteral;
+				import org.sculptor.framework.domain.Property;
 				
 				@SuppressWarnings("all")
-				public class MyClass2Literal<T> extends MyClass2LiteralImpl<T> implements IPropertyLiteral<T> {
+				public class MyClass2Literal<T> extends MyClass2LiteralImpl<T> implements Property<T> {
 				  private final static long serialVersionUID = 1L;
 				  
 				  public MyClass2Literal(final String parentPath, final String additionalPath, final Class<T> owningClass) {
@@ -104,12 +104,12 @@ class EntityLiteralTest {
 				
 				File 4 : MyClass2LiteralImpl.java
 				
-				import de.abg.jreichert.repositorytarget.activeannotations.IPropertyLiteral;
-				import de.abg.jreichert.repositorytarget.activeannotations.PropertiesCollectionLiteral;
-				import de.abg.jreichert.repositorytarget.activeannotations.PropertyLiteral;
+				import org.sculptor.framework.domain.LeafProperty;
+				import org.sculptor.framework.domain.PropertiesCollection;
+				import org.sculptor.framework.domain.Property;
 				
 				@SuppressWarnings("all")
-				public class MyClass2LiteralImpl<T> extends PropertiesCollectionLiteral {
+				public class MyClass2LiteralImpl<T> extends PropertiesCollection {
 				  private final static long serialVersionUID = 1L;
 				  
 				  private Class<T> owningClass;
@@ -124,14 +124,14 @@ class EntityLiteralTest {
 				    this.owningClass = owningClass;
 				  }
 				  
-				  public IPropertyLiteral<T> fieldWithAnnotation() {
-				    return new PropertyLiteral<T>(getParentPath(), "fieldWithAnnotation", false, owningClass);
+				  public Property<T> fieldWithAnnotation() {
+				    return new LeafProperty<T>(getParentPath(), "fieldWithAnnotation", false, owningClass);
 				  }
 				}
 				
 				File 5 : MyClass2Literals.java
 				
-				import de.abg.jreichert.repositorytarget.activeannotations.IPropertyLiteral;
+				import org.sculptor.framework.domain.Property;
 				
 				@SuppressWarnings("all")
 				public class MyClass2Literals {
@@ -141,7 +141,7 @@ class EntityLiteralTest {
 				    
 				  }
 				  
-				  public static IPropertyLiteral<MyClass2> fieldWithAnnotation() {
+				  public static Property<MyClass2> fieldWithAnnotation() {
 				    return sharedInstance.fieldWithAnnotation();
 				  }
 				}
@@ -168,10 +168,10 @@ class EntityLiteralTest {
 				
 				File 7 : MyClassLiteral.java
 				
-				import de.abg.jreichert.repositorytarget.activeannotations.IPropertyLiteral;
+				import org.sculptor.framework.domain.Property;
 				
 				@SuppressWarnings("all")
-				public class MyClassLiteral<T> extends MyClassLiteralImpl<T> implements IPropertyLiteral<T> {
+				public class MyClassLiteral<T> extends MyClassLiteralImpl<T> implements Property<T> {
 				  private final static long serialVersionUID = 1L;
 				  
 				  public MyClassLiteral(final String parentPath, final String additionalPath, final Class<T> owningClass) {
@@ -181,12 +181,12 @@ class EntityLiteralTest {
 				
 				File 8 : MyClassLiteralImpl.java
 				
-				import de.abg.jreichert.repositorytarget.activeannotations.IPropertyLiteral;
-				import de.abg.jreichert.repositorytarget.activeannotations.PropertiesCollectionLiteral;
-				import de.abg.jreichert.repositorytarget.activeannotations.PropertyLiteral;
+				import org.sculptor.framework.domain.LeafProperty;
+				import org.sculptor.framework.domain.PropertiesCollection;
+				import org.sculptor.framework.domain.Property;
 				
 				@SuppressWarnings("all")
-				public class MyClassLiteralImpl<T> extends PropertiesCollectionLiteral {
+				public class MyClassLiteralImpl<T> extends PropertiesCollection {
 				  private final static long serialVersionUID = 1L;
 				  
 				  private Class<T> owningClass;
@@ -201,8 +201,8 @@ class EntityLiteralTest {
 				    this.owningClass = owningClass;
 				  }
 				  
-				  public IPropertyLiteral<T> fieldWithAnnotation() {
-				    return new PropertyLiteral<T>(getParentPath(), "fieldWithAnnotation", false, owningClass);
+				  public Property<T> fieldWithAnnotation() {
+				    return new LeafProperty<T>(getParentPath(), "fieldWithAnnotation", false, owningClass);
 				  }
 				  
 				  public MyClass2Literal<T> fieldWithAnnotationAndEntityType() {
@@ -212,7 +212,7 @@ class EntityLiteralTest {
 				
 				File 9 : MyClassLiterals.java
 				
-				import de.abg.jreichert.repositorytarget.activeannotations.IPropertyLiteral;
+				import org.sculptor.framework.domain.Property;
 				
 				@SuppressWarnings("all")
 				public class MyClassLiterals {
@@ -222,7 +222,7 @@ class EntityLiteralTest {
 				    
 				  }
 				  
-				  public static IPropertyLiteral<MyClass> fieldWithAnnotation() {
+				  public static Property<MyClass> fieldWithAnnotation() {
 				    return sharedInstance.fieldWithAnnotation();
 				  }
 				  

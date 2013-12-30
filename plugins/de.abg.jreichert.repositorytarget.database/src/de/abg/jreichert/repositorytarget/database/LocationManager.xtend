@@ -14,6 +14,10 @@ import java.util.TreeSet
 import org.hibernate.Transaction
 import org.hibernate.criterion.Restrictions
 import de.abg.jreichert.repositorytarget.activeannotations.LogExecutionTime
+import org.sculptor.framework.accessapi.ConditionalCriteriaBuilder
+import org.sculptor.framework.accessimpl.jpa2.JpaFindByConditionAccessImpl
+import org.sculptor.framework.accessimpl.jpahibernate.JpaHibFindByConditionAccessImpl
+import de.abg.jreichert.repositorytarget.activeannotations.CustomJpaHibFindByConditionAccessImpl
 
 class LocationManager {
 
@@ -83,13 +87,14 @@ class LocationManager {
 	@LogExecutionTime def getTimestamps(Map<String, Long> timestampsToFilter) {
 		val timestamps = new HashMap<String, Long>()
 		val session = SessionManager::currentSession
-		var criteria = session.createCriteria(Location)
+		val findByCondition = new CustomJpaHibFindByConditionAccessImpl(Location, session)
+		var conditionalCriteriaRoot = ConditionalCriteriaBuilder.criteriaFor(Location)
 		if (timestampsToFilter.size > 0) {
-			// TODO for later
-			//ConditionalCriteriaBuilder.criteriaFor(Location).withProperty(LocationLiterals.url()).in(timestampsToFilter.keySet).buildSingle()
-			criteria = criteria.add(Restrictions::in('url', timestampsToFilter.keySet))
+			conditionalCriteriaRoot = conditionalCriteriaRoot.withProperty(LocationLiterals.url()).in(timestampsToFilter.keySet)
+			findByCondition.addCondition(conditionalCriteriaRoot.buildSingle())
 		}
-		val result = toLocationList(criteria.list)
+		findByCondition.performExecute
+		val result = toLocationList(findByCondition.getResult())
 		result.forEach[timestamps.put(url, Long::valueOf(timestamp))]
 		timestamps
 	}
@@ -118,7 +123,7 @@ class LocationManager {
 			val dbIdToVersions = fillDbIdToVersions(location)
 			for (dbEntry : dbIdToVersions.entrySet) {
 				val versions = idToVersions.get(dbEntry.key)
-				if (versions == null) {
+				if (versions === null) {
 					removeUnits(location, dbEntry)
 				} else {
 					removeVersions(location, dbEntry, versions)
@@ -172,7 +177,7 @@ class LocationManager {
 
 	private def fillVersions(Unit unit, Entry<String, SortedSet<String>> entry) {
 		for (versionStr : entry.value) {
-			if (findVersion(unit.versions, versionStr) == null) {
+			if (findVersion(unit.versions, versionStr) === null) {
 				unit.versions.add(new Version() => [
 					name = versionStr
 					it.unit = unit

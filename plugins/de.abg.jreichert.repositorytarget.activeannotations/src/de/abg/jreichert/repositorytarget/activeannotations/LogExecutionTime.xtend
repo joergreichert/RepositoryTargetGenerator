@@ -22,7 +22,7 @@ class DurationProcessor extends AbstractMethodProcessor {
 
 	override doTransform(MutableMethodDeclaration method, extension TransformationContext context) {
 
-		if (method.returnType == null)
+		if (method.returnType === null)
 			method.addError("A method to be time measured have to explicitly declare its return type (or void if there should be none).")
 
 		val wrappedMethodName = method.newMethodName

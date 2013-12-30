@@ -13,6 +13,7 @@ import org.eclipse.xtend.lib.macro.declaration.MutableClassDeclaration
 import org.eclipse.xtend.lib.macro.declaration.MutableTypeParameterDeclaration
 import org.eclipse.xtend.lib.macro.declaration.TypeReference
 import org.eclipse.xtend.lib.macro.declaration.Visibility
+import org.sculptor.framework.domain.PropertiesCollection
 
 @Target(ElementType.TYPE)
 @Active(EntityLiteralProcessor)
@@ -61,7 +62,7 @@ class EntityLiteralProcessor extends AbstractClassProcessor {
 	private def void addLiteralImplMembers(MutableClassDeclaration classType, ClassDeclaration annotatedClass, extension TransformationContext context, String prefix) {
 //		classType.static = true
 		val typeParameter = classType.typeParameters.head
-		classType.extendedClass = PropertiesCollectionLiteral.newTypeReference
+		classType.extendedClass = PropertiesCollection.newTypeReference
 		classType.addSerialVersionUIDField(context)
 		classType.addField("owningClass") [
 			type = typeParameter.owningClassTypeRef(context)
@@ -114,7 +115,7 @@ class EntityLiteralProcessor extends AbstractClassProcessor {
 //		classType.static = true
 		val typeParameter = classType.typeParameters.head
 		classType.extendedClass = findClassWithTypeParam(annotatedClass.literalClassImplName, context).newTypeReference(typeParameter.newTypeReference)
-		classType.setImplementedInterfaces(newArrayList(IPropertyLiteral.newTypeReference(typeParameter.newTypeReference)))
+		classType.setImplementedInterfaces(newArrayList(org.sculptor.framework.domain.Property.newTypeReference(typeParameter.newTypeReference)))
 		classType.addSerialVersionUIDField(context)
 		classType.addConstructor[
 			addParameter("parentPath", string)
@@ -156,7 +157,7 @@ class EntityLiteralProcessor extends AbstractClassProcessor {
 		classType.addMethod(field.simpleName) [
 			visibility = Visibility.PUBLIC
 			static = true
-			returnType = IPropertyLiteral.newTypeReference(annotatedClass.newTypeReference)
+			returnType = org.sculptor.framework.domain.Property.newTypeReference(annotatedClass.newTypeReference)
 			body = ['''return sharedInstance.«field.simpleName»();''']
 		]
 	}
@@ -178,8 +179,8 @@ class EntityLiteralProcessor extends AbstractClassProcessor {
 			MutableTypeParameterDeclaration typeParameter) {
 		classType.addMethod(field.simpleName) [
 			visibility = Visibility.PUBLIC
-			returnType = IPropertyLiteral.newTypeReference(typeParameter.newTypeReference)
-			body = ['''return new «toJavaCode(PropertyLiteral.newTypeReference(typeParameter.newTypeReference))»(getParentPath(), "«field.simpleName»", false, owningClass);''']
+			returnType = org.sculptor.framework.domain.Property.newTypeReference(typeParameter.newTypeReference)
+			body = ['''return new «toJavaCode(org.sculptor.framework.domain.LeafProperty.newTypeReference(typeParameter.newTypeReference))»(getParentPath(), "«field.simpleName»", false, owningClass);''']
 		]
 	}
 	

@@ -172,6 +172,23 @@
 									<overWrite>false</overWrite>
 									<outputDirectory>lib</outputDirectory>
 								</artifactItem>
+								<artifactItem>
+									<groupId>org.sculptorgenerator</groupId>
+									<artifactId>sculptor-framework-main</artifactId>
+									<version>3.0.0</version>
+									<type>jar</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>lib</outputDirectory>
+								</artifactItem>
+								<artifactItem>
+									<groupId>org.sculptorgenerator</groupId>
+									<artifactId>sculptor-framework-main</artifactId>
+									<version>3.0.0</version>
+									<classifier>publicapi</classifier>
+									<type>jar</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>lib</outputDirectory>
+								</artifactItem>
 							</artifactItems>
 						</configuration>
 					</execution>
@@ -180,6 +197,29 @@
 			<plugin>
 				<groupId>org.eclipse.xtend</groupId>
 				<artifactId>xtend-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-surefire-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>test</id>
+						<phase>test</phase>
+						<configuration>
+							<testClassesDirectory>${project.build.outputDirectory}</testClassesDirectory>
+						</configuration>
+						<goals>
+							<goal>test</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 		<pluginManagement>
@@ -220,15 +260,24 @@
 		</pluginManagement>
 	</build>
 
-	<!-- TODO: repository is not accessible as requires authentication  
 	<dependencies>
+		<!-- It is important to have JUnit >= 4.7 as dependency to select the right 
+			JUnit Provider see http://maven.apache.org/plugins/maven-surefire-plugin/examples/junit.html -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.1</version>
+		</dependency>
+		<!--
 		<dependency>
 			<groupId>de.oehme.xtend.contrib</groupId>
 			<artifactId>xtend-contrib-parent</artifactId>
 			<version>0.1.1</version>
 		</dependency>
+		-->
 	</dependencies>
 
+	<!--
 	<repositories>
 		<repository>
 			<id>oehme-releases</id>

@@ -91,7 +91,7 @@ class TargetDefinitionValidator extends AbstractTargetDefinitionValidator {
 		val nameToCategories = <String, List<Category>>newHashMap
 		target.categories.forEach[
 			val entry = nameToCategories.get(name)  
-			val categories = if(entry == null) newArrayList else entry 
+			val categories = if(entry === null) newArrayList else entry 
 			categories.add(it)
 			nameToCategories.put(name, categories)
 			

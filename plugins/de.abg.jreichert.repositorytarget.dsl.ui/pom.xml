@@ -16,6 +16,22 @@
 	<build>
 		<plugins>	
 			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>${project.basedir}/xtend-gen</directory>
+							<includes>
+								<include>**</include>
+							</includes>
+							<excludes>
+								<exclude>.gitignore</exclude>
+							</excludes>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>org.eclipse.xtend</groupId>
 				<artifactId>xtend-maven-plugin</artifactId>
 			</plugin>

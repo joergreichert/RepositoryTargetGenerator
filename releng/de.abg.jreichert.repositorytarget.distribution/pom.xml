@@ -18,7 +18,8 @@
 	<name>Repository Target Generator</name>
 	
 	<properties>
-		<distribution.dir>${basedir}/../../releng/de.abg.jreichert.repositorytarget.parent/target/repository</distribution.dir>
+		<distribution.dir>${project.basedir}/../../releng/de.abg.jreichert.repositorytarget.parent/target/repository</distribution.dir>
+		<github-site-maven-plugin.version>0.9</github-site-maven-plugin.version>
 	</properties>
 	
 	<modules>
@@ -26,7 +27,73 @@
 		<module>../../releng/de.abg.jreichert.repositorytarget.repository.parent</module>
 	</modules>
 	
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>clean-repository</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+						<configuration>
+							<excludeDefaultDirectories>true</excludeDefaultDirectories>
+							<filesets>
+								<fileset>
+									<directory>${distribution.dir}/de/abg/jreichert/repositorytarget/${project.artifactId}</directory>
+									<includes>
+										<include>**/*</include>
+									</includes>
+								</fileset>
+							</filesets>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>site-maven-plugin</artifactId>
+				<version>${github-site-maven-plugin.version}</version>
+				<configuration>
+					<message>Maven artifacts for ${project.groupId}:${project.artifactId}:${project.version} ${maven.build.timestamp}</message>
+					<noJekyll>true</noJekyll>
+					<outputDirectory>${distribution.dir}</outputDirectory>
+					<merge>true</merge>
+					<repositoryOwner>joergreichert</repositoryOwner>
+					<repositoryName>distributions</repositoryName>
+					<branch>refs/heads/master</branch>
+					<path>snapshots</path>
+					<oauth2Token>${env.RepositoryDeploy}</oauth2Token>
+					<includes>
+						<include>**/*</include>
+					</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>site</goal>
+						</goals>
+						<phase>deploy</phase>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
 	<profiles>
+		<profile>
+			<id>local-build</id>
+			<activation>
+				<property>
+					<name>local-build</name>
+				</property>
+			</activation>
+			<properties>
+				<github.global.server>github</github.global.server>
+			</properties>
+		</profile>
 		<profile>
 			<id>modules-default</id>
 			<activation>
@@ -37,6 +104,7 @@
 				<module>../../releng/de.abg.jreichert.repositorytarget.parent</module>
 				<module>../../plugins/de.abg.jreichert.repositorytarget.dsl</module>
 				<module>../../plugins/de.abg.jreichert.repositorytarget.dsl.ui</module>
+				<module>../../plugins/de.abg.jreichert.repositorytarget.transform</module>
 				<module>../../tests/de.abg.jreichert.repositorytarget.dsl.tests</module>
 			</modules>
 		</profile>

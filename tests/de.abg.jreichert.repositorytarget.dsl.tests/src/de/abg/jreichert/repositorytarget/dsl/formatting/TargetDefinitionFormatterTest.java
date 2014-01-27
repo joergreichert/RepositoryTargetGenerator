@@ -15,13 +15,28 @@ import org.xpect.runner.XpectTestFiles.FileRoot;
 import org.xpect.setup.XpectSetup;
 import org.xpect.xtext.lib.setup.ThisOffset;
 import org.xpect.xtext.lib.setup.ThisResource;
+import org.xpect.xtext.lib.setup.XtextStandaloneSetup;
+import org.xpect.xtext.lib.setup.XtextValidatingSetup;
 
 import com.google.inject.Inject;
 
+import de.abg.jreichert.repositorytarget.dsl.formatting.TargetDefinitionFormatterTest.NullValidatorSetup;
+
 @RunWith(XpectRunner.class)
-@XpectTestFiles(relativeTo = FileRoot.CURRENT, baseDir = "model/testcases/formatter", fileExtensions = "targetdef")
-@XpectSetup({ XtextStandaloneSetupWithoutValidate.class })
+@XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "model/testcases/formatter", fileExtensions = "targetdef")
+@XpectSetup({ XtextStandaloneSetup.class, NullValidatorSetup.class })
 public class TargetDefinitionFormatterTest {
+
+	public static class NullValidatorSetup extends XtextValidatingSetup {
+		public NullValidatorSetup(@ThisResource XtextResource resource) {
+			super(resource);
+		}
+
+		@Override
+		public void validate() {
+			// do nothing
+		}
+	}
 
 	@Inject
 	protected INodeModelFormatter formatter;
@@ -40,13 +55,21 @@ public class TargetDefinitionFormatterTest {
 			r = formatter.format(rootNode, rootNode.getOffset(),
 					rootNode.getTotalLength());
 		}
-		String formatted = r.getFormattedText().replaceAll("\\r\\b", "\n")
-				+ getEnding();
+		String formatted = r.getFormattedText();
+		if (isWindowsEnding()) {
+			formatted = formatted.replaceAll("\r\n", "\n");
+		}
+		formatted = formatted.replaceAll("\r\b", "\n");
+		formatted = formatted + getEnding();
 		expectation.assertEquals(formatted);
 	}
 
 	private String getEnding() {
+		return isWindowsEnding() ? "" : /* "\r" */"";
+	}
+
+	private boolean isWindowsEnding() {
 		String ls = System.getProperty("line.separator");
-		return "\r\n".equals(ls) ? "\r" : "";
+		return "\r\n".equals(ls);
 	}
 }

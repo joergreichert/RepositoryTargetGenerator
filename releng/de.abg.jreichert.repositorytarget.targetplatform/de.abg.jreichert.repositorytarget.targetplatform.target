@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.6"?>
 
-<target includeMode="feature" name="Repository Target Generator - Eclipse 4.3, Xtext/Xtend 2.4.2" sequenceNumber="67">
+<target includeMode="feature" name="Repository Target Generator - Eclipse 4.3.1, Xtext/Xtend 2.5.0" sequenceNumber="67">
 	<locations>
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="org.eclipse.sdk.feature.group" version="4.3.0.v20130605-2000"/>
-			<unit id="org.eclipse.pde.feature.group" version="3.9.0.v20130605-2000"/>
-			<unit id="org.eclipse.emf.sdk.feature.group" version="2.9.0.v20130610-0406"/>
-			<unit id="org.eclipse.xtext.sdk.feature.group" version="2.4.2.v201306120542"/>
-			<unit id="org.eclipse.xtend.sdk.feature.group" version="2.4.2.v201306120542"/>
-			<unit id="org.eclipse.emf.mwe2.language.sdk.feature.group" version="2.4.0.v201306110940"/>
-			<unit id="org.eclipse.emf.mwe2.runtime.sdk.feature.group" version="2.4.0.v201306110341"/>
+			<unit id="org.eclipse.sdk.feature.group" version="4.3.1.v20130911-1000"/>
+			<unit id="org.eclipse.pde.feature.group" version="3.9.1.v20130911-1000"/>
 			<repository location="http://download.eclipse.org/releases/kepler"/>
 		</location>
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="de.itemis.xtext.antlr.sdk.feature.group" version="2.0.0.v201108011202"/>
-			<unit id="de.itemis.xtext.antlr.feature.feature.group" version="2.0.0.v201108011202"/>
-			<repository location="http://download.itemis.com/updates/releases/2.0.0/"/>
+			<unit id="org.eclipse.emf.sdk.feature.group" version="2.9.2.v20131212-0558"/>
+			<unit id="org.eclipse.xtext.sdk.feature.group" version="2.5.0.v201312110906"/>
+			<unit id="org.eclipse.xtend.sdk.feature.group" version="2.5.0.v201312110906"/>
+			<unit id="org.eclipse.emf.mwe2.language.sdk.feature.group" version="2.5.0.v201312110944"/>
+			<unit id="org.eclipse.emf.mwe2.runtime.sdk.feature.group" version="2.5.0.v201312110307"/>
+			<repository location="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
 		</location>
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="org.eclipselabs.xtext.utils.unittesting.feature.feature.group" version="0.9.3.201204261440"/>
-			<repository location="http://xtext-utils.eclipselabs.org.codespot.com/git.distribution/releases/unittesting-0.9.x"/>
+			<unit id="de.itemis.xtext.antlr.sdk.feature.group" version="2.1.0.v201308291703"/>
+			<unit id="de.itemis.xtext.antlr.feature.feature.group" version="2.1.0.v201308291703"/>
+			<repository location="http://download.itemis.com/updates/releases/2.1.0/"/>
 		</location>
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="org.xpect.sdk.feature.group" version="0.1.0.201308161707"/>
+			<unit id="org.xpect.sdk.feature.group" version="0.1.0.201401101421"/>
 			<repository location="http://www.xpect-tests.org/updatesite/nightly/"/>
 		</location>
 	</locations>

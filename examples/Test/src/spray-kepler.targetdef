@@ -23,9 +23,9 @@ TargetDefinition "Spray Target Platform - Eclipse 4.3"
 		org.eclipse.emf.sdk 2.9.0.v20130610-0406 category = EMF,
 		org.eclipse.emf.transaction.sdk 1.7.0.201306111400 category = EMF,
 		org.eclipse.emf.eef.sdk-feature 1.2.0.201301111054 category = EMF,
-		org.eclipse.gef.sdk 3.9.0.201305060205 category = { EMF, GraphicalEditing },
-		org.eclipse.zest.sdk 1.5.0.201305060205 category = { EMF, GraphicalEditing },
-		org.eclipse.graphiti.sdk.plus.feature 0.10.0.v20130612-0936 category = { EMF, GraphicalEditing },
+		org.eclipse.gef.sdk 3.9.0.201305060205 category = ( EMF, GraphicalEditing ),
+		org.eclipse.zest.sdk 1.5.0.201305060205 category = ( EMF, GraphicalEditing ),
+		org.eclipse.graphiti.sdk.plus.feature 0.10.0.v20130612-0936 category = ( EMF, GraphicalEditing ),
 		org.eclipse.swt noFeature 3.102.0.v20130605-1539,
 		org.eclipse.xtext.sdk 2.4.2.v201306120542 category = Xtext,
 		org.eclipse.xtend.sdk 2.4.2.v201306120542 category = Xtext,
@@ -35,10 +35,10 @@ TargetDefinition "Spray Target Platform - Eclipse 4.3"
 	
 	"SWTBot" http://download.eclipse.org/technology/swtbot/releases/latest/ {
 		org.eclipse.swtbot.eclipse 2.1.1.201307101628 category = Testing,
-		org.eclipse.swtbot.eclipse.gef 2.1.1.201307101628 category = { Testing, GraphicalEditing }
+		org.eclipse.swtbot.eclipse.gef 2.1.1.201307101628 category = Testing, GraphicalEditing
 	}
 
-	"Xpect" http://www.xpect-tests.org/updatesite/nightly/ category = {Xtext, Testing} {
+	"Xpect" http://www.xpect-tests.org/updatesite/nightly/ category = ( Xtext, Testing ) {
 		org.xpect.sdk 0.1.0.201308071738
 	}
 

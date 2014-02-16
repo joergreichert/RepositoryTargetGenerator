@@ -23,7 +23,7 @@
 		<maven-clean-plugin.version>2.5</maven-clean-plugin.version>
 		<maven-deploy-plugin.version>2.7</maven-deploy-plugin.version>
 		<local-build-platform.version>[3.8,4.3)</local-build-platform.version>
-		<xtend-library.version>2.5.0</xtend-library.version>
+		<xtend-library.version>2.5.2</xtend-library.version>
 		<ui.test.vmargs></ui.test.vmargs>
 		<coverageAgent></coverageAgent>
 		<it.coverage.argLine></it.coverage.argLine>

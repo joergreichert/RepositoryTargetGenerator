@@ -3,13 +3,7 @@
 	<classpathentry kind="src" path="xtend-gen"/>
 	<classpathentry exported="true" kind="lib" path="lib/sculptor-framework-main-3.0.0-publicapi.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/sculptor-framework-main-3.0.0.jar" sourcepath="lib/sculptor-framework-main-3.0.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/xtend-contrib/xtend-contrib-base-0.1.2-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/xtend-contrib/xtend-contrib-beanio-0.1.2-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/xtend-contrib/xtend-contrib-caliper-0.1.2-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/xtend-contrib/xtend-contrib-querydsl-0.1.2-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/antlr-2.7.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/asm-1.5.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/asm-attrs-1.5.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/c3p0-0.9.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/cglib-3.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/dom4j-1.6.1.jar"/>

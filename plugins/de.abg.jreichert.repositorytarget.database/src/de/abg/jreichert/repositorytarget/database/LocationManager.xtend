@@ -84,7 +84,7 @@ class LocationManager {
 		getTimestamps(new HashMap<String, Long>())
 	}
 
-	@LogExecutionTime def getTimestamps(Map<String, Long> timestampsToFilter) {
+	@LogExecutionTime def Map<String, Long> getTimestamps(Map<String, Long> timestampsToFilter) {
 		val timestamps = new HashMap<String, Long>()
 		val session = SessionManager::currentSession
 		val findByCondition = new CustomJpaHibFindByConditionAccessImpl(Location, session)
@@ -100,7 +100,7 @@ class LocationManager {
 	}
 
 	// TODO: find a time and memory saving alternative!
-	@LogExecutionTime def getUrlToIdToVersions(Map<String, Long> timestampsToFilter) {
+	@LogExecutionTime def Map<String, SortedMap<String, SortedSet<String>>> getUrlToIdToVersions(Map<String, Long> timestampsToFilter) {
 		val urlToIdToVersions = new TreeMap<String, SortedMap<String, SortedSet<String>>>()
 		val locationToTimestamp = getTimestamps(timestampsToFilter)
 		for (entry : locationToTimestamp.entrySet) {

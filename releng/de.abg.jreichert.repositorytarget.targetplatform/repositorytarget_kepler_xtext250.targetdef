@@ -8,11 +8,12 @@ TargetDefinition "Repository Target Generator - Eclipse 4.3.1, Xtext/Xtend 2.5.0
 	}
 	
 	"Xtext & Xtend" http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/ {
-		org.eclipse.emf.sdk 2.9.1.v20130902-0605,
-		org.eclipse.xtext.sdk 2.5.0.v201312110906,
-		org.eclipse.xtend.sdk 2.5.0.v201312110906,
-		org.eclipse.emf.mwe2.language.sdk 2.5.0.v201312110944,
-		org.eclipse.emf.mwe2.runtime.sdk 2.5.0.v201312110307
+		org.eclipse.emf.ecore.xcore.sdk 1.1.2.v20131212-0836,
+		org.eclipse.emf.sdk 2.9.2.v20140203-1126,
+		org.eclipse.xtext.sdk 2.5.2.v201402120812,
+		org.eclipse.xtend.sdk 2.5.2.v201402120812,
+		org.eclipse.emf.mwe2.language.sdk 2.5.1.v201402030750,
+		org.eclipse.emf.mwe2.runtime.sdk 2.5.1.v201402030544
 	}	
 
 	"Xtext ANTLR" http://download.itemis.com/updates/releases/2.1.0/ {
@@ -21,5 +22,5 @@ TargetDefinition "Repository Target Generator - Eclipse 4.3.1, Xtext/Xtend 2.5.0
 	}
 
 	"Xpect" http://www.xpect-tests.org/updatesite/nightly/ {
-		org.xpect.sdk 0.1.0.201311301514
+		org.xpect.sdk 0.1.0.201401101421
 	}

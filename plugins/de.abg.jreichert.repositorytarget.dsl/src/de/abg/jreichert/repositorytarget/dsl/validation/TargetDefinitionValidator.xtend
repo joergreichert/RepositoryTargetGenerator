@@ -1,6 +1,7 @@
 package de.abg.jreichert.repositorytarget.dsl.validation
 
 import com.google.inject.Inject
+import de.abg.jreichert.repositorytarget.activeannotations.LogExecutionTime
 import de.abg.jreichert.repositorytarget.dsl.logic.ReadOutP2Repository
 import de.abg.jreichert.repositorytarget.dsl.targetDefinition.Category
 import de.abg.jreichert.repositorytarget.dsl.targetDefinition.Location
@@ -17,7 +18,6 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.eclipse.xtext.validation.Check
 
 import static org.eclipse.xtext.validation.CheckType.*
-import de.abg.jreichert.repositorytarget.activeannotations.LogExecutionTime
 
 class TargetDefinitionValidator extends AbstractTargetDefinitionValidator {
 
@@ -28,7 +28,7 @@ class TargetDefinitionValidator extends AbstractTargetDefinitionValidator {
 
 	@Inject
 	private ReadOutP2Repository readOutP2Repository
-
+	
 	@Check(value=EXPENSIVE)
 	@LogExecutionTime
 	def void checkUpToDate(Target target) {
@@ -38,6 +38,8 @@ class TargetDefinitionValidator extends AbstractTargetDefinitionValidator {
 				try {
 					val contentHandler = new ContentXmlHandler(location.repositoryLocation)
 					readOutP2Repository.execute(location.repositoryLocation, contentHandler, monitor)
+					
+					
 					val urlToIdVersionPairs = contentHandler.urlToIdToVersion
 					checkLocation(urlToIdVersionPairs, location)
 				} catch (IllegalArgumentException iae) {

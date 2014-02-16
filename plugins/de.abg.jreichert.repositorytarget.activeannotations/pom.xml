@@ -116,22 +116,22 @@
 									<overWrite>false</overWrite>
 									<outputDirectory>lib</outputDirectory>
 								</artifactItem>
-								<artifactItem>
+								<!-- artifactItem>
 									<groupId>asm</groupId>
 									<artifactId>asm</artifactId>
 									<version>1.5.3</version>
 									<type>jar</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>lib</outputDirectory>
-								</artifactItem>
-								<artifactItem>
+								</artifactItem-->
+								<!-- artifactItem>
 									<groupId>asm</groupId>
 									<artifactId>asm-attrs</artifactId>
 									<version>1.5.3</version>
 									<type>jar</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>lib</outputDirectory>
-								</artifactItem>
+								</artifactItem-->
 								<artifactItem>
 									<groupId>c3p0</groupId>
 									<artifactId>c3p0</artifactId>

@@ -6,9 +6,9 @@
 	<properties size='2'>
 		<property name='p2.compressed' value='true' />
 		<!-- get new time w/ date +%s000 -->
-		<property name='p2.timestamp' value='1390856069349' />
+		<property name='p2.timestamp' value='1400856507893' />
 	</properties>
-	<children size='6'>
+	<children size='7'>
 		<child
 			location='jar:http://joergreichert.github.io/RepositoryTargetGenerator/updatesite/de.abg.jreichert.repositorytarget.updatesite-0.1.0.201211111542.zip!/' />
 		<child
@@ -21,5 +21,7 @@
 			location='jar:http://joergreichert.github.io/RepositoryTargetGenerator/updatesite/de.abg.jreichert.repositorytarget.updatesite-0.1.0-201308231639.zip!/' />
 		<child
 			location='jar:http://joergreichert.github.io/RepositoryTargetGenerator/updatesite/de.abg.jreichert.repositorytarget.updatesite-0.1.0-201401272154.zip!/' />
+		<child
+			location='jar:http://joergreichert.github.io/RepositoryTargetGenerator/updatesite/de.abg.jreichert.repositorytarget.updatesite-0.1.0.201405231648.zip!/' />
 	</children>
 </repository>

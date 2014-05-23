@@ -1,5 +1,7 @@
 package de.abg.jreichert.repositorytarget.database
 
+import de.abg.jreichert.repositorytarget.activeannotations.CustomJpaHibFindByConditionAccessImpl
+import de.abg.jreichert.repositorytarget.activeannotations.LogExecutionTime
 import java.util.ArrayList
 import java.util.Date
 import java.util.HashMap
@@ -13,11 +15,7 @@ import java.util.TreeMap
 import java.util.TreeSet
 import org.hibernate.Transaction
 import org.hibernate.criterion.Restrictions
-import de.abg.jreichert.repositorytarget.activeannotations.LogExecutionTime
 import org.sculptor.framework.accessapi.ConditionalCriteriaBuilder
-import org.sculptor.framework.accessimpl.jpa2.JpaFindByConditionAccessImpl
-import org.sculptor.framework.accessimpl.jpahibernate.JpaHibFindByConditionAccessImpl
-import de.abg.jreichert.repositorytarget.activeannotations.CustomJpaHibFindByConditionAccessImpl
 
 class LocationManager {
 

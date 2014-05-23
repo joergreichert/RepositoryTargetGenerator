@@ -32,7 +32,7 @@
    </feature>
    <category-def name="3rdparty" label="Third Party">
       <description>
-         Repository Target Generator - Eclipse 4.3, Xtext/Xtend 2.5.0
+         Repository Target Generator - Eclipse 4.3.2, Xtext/Xtend 2.6.0
       </description>
    </category-def>
 </site>

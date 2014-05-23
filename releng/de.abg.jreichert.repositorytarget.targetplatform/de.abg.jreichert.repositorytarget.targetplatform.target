@@ -4,16 +4,16 @@
 <target includeMode="feature" name="Repository Target Generator - Eclipse 4.3.1, Xtext/Xtend 2.5.0" sequenceNumber="67">
 	<locations>
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="org.eclipse.sdk.feature.group" version="4.3.1.v20130911-1000"/>
-			<unit id="org.eclipse.pde.feature.group" version="3.9.1.v20130911-1000"/>
+			<unit id="org.eclipse.sdk.feature.group" version="4.3.2.v20140221-1852"/>
+			<unit id="org.eclipse.pde.feature.group" version="3.9.1.v20140221-1700"/>
 			<repository location="http://download.eclipse.org/releases/kepler"/>
 		</location>
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="org.eclipse.emf.sdk.feature.group" version="2.9.2.v20131212-0558"/>
-			<unit id="org.eclipse.xtext.sdk.feature.group" version="2.5.0.v201312110906"/>
-			<unit id="org.eclipse.xtend.sdk.feature.group" version="2.5.0.v201312110906"/>
-			<unit id="org.eclipse.emf.mwe2.language.sdk.feature.group" version="2.5.0.v201312110944"/>
-			<unit id="org.eclipse.emf.mwe2.runtime.sdk.feature.group" version="2.5.0.v201312110307"/>
+			<unit id="org.eclipse.emf.sdk.feature.group" version="2.9.2.v20140203-1126"/>
+			<unit id="org.eclipse.xtext.sdk.feature.group" version="2.6.0.v201405210727"/>
+			<unit id="org.eclipse.xtend.sdk.feature.group" version="2.6.0.v201405210727"/>
+			<unit id="org.eclipse.emf.mwe2.language.sdk.feature.group" version="2.6.0.v201405200939"/>
+			<unit id="org.eclipse.emf.mwe2.runtime.sdk.feature.group" version="2.6.0.v201405200714"/>
 			<repository location="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
 		</location>
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">

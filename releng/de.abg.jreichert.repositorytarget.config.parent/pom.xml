@@ -18,12 +18,12 @@
 		<platform-version-name>kepler</platform-version-name>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<tycho-version>0.19.0</tycho-version>
+		<tycho-version>0.20.0</tycho-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven-clean-plugin.version>2.5</maven-clean-plugin.version>
-		<maven-deploy-plugin.version>2.7</maven-deploy-plugin.version>
+		<maven-clean-plugin-version>2.5</maven-clean-plugin-version>
+		<maven-deploy-plugin-version>2.8.1</maven-deploy-plugin-version>
 		<local-build-platform.version>[3.8,4.3)</local-build-platform.version>
-		<xtend-library.version>2.5.0</xtend-library.version>
+		<xtend-library.version>2.6.0</xtend-library.version>
 		<ui.test.vmargs></ui.test.vmargs>
 		<coverageAgent></coverageAgent>
 		<it.coverage.argLine></it.coverage.argLine>
@@ -119,7 +119,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-deploy-plugin</artifactId>
-					<version>${maven-deploy-plugin.version}</version>
+					<version>${maven-deploy-plugin-version}</version>
 					<configuration>
 						<skip>true</skip>
 					</configuration>
@@ -127,7 +127,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-clean-plugin</artifactId>
-					<version>${maven-clean-plugin.version}</version>
+					<version>${maven-clean-plugin-version}</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>

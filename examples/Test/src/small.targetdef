@@ -1,0 +1,17 @@
+TargetDefinition "Small"
+
+	targetFile = small
+
+	categories {
+		ThirdParty "Third Party" default,
+		EMF "EMF related" description: "EMF related stuff",
+		Xtext "Xtext related" description: "Xtext related stuff",
+		Testing "Testing related" description: "Testing related stuff",
+		GraphicalEditing "Graphical Editing related" description: "Graphical Editing related stuff"
+	}
+
+
+	"Xtext ANTLR" http://download.itemis.com/updates/releases/2.0.0/ category = Xtext {
+		de.itemis.xtext.antlr.sdk 2.0.0.v201108011202 strictVersion,
+		de.itemis.xtext.antlr.feature 2.0.0.v201108011202
+	}

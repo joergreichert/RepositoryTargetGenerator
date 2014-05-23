@@ -18,11 +18,13 @@ import static org.junit.Assert.*
 @RunWith(XtextRunner)
 @InjectWith(TargetDefinitionInjectorProvider)
 class GeneratorTest {
-	@Inject extension ParseHelper<Target> 
-	@Inject extension IGenerator
+	@Inject extension ParseHelper<Target> parserHelper
+	@Inject extension IGenerator generator
 	
 	@Test
 	def void testGenerate() {
+		assertNotNull("parserHelper should not be null", parserHelper)
+		assertNotNull("generator should not be null", generator)
 		val target = testData.parse
 		val rs = new XtextResourceSet
 		val res = rs.createResource(URI.createFileURI("dummy.targetdef"))

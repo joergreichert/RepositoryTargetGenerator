@@ -19,7 +19,7 @@
 	
 	<properties>
 		<distribution.dir>${project.basedir}/../../releng/de.abg.jreichert.repositorytarget.parent/target/repository</distribution.dir>
-		<github-site-maven-plugin.version>0.9</github-site-maven-plugin.version>
+		<github-site-maven-plugin-version>0.9</github-site-maven-plugin-version>
 	</properties>
 	
 	<modules>
@@ -55,7 +55,7 @@
 			<plugin>
 				<groupId>com.github.github</groupId>
 				<artifactId>site-maven-plugin</artifactId>
-				<version>${github-site-maven-plugin.version}</version>
+				<version>${github-site-maven-plugin-version}</version>
 				<configuration>
 					<message>Maven artifacts for ${project.groupId}:${project.artifactId}:${project.version} ${maven.build.timestamp}</message>
 					<noJekyll>true</noJekyll>

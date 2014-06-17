@@ -8,14 +8,6 @@ import de.abg.jreichert.repositorytarget.dsl.services.TargetDefinitionGrammarAcc
 import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter
 import org.eclipse.xtext.formatting.impl.FormattingConfig
 
-/**
- * This class contains custom formatting description.
- * 
- * see : http://www.eclipse.org/Xtext/documentation.html#formatting
- * on how and when to use it 
- * 
- * Also see {@link org.eclipse.xtext.xtext.XtextFormattingTokenSerializer} as an example
- */
 class TargetDefinitionFormatter extends AbstractDeclarativeFormatter {
 
 	@Inject extension TargetDefinitionGrammarAccess
@@ -24,34 +16,39 @@ class TargetDefinitionFormatter extends AbstractDeclarativeFormatter {
 		c.setLinewrap(0, 1, 2).before(SL_COMMENTRule)
 		c.setLinewrap(0, 1, 2).before(ML_COMMENTRule)
 		c.setLinewrap(0, 1, 1).after(ML_COMMENTRule)
-		
+
 		c.genericFormatting
-		
+
 		c.setIndentationIncrement.before(targetAccess.targetFileKeyword_2_0);
 		c.setIndentationDecrement.after(targetAccess.targetFileNameAssignment_2_2);
-		c.setLinewrap(2,2,2).before(targetAccess.targetFileKeyword_2_0)
-		c.setLinewrap(2,2,2).after(targetAccess.targetFileNameAssignment_2_2)
+		c.setLinewrap(2, 2, 2).before(targetAccess.targetFileKeyword_2_0)
+		c.setLinewrap(2, 2, 2).after(targetAccess.targetFileNameAssignment_2_2)
 
 		c.setIndentationIncrement.before(targetAccess.categoriesKeyword_3_0);
-		c.setLinewrap(2,2,2).before(targetAccess.categoriesKeyword_3_0)
+		c.setLinewrap(2, 2, 2).before(targetAccess.categoriesKeyword_3_0)
 		c.setLinewrap.after(targetAccess.leftCurlyBracketKeyword_3_1)
-		c.setLinewrap(2,2,2).after(targetAccess.rightCurlyBracketKeyword_3_4)
+		c.setLinewrap(2, 2, 2).after(targetAccess.rightCurlyBracketKeyword_3_4)
 		c.setIndentationDecrement.after(targetAccess.rightCurlyBracketKeyword_3_4);
 
 		c.setLinewrap.before(targetAccess.categoriesAssignment_3_2)
 		c.setLinewrap.before(targetAccess.categoriesAssignment_3_3_1)
 		c.setNoLinewrap.before(categoryAccess.longNameAssignment_1)
 		c.setNoLinewrap.before(categoryAccess.descriptionKeyword_2_0)
-		c.setNoLinewrap.between(categoryAccess.descriptionKeyword_2_0, categoryAccess.descriptionSTRINGTerminalRuleCall_2_1_0)
+		c.setNoLinewrap.between(categoryAccess.descriptionKeyword_2_0,
+			categoryAccess.descriptionSTRINGTerminalRuleCall_2_1_0)
 
-		c.setLinewrap(2,2,2).around(targetAccess.locationsAssignment_4)
+		c.setLinewrap(2, 2, 2).around(targetAccess.locationsAssignment_4)
 		c.setIndentationIncrement.before(targetAccess.locationsAssignment_4);
 		c.setIndentationDecrement.after(targetAccess.locationsAssignment_4);
 
-		c.setNoLinewrap.between(locationAccess.repositoryLocationURLTerminalRuleCall_1_0, locationAccess.categoryKeyword_2_0)
-		c.setNoLinewrap.between(locationAccess.repositoryLocationURLTerminalRuleCall_1_0, locationAccess.strictVersionStrictVersionKeyword_3_0)
-		c.setNoLinewrap.between(locationAccess.categoriesAssignment_2_2_0, locationAccess.strictVersionStrictVersionKeyword_3_0)
-		c.setNoLinewrap.between(locationAccess.rightParenthesisKeyword_2_2_1_3, locationAccess.strictVersionStrictVersionKeyword_3_0)
+		c.setNoLinewrap.between(locationAccess.repositoryLocationURLTerminalRuleCall_1_0,
+			locationAccess.categoryKeyword_2_0)
+		c.setNoLinewrap.between(locationAccess.repositoryLocationURLTerminalRuleCall_1_0,
+			locationAccess.strictVersionStrictVersionKeyword_3_0)
+		c.setNoLinewrap.between(locationAccess.categoriesAssignment_2_2_0,
+			locationAccess.strictVersionStrictVersionKeyword_3_0)
+		c.setNoLinewrap.between(locationAccess.rightParenthesisKeyword_2_2_1_3,
+			locationAccess.strictVersionStrictVersionKeyword_3_0)
 		c.setNoLinewrap.between(locationAccess.nameAssignment_0, locationAccess.repositoryLocationAssignment_1)
 		c.setNoLinewrap.after(locationAccess.commaKeyword_2_2_1_2_0)
 		c.setNoLinewrap.before(locationAccess.categoriesCategoryCrossReference_2_2_0_0)
@@ -63,13 +60,14 @@ class TargetDefinitionFormatter extends AbstractDeclarativeFormatter {
 		c.setNoLinewrap.between(unitAccess.categoryIdAssignment_0, unitAccess.categoryKeyword_2_0)
 		c.setNoLinewrap.between(unitAccess.categoryIdAssignment_0, unitAccess.strictVersionStrictVersionKeyword_3_0)
 		c.setNoLinewrap.between(unitAccess.categoriesAssignment_2_2_0, unitAccess.strictVersionStrictVersionKeyword_3_0)
-		c.setNoLinewrap.between(unitAccess.rightParenthesisKeyword_2_2_1_3, unitAccess.strictVersionStrictVersionKeyword_3_0)
+		c.setNoLinewrap.between(unitAccess.rightParenthesisKeyword_2_2_1_3,
+			unitAccess.strictVersionStrictVersionKeyword_3_0)
 		c.setNoLinewrap.after(unitAccess.commaKeyword_2_2_1_2_0)
 		c.setNoLinewrap.before(unitAccess.categoriesCategoryCrossReference_2_2_0_0)
 		c.setNoLinewrap.before(unitAccess.categoriesCategoryCrossReference_2_2_1_1_0)
 		c.setNoLinewrap.before(unitAccess.categoriesCategoryCrossReference_2_2_1_2_1_0)
 		c.setLinewrap.after(locationAccess.unitAssignment_6_1)
-		
+
 		c.setLinewrap.before(locationAccess.unitAssignment_5)
 		c.setLinewrap.before(locationAccess.unitAssignment_6_1)
 		c.setNoLinewrap.between(unitAccess.categoryIdAssignment_0, unitAccess.versionAssignment_1_1)
@@ -85,13 +83,13 @@ class TargetDefinitionFormatter extends AbstractDeclarativeFormatter {
 			config.setIndentation(pair.getFirst(), pair.getSecond());
 			config.setLinewrap.before(pair.getSecond());
 		}
-		
+
 		for (pair : findKeywordPairs('(', ')')) {
 			config.setSpace(" ").before(pair.getFirst());
 			config.setIndentation(pair.getFirst(), pair.getSecond());
 			config.setNoLinewrap.before(pair.getSecond());
 		}
-		
+
 		findKeywords("=").forEach[config.setSpace(" ").around(it)]
 		findKeywords(",").forEach[config.setNoSpace().before(it)]
 	}

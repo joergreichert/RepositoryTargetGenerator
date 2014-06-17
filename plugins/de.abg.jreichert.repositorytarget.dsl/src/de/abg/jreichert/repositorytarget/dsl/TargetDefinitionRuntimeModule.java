@@ -6,6 +6,7 @@ package de.abg.jreichert.repositorytarget.dsl;
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
-public class TargetDefinitionRuntimeModule extends de.abg.jreichert.repositorytarget.dsl.AbstractTargetDefinitionRuntimeModule {
-
+public class TargetDefinitionRuntimeModule extends
+		de.abg.jreichert.repositorytarget.dsl.AbstractTargetDefinitionRuntimeModule {
+	// nothing to do
 }

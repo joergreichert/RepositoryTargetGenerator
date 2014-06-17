@@ -18,7 +18,7 @@ Require-Bundle: de.abg.jreichert.repositorytarget.dsl;bundle-version="0.1.0";vis
  org.eclipse.compare,
  org.eclipse.xtend2.lib,
  org.apache.log4j
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: de.abg.jreichert.repositorytarget.dsl.ui.quickfix,
  de.abg.jreichert.repositorytarget.dsl.ui.contentassist,
  de.abg.jreichert.repositorytarget.dsl.ui.contentassist.antlr,

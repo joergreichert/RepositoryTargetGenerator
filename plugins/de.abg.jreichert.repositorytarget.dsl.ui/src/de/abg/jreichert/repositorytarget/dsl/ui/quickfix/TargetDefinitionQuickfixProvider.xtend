@@ -17,6 +17,9 @@ import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider
 import org.eclipse.xtext.ui.editor.quickfix.Fix
 import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor
 import org.eclipse.xtext.validation.Issue
+import org.eclipse.core.runtime.CoreException
+import org.eclipse.core.runtime.Status
+import org.eclipse.core.runtime.IStatus
 
 /**
  * Custom quickfixes.
@@ -28,40 +31,46 @@ class TargetDefinitionQuickfixProvider extends DefaultQuickfixProvider {
 	@Fix(TargetDefinitionValidator::NOT_UPTODATE)
 	def fixVersion(Issue issue, IssueResolutionAcceptor acceptor) {
 		val newVersion = issue.data.last
-		acceptor.accept(issue, 'Update version to ' + newVersion, 'Updates current version to ' + newVersion, null) [
-			element, context |
-			if(element instanceof Unit) {
-				val unit = element as Unit
-				unit.version = newVersion
-				removeMarker(unit, issue)
+		acceptor.accept(issue, 'Update version to ' + newVersion, 'Updates current version to ' + newVersion, null) [ element, context |
+			if (element instanceof Unit) {
+				element.version = newVersion
+				removeMarker(element, issue)
 			}
 		]
 	}
-	
+
 	def private removeMarker(EObject eObject, Issue issue) {
 		val file = ResourcesPlugin.getWorkspace().getRoot().getFile(
 			new Path(URI.decode(eObject.eResource.URI.toPlatformString(true)))
 		);
-		if(file.exists) {
+		if (file.exists) {
 			val markerManager = (ResourcesPlugin.getWorkspace() as Workspace).getMarkerManager();
 			val markerList = <IMarker>newArrayList
-			markerManager.doFindMarkers(file, markerList, 
-				TargetDefinitionActivator.instance.bundle.symbolicName + ".targetdefinition.check.expensive", 
-				true, IResource.DEPTH_INFINITE
+			markerManager.doFindMarkers(
+				file,
+				markerList,
+				TargetDefinitionActivator.instance.bundle.symbolicName + ".targetdefinition.check.expensive",
+				true,
+				IResource.DEPTH_INFINITE
 			)
-			val markers = markerList.filter[it.getAttribute(IMarker.CHAR_START) == issue.offset] 
-			markers.forEach[delete]
+			try {
+				val markers = markerList.filter[it.getAttribute(IMarker.CHAR_START) == issue.offset]
+				markers.forEach[delete]
+			} catch (CoreException ce) {
+				TargetDefinitionActivator.getInstance.log.log(
+					new Status(IStatus.ERROR,
+						TargetDefinitionActivator.DE_ABG_JREICHERT_REPOSITORYTARGET_DSL_TARGETDEFINITION, ce.message))
+			}
 		} else {
 			System::err.println(file + " does not exist.")
 		}
 	}
-	
+
 	@Fix(TargetDefinitionValidator::DEPRECATED_FEATURE_ORDER)
 	def fixNoFeatureOrder(Issue issue, IssueResolutionAcceptor acceptor) {
-		acceptor.accept(issue, 'Update position', 'Plaves noFeature between categoryId and version', null) [
-			context |
-				val xtextDocument = context.getXtextDocument();
-				xtextDocument.replace(issue.offset, issue.length, issue.data.last);
+		acceptor.accept(issue, 'Update position', 'Plaves noFeature between categoryId and version', null) [ context |
+			val xtextDocument = context.getXtextDocument();
+			xtextDocument.replace(issue.offset, issue.length, issue.data.last);
 		]
 	}
 }

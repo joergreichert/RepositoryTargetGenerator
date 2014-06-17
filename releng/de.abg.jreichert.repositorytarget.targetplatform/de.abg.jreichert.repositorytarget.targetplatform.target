@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.6"?>
 
-<target includeMode="feature" name="Repository Target Generator - Eclipse 4.3.1, Xtext/Xtend 2.5.0" sequenceNumber="67">
+<target includeMode="feature" name="Repository Target Generator - Eclipse 4.3.1, Xtext/Xtend 2.6.1" sequenceNumber="67">
 	<locations>
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<unit id="org.eclipse.sdk.feature.group" version="4.3.2.v20140221-1852"/>
@@ -10,16 +10,16 @@
 		</location>
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<unit id="org.eclipse.emf.sdk.feature.group" version="2.9.2.v20140203-1126"/>
-			<unit id="org.eclipse.xtext.sdk.feature.group" version="2.6.0.v201405210727"/>
-			<unit id="org.eclipse.xtend.sdk.feature.group" version="2.6.0.v201405210727"/>
-			<unit id="org.eclipse.emf.mwe2.language.sdk.feature.group" version="2.6.0.v201405200939"/>
-			<unit id="org.eclipse.emf.mwe2.runtime.sdk.feature.group" version="2.6.0.v201405200714"/>
+			<unit id="org.eclipse.xtext.sdk.feature.group" version="2.6.1.v201406120726"/>
+			<unit id="org.eclipse.xtend.sdk.feature.group" version="2.6.1.v201406120726"/>
+			<unit id="org.eclipse.emf.mwe2.language.sdk.feature.group" version="2.6.1.v201406120758"/>
+			<unit id="org.eclipse.emf.mwe2.runtime.sdk.feature.group" version="2.6.1.v201406110919"/>
 			<repository location="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
 		</location>
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="de.itemis.xtext.antlr.sdk.feature.group" version="2.1.0.v201308291703"/>
-			<unit id="de.itemis.xtext.antlr.feature.feature.group" version="2.1.0.v201308291703"/>
-			<repository location="http://download.itemis.com/updates/releases/2.1.0/"/>
+			<unit id="de.itemis.xtext.antlr.sdk.feature.group" version="2.1.1.v201405091103"/>
+			<unit id="de.itemis.xtext.antlr.feature.feature.group" version="2.1.1.v201405091103"/>
+			<repository location="http://download.itemis.com/updates/releases/2.1.1/"/>
 		</location>
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<unit id="org.xpect.sdk.feature.group" version="0.1.0.201401101421"/>

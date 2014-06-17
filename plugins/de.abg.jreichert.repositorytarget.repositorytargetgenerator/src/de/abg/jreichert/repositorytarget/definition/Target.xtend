@@ -149,7 +149,7 @@ class Unit {
 	
 	def generateTarget() '''
 		«IF includeInTarget»
-			<unit id="«targetId»" version="«version»"/>
+			<unit id="«targetId»" version="«if(version.nullOrEmpty) "0.0.0" else version»"/>
 		«ENDIF»
 	'''
 	
@@ -168,7 +168,7 @@ class Unit {
 		if (assignedUnitCategories.empty) {
 			if(assignedLocationCategories.empty) {
 				val defaultCategory = allCategories.findFirst[it.defaultCategory]
-				if(defaultCategory != null) #[defaultCategory.name] else #[this.defaultCategory]  
+				if(defaultCategory !== null) #[defaultCategory.name] else #[this.defaultCategory]  
 			} else {
 				assignedLocationCategories
 			}

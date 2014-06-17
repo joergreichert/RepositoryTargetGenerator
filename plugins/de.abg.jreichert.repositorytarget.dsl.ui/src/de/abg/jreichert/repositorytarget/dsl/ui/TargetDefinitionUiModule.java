@@ -9,6 +9,10 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * Use this class to register components to be used within the IDE.
  */
 public class TargetDefinitionUiModule extends de.abg.jreichert.repositorytarget.dsl.ui.AbstractTargetDefinitionUiModule {
+	/**
+	 * @param plugin
+	 *            the plugin
+	 */
 	public TargetDefinitionUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
 	}

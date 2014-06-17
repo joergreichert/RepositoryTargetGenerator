@@ -15,7 +15,7 @@ class TargetDefinitionGenerator implements IGenerator {
 	
 	override void doGenerate(Resource resource, IFileSystemAccess fsa) {
 		val dslTarget = resource.allContents.filter(typeof(de.abg.jreichert.repositorytarget.dsl.targetDefinition.Target)).head
-		if(dslTarget != null) {
+		if(dslTarget !== null) {
 			val generatorTarget = dslTarget.transformTarget
 			val dslTargetFileName = dslTarget.fileName
 			val dslTargetFolderName = dslTargetFileName.replace('.target', '')

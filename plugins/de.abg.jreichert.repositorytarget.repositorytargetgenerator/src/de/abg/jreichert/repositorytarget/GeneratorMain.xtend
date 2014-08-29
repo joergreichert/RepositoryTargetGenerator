@@ -1,13 +1,13 @@
 package de.abg.jreichert.repositorytarget
 
-import de.abg.jreichert.repositorytarget.definition.LocalTargetDefinition
-import java.io.FileWriter
-import java.io.File
 import de.abg.jreichert.repositorytarget.definition.AbstractTargetDefinition
+import de.abg.jreichert.repositorytarget.definition.LocalTargetDefinition
 import de.abg.jreichert.repositorytarget.definition.TodoTargetDefinition
+import java.io.File
+import java.io.FileWriter
 import java.io.IOException
-import org.xml.sax.SAXException
 import java.net.URISyntaxException
+import org.xml.sax.SAXException
 
 class GeneratorMain {
 	private val TargetFilter targetFilter;
@@ -32,6 +32,8 @@ class GeneratorMain {
 		} catch (IOException exc) {
 			throw new RuntimeException("auto-generated try/catch", exc)
 		} catch (SAXException exc) {
+			throw new RuntimeException("auto-generated try/catch", exc)
+		} catch (URISyntaxException exc) {
 			throw new RuntimeException("auto-generated try/catch", exc)
 		}
 	}
@@ -66,15 +68,15 @@ class GeneratorMain {
 		}
 	}
 
-	def generateSpray() throws IOException, SAXException {
+	def generateSpray() throws IOException, SAXException, URISyntaxException {
 		generateNewFiles("input/spray/spray-juno.target", "output/spray")
 	}
 
-	def generateBookmarks() throws IOException, SAXException {
+	def generateBookmarks() throws IOException, SAXException, URISyntaxException {
 		generateNewFiles("input/bookmarks/bookmarks.target", "output/bookmarks")
 	}
 
-	def generateTodo() throws IOException, SAXException {
+	def generateTodo() throws IOException, SAXException, URISyntaxException {
 		val todoTargetDefinition = new TodoTargetDefinition
 		generateNewFiles(todoTargetDefinition, "output/todo", "todo.target")
 	}

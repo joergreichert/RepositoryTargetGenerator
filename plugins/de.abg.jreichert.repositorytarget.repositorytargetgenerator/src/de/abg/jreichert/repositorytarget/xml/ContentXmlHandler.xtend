@@ -22,13 +22,13 @@ class ContentXmlHandler extends DefaultHandler {
 	}
 	
 	def private compareStrings(String s1, String s2) {
-		if(s1 != null) {
-			if(s2 != null) {
+		if(s1 !== null) {
+			if(s2 !== null) {
 				s1.compareTo(s2)
 			} else {
 				-1
 			}
-		} else if(s2 != null) {
+		} else if(s2 !== null) {
 			-1
 		} else {
 			0
@@ -56,8 +56,8 @@ class ContentXmlHandler extends DefaultHandler {
 			Attributes atts) throws SAXException {
 		if (localName.equals("unit")) {
 			id = atts.getValue("id")
-			if(expectedId != null) {
-				if(id != null && id.startsWith(expectedId)) {
+			if(expectedId !== null) {
+				if(id !== null && id.startsWith(expectedId)) {
 					register(atts)
 				}
 			} else {
@@ -68,7 +68,7 @@ class ContentXmlHandler extends DefaultHandler {
 	
 	def private register(Attributes atts) {
 		version = atts.getValue("version")
-		if(version != null && version.filter) {
+		if(version !== null && version.filter) {
 			if(!idToVersions.containsKey(id)) {
 				idToVersions.put(id, <String>newTreeSet([s1, s2 | compareStrings(s1, s2)]))
 			}
@@ -95,15 +95,15 @@ class ContentXmlHandler extends DefaultHandler {
 	}
 	
 	def SortedSet<String> getVersions() {
-		if(expectedId != null) expectedId.versions else createEmptySortedSet
+		if(expectedId !== null) expectedId.versions else createEmptySortedSet
 	}
 	
 	def SortedSet<String> getVersions(String id) {
-		if(id != null) idToVersions.getNullSafe(id) else createEmptySortedSet
+		if(id !== null) idToVersions.getNullSafe(id) else createEmptySortedSet
 	}	
 	
 	def private getNullSafe(SortedMap<String, SortedSet<String>> map, String key) {
-		if (map.get(id) == null) {
+		if (map.get(id) === null) {
 			map.put(id, createEmptySortedSet)
 		}
 		map.get(id)

@@ -27,7 +27,7 @@ class CompositeContentXmlHandler extends DefaultHandler {
 			Attributes atts) throws SAXException {
 		if (localName.equals("child")) {
 			child = atts.getValue("location");
-			if (child != null) {
+			if (child !== null) {
 				if (!child.contains("http://")) {
 					if(child.contains("file://")) {
 						child = child.replace("file://", "");

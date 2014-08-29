@@ -13,8 +13,6 @@ import org.eclipse.core.runtime.NullProgressMonitor
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.eclipse.xtext.validation.Check
 
-import static org.eclipse.xtext.validation.CheckType.*
-
 class TargetDefinitionValidator extends AbstractTargetDefinitionValidator {
 	
 	public static val NOT_UPTODATE = "NOT_UPTODATE"
@@ -69,7 +67,8 @@ class TargetDefinitionValidator extends AbstractTargetDefinitionValidator {
 	
 	def sortVersions(Iterable<String> versions) {
 		val tokenized = versions.map[it -> it.tokenize.toList].toList
-		tokenized.sort(left, right| compareVersions(left.value, right.value)).map[key]
+		tokenized.sort(left, right | compareVersions(left.value, right.value))
+		tokenized.map[key]
 	}
 
 	def tokenize(String version) {
@@ -80,7 +79,7 @@ class TargetDefinitionValidator extends AbstractTargetDefinitionValidator {
 		version.split(delimiter).toList.fold(newArrayList, [list, b | if(!list.empty) list.add(delimiter); list.add(b); list])
 	}
 	
-	def compareVersions(List<String> left, List<String> right) {
+	def int compareVersions(List<String> left, List<String> right) {
 		val max = if (left.size < right.size) left.size else right.size
 		val typeList = <Class<?>>newArrayList
 		for(i : 0 ..< max) {

@@ -1,10 +1,11 @@
 package de.abg.jreichert.xtextmavenproject
 
-import org.eclipse.xtend.lib.Data
-import org.eclipse.xtext.generator.IFileSystemAccess
-import java.io.FileWriter
 import java.io.File
+import java.io.FileWriter
 import java.util.List
+import org.eclipse.xtend.lib.annotations.Data
+import org.eclipse.xtext.generator.IFileSystemAccess
+import java.io.IOException
 
 @Data class MyFileSystemAccess implements IFileSystemAccess {
 	private String base;
@@ -15,9 +16,13 @@ import java.util.List
 	override generateFile(String fileName, CharSequence contents) {
 		val file = new File(base + "/" + fileName)
 		if(file.parentFile.mkdirs) {
-			val fw = new FileWriter(file)
-			fw.write(contents.toString)
-			fw.close
+			try {
+				val fw = new FileWriter(file)
+				fw.write(contents.toString)
+				fw.close
+			} catch (IOException exc) {
+				exc.printStackTrace
+			}
 		}
 	}
 	
@@ -63,7 +68,7 @@ import java.util.List
 	}
 	
 	def targetPlatformPom(String projectName) '''
-		«pomHeader(projectName)»
+		ï¿½pomHeader(projectName)ï¿½
 			<packaging>pom</packaging>
 
 			<build>
@@ -82,9 +87,9 @@ import java.util.List
 								<configuration>
 									<artifacts>
 										<artifact>
-											<file>«targetName».target</file>
+											<file>ï¿½targetNameï¿½.target</file>
 											<type>target</type>
-											<classifier>«targetName»</classifier>
+											<classifier>ï¿½targetNameï¿½</classifier>
 										</artifact>
 									</artifacts>
 								</configuration>
@@ -101,9 +106,9 @@ import java.util.List
 		<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 			<modelVersion>4.0.0</modelVersion>
-			<groupId>«name»</groupId>
-			<artifactId>«projectName»</artifactId>
-			<version>«version»</version>
+			<groupId>ï¿½nameï¿½</groupId>
+			<artifactId>ï¿½projectNameï¿½</artifactId>
+			<version>ï¿½versionï¿½</version>
 	'''
 	
 	def void generateRepositoryParentProject() {
@@ -121,9 +126,9 @@ import java.util.List
 				<maven>3.0</maven>
 			</prerequisites>
 		
-			<groupId>«name»</groupId>
-			<artifactId>«projectName»</artifactId>
-			<version>«version»</version>
+			<groupId>ï¿½nameï¿½</groupId>
+			<artifactId>ï¿½projectNameï¿½</artifactId>
+			<version>ï¿½versionï¿½</version>
 			<packaging>pom</packaging>
 		
 			<properties>
@@ -162,10 +167,10 @@ import java.util.List
 							<pomDependencies>consider</pomDependencies>
 							<target>
 								<artifact>
-									<groupId>«name»</groupId>
-									<artifactId>«name».targetplatform</artifactId>
+									<groupId>ï¿½nameï¿½</groupId>
+									<artifactId>ï¿½nameï¿½.targetplatform</artifactId>
 									<version>${target-platform-version}</version>
-									<classifier>«targetName»</classifier>
+									<classifier>ï¿½targetNameï¿½</classifier>
 								</artifact>
 							</target>
 							<environments>
@@ -439,14 +444,14 @@ import java.util.List
 			xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 			<modelVersion>4.0.0</modelVersion>
 			<parent>
-				<groupId>«name»</groupId>
-				<artifactId>«projectParentName»</artifactId>
-				<version>«version»</version>
-				<relativePath>../../releng/«projectParentName»/pom.xml</relativePath>
+				<groupId>ï¿½nameï¿½</groupId>
+				<artifactId>ï¿½projectParentNameï¿½</artifactId>
+				<version>ï¿½versionï¿½</version>
+				<relativePath>../../releng/ï¿½projectParentNameï¿½/pom.xml</relativePath>
 			</parent>
 		
-			<artifactId>«projectName»</artifactId>
-			<version>«version»</version>
+			<artifactId>ï¿½projectNameï¿½</artifactId>
+			<version>ï¿½versionï¿½</version>
 			<packaging>eclipse-repository</packaging>
 			
 			<build>
@@ -478,15 +483,15 @@ import java.util.List
 			xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 			<modelVersion>4.0.0</modelVersion>
 			<parent>
-				<groupId>«name»</groupId>
-				<artifactId>«projectParentName»</artifactId>
-				<version>«version»</version>
-				<relativePath>../../releng/«projectParentName»/pom.xml</relativePath>
+				<groupId>ï¿½nameï¿½</groupId>
+				<artifactId>ï¿½projectParentNameï¿½</artifactId>
+				<version>ï¿½versionï¿½</version>
+				<relativePath>../../releng/ï¿½projectParentNameï¿½/pom.xml</relativePath>
 			</parent>	
 		
-			<groupId>«name»</groupId>
-			<artifactId>«projectName»</artifactId>
-			<version>«version»</version>
+			<groupId>ï¿½nameï¿½</groupId>
+			<artifactId>ï¿½projectNameï¿½</artifactId>
+			<version>ï¿½versionï¿½</version>
 			<packaging>pom</packaging>
 		
 			<build>
@@ -545,9 +550,9 @@ import java.util.List
 		            </activation>
 		            <repositories>
 		                <repository>
-		                    <id>«targetName»-dependencies</id>
+		                    <id>ï¿½targetNameï¿½-dependencies</id>
 		                    <layout>p2</layout>
-		                    <url>file:../«name».repository/target/repository</url>
+		                    <url>file:../ï¿½nameï¿½.repository/target/repository</url>
 		                </repository>
 		            </repositories>
 		        </profile>
@@ -562,7 +567,7 @@ import java.util.List
 		                <repository>
 		                    <id>bookmarks-dependencies</id>
 		                    <layout>p2</layout>
-		                    <url>https://joergreichert.ci.cloudbees.com/job/XtextTodos/lastSuccessfulBuild/artifact/«name».repository/target/repository/</url>
+		                    <url>https://joergreichert.ci.cloudbees.com/job/XtextTodos/lastSuccessfulBuild/artifact/ï¿½nameï¿½.repository/target/repository/</url>
 		                </repository>
 		            </repositories>
 		        </profile>
@@ -617,15 +622,15 @@ import java.util.List
 			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 			<modelVersion>4.0.0</modelVersion>
 			<parent>
-				<groupId>«name»</groupId>
-				<artifactId>«name».parent</artifactId>
-				<version>«version»</version>
-				<relativePath>../../releng/«name».parent/pom.xml</relativePath>
+				<groupId>ï¿½nameï¿½</groupId>
+				<artifactId>ï¿½nameï¿½.parent</artifactId>
+				<version>ï¿½versionï¿½</version>
+				<relativePath>../../releng/ï¿½nameï¿½.parent/pom.xml</relativePath>
 			</parent>
 		
-			<groupId>«name»</groupId>
-			<artifactId>«projectName»</artifactId>
-			<version>«version»</version>
+			<groupId>ï¿½nameï¿½</groupId>
+			<artifactId>ï¿½projectNameï¿½</artifactId>
+			<version>ï¿½versionï¿½</version>
 			<packaging>eclipse-plugin</packaging>
 			<build>
 				<plugins>
@@ -669,15 +674,15 @@ import java.util.List
 				<maven>3.0</maven>
 			</prerequisites>
 		
-			<groupId>«name»</groupId>
-			<artifactId>«projectName»</artifactId>
-			<version>«version»</version>
+			<groupId>ï¿½nameï¿½</groupId>
+			<artifactId>ï¿½projectNameï¿½</artifactId>
+			<version>ï¿½versionï¿½</version>
 			<packaging>pom</packaging>
-			<name>«targetName»</name>
+			<name>ï¿½targetNameï¿½</name>
 			<modules>
-				<module>../../releng/«name».targetplatform</module>
-				<module>../../releng/«name».repository.parent</module>
-				<module>../../releng/«name».parent</module>
+				<module>../../releng/ï¿½nameï¿½.targetplatform</module>
+				<module>../../releng/ï¿½nameï¿½.repository.parent</module>
+				<module>../../releng/ï¿½nameï¿½.parent</module>
 			</modules>
 			<profiles>
 				<profile>
@@ -686,9 +691,9 @@ import java.util.List
 						<activeByDefault>true</activeByDefault>
 					</activation>
 					<modules>
-						«FOR pluginProject : pluginProjects»
-						<module>../../plugins/«name».«pluginProject»</module>
-						«ENDFOR»
+						ï¿½FOR pluginProject : pluginProjectsï¿½
+						<module>../../plugins/ï¿½nameï¿½.ï¿½pluginProjectï¿½</module>
+						ï¿½ENDFORï¿½
 					</modules>
 				</profile>
 				<profile>
@@ -699,7 +704,7 @@ import java.util.List
 						</property>
 					</activation>
 					<modules>
-						<module>../../releng/«name».repository</module>
+						<module>../../releng/ï¿½nameï¿½.repository</module>
 					</modules>
 				</profile>
 				<!--profile>
@@ -710,8 +715,8 @@ import java.util.List
 						</property>
 					</activation>
 					<modules>
-						<module>../../features/«name».feature</module>
-						<module>../../features/«name».updatesite</module>
+						<module>../../features/ï¿½nameï¿½.feature</module>
+						<module>../../features/ï¿½nameï¿½.updatesite</module>
 					</modules>
 				</profile-->
 				<profile>

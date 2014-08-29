@@ -1,11 +1,13 @@
 package de.abg.jreichert.repositorytarget.definition
 
 import java.util.List
+import org.eclipse.xtend.lib.annotations.Accessors
 
+@Accessors
 class Target {
-   @Property private String name
-   @Property private List<Category> categories = newArrayList
-   @Property private List<Location> locations = newArrayList
+   private String name
+   private List<Category> categories = newArrayList
+   private List<Location> locations = newArrayList
   
    def createLocation((Location) => void initializer) {
       val location = new Location
@@ -69,11 +71,12 @@ class Target {
 }
 
 
+@Accessors
 class Category {
-	@Property String name 
-	@Property String longName 
-	@Property String description 
-	@Property boolean defaultCategory
+	private String name 
+	private String longName 
+	private String description 
+	private boolean defaultCategory
 
 	def generateCategoryXml() '''
 		<category-def name="«name»" «IF !longName.nullOrEmpty»label="«longName»"«ENDIF»>
@@ -117,28 +120,30 @@ class Location {
 	'''
 }
 
+@Accessors
 class Unit {
-	@Property private String categoryId = ""
-	@Property private String targetId = ""
-	@Property private String version = ""
-	@Property private String url = ""
-	@Property private List<String> assignedUnitCategories = newArrayList
-	@Property private Boolean feature = true
-	@Property private Boolean includeInCategoryXml = true
-	@Property private Boolean includeInTarget = true
-	@Property boolean strictVersion = false
+	private String categoryId = ""
+	private String targetId = ""
+	private String version = ""
+	private String url = ""
+	private List<String> assignedUnitCategories = newArrayList
+	private Boolean feature = true
+	private Boolean includeInCategoryXml = true
+	private Boolean includeInTarget = true
+	private boolean strictVersion = false
+	// how to excluded from accessors?
 	private String defaultCategory = "3rdparty"
 	
 	def String getTargetId() {
-		if(_targetId.nullOrEmpty && !_categoryId.nullOrEmpty && !_categoryId.endsWith("feature.group") && feature)
-           _targetId = _categoryId + ".feature.group"
-		else _targetId	
+		if(targetId.nullOrEmpty && !categoryId.nullOrEmpty && !categoryId.endsWith("feature.group") && feature)
+           targetId = categoryId + ".feature.group"
+		else targetId	
 	}
 
 	def String getCategoryId() {
-		if(!_targetId.nullOrEmpty && _categoryId.nullOrEmpty)
-			_categoryId = _targetId.replace(".feature.group", "") 
-		else _categoryId	
+		if(!targetId.nullOrEmpty && categoryId.nullOrEmpty)
+			categoryId = targetId.replace(".feature.group", "") 
+		else categoryId	
 	}
 	
 	def String getUrl() {

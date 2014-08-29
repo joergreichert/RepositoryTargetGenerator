@@ -9,15 +9,17 @@ import org.xml.sax.InputSource
 import org.xml.sax.helpers.XMLReaderFactory
 
 import static extension com.google.common.io.CharStreams.*
+import java.io.IOException
+import org.xml.sax.SAXException
 
 class ContentParser {
 
-	def String getContent(InputStream input) {
+	def String getContent(InputStream input) throws IOException {
 		val buf = new BufferedReader(new InputStreamReader(input))
 		buf.readLines.join("\n")
 	}
 	
-	def void parse(String content, ContentHandler contentHandler) {
+	def void parse(String content, ContentHandler contentHandler) throws SAXException , IOException {
 		val xmlReader = XMLReaderFactory::createXMLReader();
       	xmlReader.setContentHandler(contentHandler);
       	val reader = new StringReader(content.toString)

@@ -7,6 +7,7 @@ import de.abg.jreichert.repositorytarget.definition.AbstractTargetDefinition
 import de.abg.jreichert.repositorytarget.definition.TodoTargetDefinition
 import java.io.IOException
 import org.xml.sax.SAXException
+import java.net.URISyntaxException
 
 class GeneratorMain {
 	private val TargetFilter targetFilter;
@@ -40,17 +41,17 @@ class GeneratorMain {
 		targetTransformator = new TargetTransformator
 	}
 
-	def generateNewFiles(String inputTargetFile, String outputPath) throws IOException, SAXException {
+	def generateNewFiles(String inputTargetFile, String outputPath) throws IOException, SAXException, URISyntaxException {
 		val targetFileName = new File(inputTargetFile).name
 		val targetDefinition = new LocalTargetDefinition(inputTargetFile)
 		generateNewFiles(targetDefinition, outputPath, targetFileName)
 	}
 
-	def generateNewFiles(AbstractTargetDefinition targetDefinition, String outputPath, String targetFileName) throws IOException, SAXException {
-		val unitFilters = targetFilter.unitFilters()
-		val target = targetDefinition.buildTarget(unitFilters, targetTransformator.targetTransformators)
-		generate(outputPath + "/category.xml", target.generateCategoryXml)
-		generate(outputPath + "/" + targetFileName, target.generateTarget)
+	def generateNewFiles(AbstractTargetDefinition targetDefinition, String outputPath, String targetFileName) throws IOException, SAXException , URISyntaxException {
+//		val unitFilters = targetFilter.unitFilters()
+//		val target = targetDefinition.buildTarget(unitFilters, targetTransformator.targetTransformators)
+//		generate(outputPath + "/category.xml", target.generateCategoryXml)
+//		generate(outputPath + "/" + targetFileName, target.generateTarget)
 	}
 
 	def generate(String fileName, CharSequence fileContent) {

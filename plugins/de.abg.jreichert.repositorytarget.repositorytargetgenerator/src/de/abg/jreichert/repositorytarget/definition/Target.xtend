@@ -88,11 +88,12 @@ class Category {
 }
 
 
+@Accessors
 class Location {
-   @Property private List<Unit> units = newArrayList
-   @Property private String repositoryLocation
-   @Property private List<String> assignedLocationCategories = newArrayList
-   @Property boolean strictVersion = false
+   private List<Unit> units = newArrayList
+   private String repositoryLocation
+   private List<String> assignedLocationCategories = newArrayList
+   boolean strictVersion = false
 	
    def createUnit((Unit) => void initializer) {
       val unit = new Unit()
@@ -131,7 +132,6 @@ class Unit {
 	private Boolean includeInCategoryXml = true
 	private Boolean includeInTarget = true
 	private boolean strictVersion = false
-	// how to excluded from accessors?
 	private String defaultCategory = "3rdparty"
 	
 	def String getTargetId() {
@@ -148,21 +148,21 @@ class Unit {
 	
 	def String getUrl() {
 		if(!categoryId.nullOrEmpty && !version.nullOrEmpty)
-			"features/" + categoryId + "_" + calculateVersion(version, strictVersion) + ".jar"
-		else ""	
+			"features/" + getCategoryId + "_" + calculateVersion(getVersion, strictVersion) + ".jar"
+		else url	
 	}
 	
 	def generateTarget() '''
 		«IF includeInTarget»
-			<unit id="«targetId»" version="«if(version.nullOrEmpty) "0.0.0" else version»"/>
+			<unit id="«getTargetId»" version="«if(getVersion.nullOrEmpty) "0.0.0" else getVersion»"/>
 		«ENDIF»
 	'''
 	
 	def generateCategoryXml(List<Category> allCategories, List<String> assignedLocationCategories, boolean strictVersion) '''
-		«this.strictVersion = strictVersion»
-		«IF includeInCategoryXml»
-			«FOR category : calculateCategory(allCategories, assignedLocationCategories, assignedUnitCategories)»
-				<feature url="«url»" id="«categoryId»" version="«calculateVersion(version, this.strictVersion)»">
+		«setStrictVersion = strictVersion»
+		«IF getIncludeInCategoryXml»
+			«FOR category : calculateCategory(allCategories, assignedLocationCategories, getAssignedUnitCategories)»
+				<feature url="«getUrl»" id="«getCategoryId»" version="«calculateVersion(getVersion, this.strictVersion)»">
 					<category name="«category»"/>
 				</feature>
 			«ENDFOR»
@@ -188,7 +188,7 @@ class Unit {
 	
     def generateFeatureXml() '''
 	   <includes
-	         id="«targetId»"
+	         id="«getTargetId»"
 	         version="0.0.0"/>
     '''
 }

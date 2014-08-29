@@ -47,16 +47,16 @@ class GeneratorTest {
 		) 
 
 		assertEquals("should have generated expected category.xml content", 
-			filesystemAccess.allFiles.get(categoryXmlFilePath).toString,
-			expectedCategoryXmlContent.toString
+			expectedCategoryXmlContent.toString,
+			filesystemAccess.allFiles.get(categoryXmlFilePath).toString
 		) 
 		assertEquals("should have generated expected feature.xml content", 
-			filesystemAccess.allFiles.get(featureXmlFilePath).toString,
-			expectedFeatureXmlContent.toString
+			expectedFeatureXmlContent.toString,
+			filesystemAccess.allFiles.get(featureXmlFilePath).toString
 		) 
 		assertEquals("should have generated expected testdata.target content",
-			filesystemAccess.allFiles.get(targetFilePath).toString,
-			expectedTargetContent.toString
+			expectedTargetContent.toString,
+			filesystemAccess.allFiles.get(targetFilePath).toString
 		) 
 	}
 	

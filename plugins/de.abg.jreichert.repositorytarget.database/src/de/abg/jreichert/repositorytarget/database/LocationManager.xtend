@@ -35,7 +35,7 @@ class LocationManager {
 			result = getById((id as Long))
 		} catch (Exception e) {
 			if(tx !== null) tx.rollback
-			throw e;
+			throw new RuntimeException(e);
 		} 
 		(result as Location)
 	}
@@ -55,7 +55,7 @@ class LocationManager {
 			tx.commit
 		} catch (Exception e) {
 			if(tx !== null) tx.rollback
-			throw e;
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -70,7 +70,7 @@ class LocationManager {
 			tx.commit
 		} catch (Exception e) {
 			if(tx !== null) tx.rollback
-			throw e;
+			throw new RuntimeException(e);
 		}
 	}
 

@@ -6,6 +6,7 @@ import org.junit.Before
 import org.junit.Test
 
 import static org.junit.Assert.*
+import org.eclipse.xtend.lib.annotations.Accessors
 
 class LocationManagerTest {
 	private extension LocationManager locationManager
@@ -321,10 +322,9 @@ class LocationManagerTest {
 	}
 }
 
-@Data
+@Accessors
 class LocationTestdata {
-	@Property 
-	private Location location
+	private val Location location
 	
 	def getTimestamp() {
 		Long.valueOf(location.timestamp)

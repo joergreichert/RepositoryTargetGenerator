@@ -30,6 +30,7 @@ import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import de.abg.jreichert.repositorytarget.dsl.targetDefinition.TargetDefinitionPackage
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#contentAssist on how to customize content assistant
@@ -57,9 +58,9 @@ class TargetDefinitionProposalProvider extends AbstractTargetDefinitionProposalP
 	override completeUnit_CategoryId(EObject model, Assignment assignment, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
 		val location = getLocation(model)
-		if (location != null) {
+		if (location !== null) {
 			val repositoryLocation = location.getRepositoryLocation()
-			if (repositoryLocation != null) {
+			if (repositoryLocation !== null) {
 				val existingCategoryId = NodeModelUtils
 						.findNodesForFeature(location, TargetDefinitionPackage.Literals.LOCATION__UNIT)
 						.filter[it.offset + text.trim.length == context.offset]
@@ -70,7 +71,7 @@ class TargetDefinitionProposalProvider extends AbstractTargetDefinitionProposalP
 					fill(repositoryLocation)
 					val ids = urlToCategoryIdsToVersions.get(repositoryLocation).keySet()
 					val filteredIds = 
-						if(existingCategoryId == null) 
+						if(existingCategoryId === null) 
 							ids.filter[length == replaceAll("\\s", "").length]
 						else {
 							ids
@@ -112,8 +113,8 @@ class TargetDefinitionProposalProvider extends AbstractTargetDefinitionProposalP
 	}
 
 	def private void fill(String repositoryLocation) throws InvocationTargetException, InterruptedException {
-		if (repositoryLocation != null) {
-			if (urlToCategoryIdsToVersions.get(repositoryLocation) == null) {
+		if (repositoryLocation !== null) {
+			if (urlToCategoryIdsToVersions.get(repositoryLocation) === null) {
 				val contentHandler = new ContentXmlHandler(repositoryLocation)
 				val runnable = new ReadOutP2RepositoryRunnable(repositoryLocation, contentHandler, readOutP2Repository)
 				val shell = Display::getDefault().getActiveShell()
@@ -127,11 +128,11 @@ class TargetDefinitionProposalProvider extends AbstractTargetDefinitionProposalP
 	override completeUnit_Version(EObject model, Assignment assignment, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
 		val Unit unit = getUnit(model)
-		if (unit != null) {
+		if (unit !== null) {
 			val repositoryLocation = getRepositoryLocation(unit)
-			if (repositoryLocation != null) {
+			if (repositoryLocation !== null) {
 				var categoryId = unit.getCategoryId()
-				if (categoryId != null) {
+				if (categoryId !== null) {
 					val existingVersion = NodeModelUtils
 							.findNodesForFeature(unit, TargetDefinitionPackage.Literals.UNIT__VERSION)
 							.last?.text					
@@ -145,9 +146,9 @@ class TargetDefinitionProposalProvider extends AbstractTargetDefinitionProposalP
 							else 
 								categoryId + ".feature.group"
 						val versions = urlToCategoryIdsToVersions.get(repositoryLocation).get(categoryId)
-						if (versions != null) {
+						if (versions !== null) {
 							val filteredVersions = 
-								if(existingVersion == null) 
+								if(existingVersion === null) 
 									versions.filterWhitespaceContainingStrings
 								else {
 									versions
@@ -155,7 +156,7 @@ class TargetDefinitionProposalProvider extends AbstractTargetDefinitionProposalP
 									 	.filterStringThatStartsWith(existingVersion)
 								}
 							for (String version : filteredVersions) {
-								if (version != null) {
+								if (version !== null) {
 									displayString = new StyledString(version)
 									proposal = doCreateProposal(version, displayString, null, 600, context)
 									acceptor.accept(proposal)
@@ -189,7 +190,7 @@ class TargetDefinitionProposalProvider extends AbstractTargetDefinitionProposalP
 	def private String getRepositoryLocation(Unit unit) {
 		var String repositoryLocation = null
 		val location = unit.eContainer() as Location
-		if (location != null) {
+		if (location !== null) {
 			repositoryLocation = location.getRepositoryLocation()
 		}
 		return repositoryLocation
@@ -202,7 +203,7 @@ class TargetDefinitionProposalProvider extends AbstractTargetDefinitionProposalP
 
 	override complete_ID(EObject model, RuleCall ruleCall, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
-		if (EcoreUtil2::getContainerOfType(model, typeof(Location)) == null) {
+		if (EcoreUtil2::getContainerOfType(model, typeof(Location)) === null) {
 			terminalsProposalProvider.complete_ID(model, ruleCall, context, acceptor)
 		} else {
 			super.complete_ID(model, ruleCall, context, acceptor)
@@ -210,11 +211,11 @@ class TargetDefinitionProposalProvider extends AbstractTargetDefinitionProposalP
 	}
 }
 
-@Data
+@Accessors
 class ReadOutP2RepositoryRunnable implements IRunnableWithProgress {
 	private val String repositoryLocation
 	private val ContentXmlHandler contentHandler
-	private ReadOutP2Repository readOutP2Repository
+	private val ReadOutP2Repository readOutP2Repository
 
 	override run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 		try {

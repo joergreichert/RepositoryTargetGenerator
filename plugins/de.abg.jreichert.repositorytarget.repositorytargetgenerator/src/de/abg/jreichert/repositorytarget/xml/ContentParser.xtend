@@ -13,15 +13,23 @@ import static extension com.google.common.io.CharStreams.*
 class ContentParser {
 
 	def String getContent(InputStream input) {
-		val buf = new BufferedReader(new InputStreamReader(input))
-		buf.readLines.join("\n")
+		try {
+			val buf = new BufferedReader(new InputStreamReader(input))
+			buf.readLines.join("\n")
+		} catch (Exception exc) {
+			throw new RuntimeException(exc)
+		}
 	}
 	
 	def void parse(String content, ContentHandler contentHandler) {
-		val xmlReader = XMLReaderFactory::createXMLReader();
-      	xmlReader.setContentHandler(contentHandler);
-      	val reader = new StringReader(content.toString)
-      	val inputSource = new InputSource(reader);
-      	xmlReader.parse(inputSource);
+		try {
+			val xmlReader = XMLReaderFactory::createXMLReader();
+	      	xmlReader.setContentHandler(contentHandler);
+	      	val reader = new StringReader(content.toString)
+	      	val inputSource = new InputSource(reader);
+	      	xmlReader.parse(inputSource);
+		} catch (Exception exc) {
+			throw new RuntimeException(exc)
+		}
 	}
 }

@@ -12,6 +12,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
+@SuppressWarnings("javadoc")
 public class SessionManager {
 
 	private static SessionFactory sessionFactory;
@@ -19,19 +20,19 @@ public class SessionManager {
 	static {
 		try {
 			Configuration cfg = new Configuration()
-					.addAnnotatedClass(Location.class)
-					.addAnnotatedClass(Unit.class)
-					.addAnnotatedClass(Version.class)
-					.setProperty("hibernate.dialect",
-							SQLiteDialect.class.getName())
+			.addAnnotatedClass(Location.class)
+			.addAnnotatedClass(Unit.class)
+			.addAnnotatedClass(Version.class)
+			.setProperty("hibernate.dialect",
+					SQLiteDialect.class.getName())
 					.setProperty("hibernate.connection.driver_class",
 							org.sqlite.JDBC.class.getName())
-					.setProperty("hibernate.show_sql", "false")
-					.setProperty("hibernate.format_sql", "false")
-					.setProperty("hibernate.connection.username", "")
-					.setProperty("hibernate.connection.password", "")
-					.setProperty("hibernate.current_session_context_class", "thread")
-					.setProperty("connection.pool_size", "1");
+							.setProperty("hibernate.show_sql", "false")
+							.setProperty("hibernate.format_sql", "false")
+							.setProperty("hibernate.connection.username", "")
+							.setProperty("hibernate.connection.password", "")
+							.setProperty("hibernate.current_session_context_class", "thread")
+							.setProperty("connection.pool_size", "1");
 
 			if (Platform.isRunning()) {
 				IPath path = Activator.getDefault().getStateLocation()
@@ -60,14 +61,14 @@ public class SessionManager {
 						"jdbc:sqlite:" + path);
 			}
 			ServiceRegistry serviceRegistry = new ServiceRegistryBuilder()
-					.applySettings(cfg.getProperties()).buildServiceRegistry();
+			.applySettings(cfg.getProperties()).buildServiceRegistry();
 			sessionFactory = cfg.buildSessionFactory(serviceRegistry);
 		} catch (Exception e) {
 			Activator
-					.getDefault()
-					.getLog()
-					.log(new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(),
-							e.getMessage(), e));
+			.getDefault()
+			.getLog()
+			.log(new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(),
+					e.getMessage(), e));
 			throw new RuntimeException(e);
 		}
 	}

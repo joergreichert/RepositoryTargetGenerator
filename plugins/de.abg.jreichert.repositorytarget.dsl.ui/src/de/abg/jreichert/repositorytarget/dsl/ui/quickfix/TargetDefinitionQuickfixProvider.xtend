@@ -6,10 +6,10 @@ package de.abg.jreichert.repositorytarget.dsl.ui.quickfix
 import de.abg.jreichert.repositorytarget.dsl.targetDefinition.Unit
 import de.abg.jreichert.repositorytarget.dsl.ui.internal.TargetDefinitionActivator
 import de.abg.jreichert.repositorytarget.dsl.validation.TargetDefinitionValidator
-import org.eclipse.core.internal.resources.Workspace
 import org.eclipse.core.resources.IMarker
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.Path
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
@@ -31,9 +31,8 @@ class TargetDefinitionQuickfixProvider extends DefaultQuickfixProvider {
 		acceptor.accept(issue, 'Update version to ' + newVersion, 'Updates current version to ' + newVersion, null) [
 			element, context |
 			if(element instanceof Unit) {
-				val unit = element as Unit
-				unit.version = newVersion
-				removeMarker(unit, issue)
+				element.version = newVersion
+				removeMarker(element, issue)
 			}
 		]
 	}
@@ -43,14 +42,22 @@ class TargetDefinitionQuickfixProvider extends DefaultQuickfixProvider {
 			new Path(URI.decode(eObject.eResource.URI.toPlatformString(true)))
 		);
 		if(file.exists) {
-			val markerManager = (ResourcesPlugin.getWorkspace() as Workspace).getMarkerManager();
+			val markerManager = MarkerManagerProvider.getMarkerManager();
 			val markerList = <IMarker>newArrayList
 			markerManager.doFindMarkers(file, markerList, 
 				TargetDefinitionActivator.instance.bundle.symbolicName + ".targetdefinition.check.expensive", 
 				true, IResource.DEPTH_INFINITE
 			)
-			val markers = markerList.filter[it.getAttribute(IMarker.CHAR_START) == issue.offset] 
-			markers.forEach[delete]
+			val markers = markerList.filter[try {
+				it.getAttribute(IMarker.CHAR_START) == issue.offset
+			} catch (CoreException exc) {
+				throw new RuntimeException(exc)
+			}] 
+			markers.forEach[try {
+				delete
+			} catch (CoreException exc) {
+				throw new RuntimeException("auto-generated try/catch", exc)
+			}]
 		} else {
 			System::err.println(file + " does not exist.")
 		}

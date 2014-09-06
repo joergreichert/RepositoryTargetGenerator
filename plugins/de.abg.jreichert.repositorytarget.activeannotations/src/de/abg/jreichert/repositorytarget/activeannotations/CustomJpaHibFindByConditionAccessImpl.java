@@ -4,6 +4,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.sculptor.framework.accessimpl.jpahibernate.JpaHibFindByConditionAccessImpl;
 
+@SuppressWarnings("javadoc")
 public class CustomJpaHibFindByConditionAccessImpl<T> extends JpaHibFindByConditionAccessImpl<T> {
 	private final Session session;
 

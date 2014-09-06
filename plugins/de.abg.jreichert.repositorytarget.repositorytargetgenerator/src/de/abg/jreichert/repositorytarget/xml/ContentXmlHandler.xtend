@@ -31,13 +31,13 @@ class ContentXmlHandler extends DefaultHandler {
 	}
 	
 	def private compareStrings(String s1, String s2) {
-		if(s1 != null) {
-			if(s2 != null) {
+		if(s1 !== null) {
+			if(s2 !== null) {
 				s1.compareTo(s2)
 			} else {
 				-1
 			}
-		} else if(s2 != null) {
+		} else if(s2 !== null) {
 			-1
 		} else {
 			0
@@ -65,11 +65,11 @@ class ContentXmlHandler extends DefaultHandler {
 
 	override startElement(String uri, String localName, String qName,
 			Attributes atts) throws SAXException {
-		if(getUrl != null) {
+		if(getUrl !== null) {
 			if (localName.equals("unit")) {
 				id = atts.getValue("id")
-				if(expectedId != null) {
-					if(id != null && id.startsWith(expectedId)) {
+				if(expectedId !== null) {
+					if(id !== null && id.startsWith(expectedId)) {
 						register(getUrl, atts)
 					}
 				} else {
@@ -90,7 +90,7 @@ class ContentXmlHandler extends DefaultHandler {
 	def private register(String uri, Attributes atts) {
 		version = atts.getValue("version")
 		var idToVersions = getIdToVersions(uri) ?: <String, SortedSet<String>>newTreeMap[s1, s2 | compareStrings(s1, s2)]
-		if(version != null && version.filter) {
+		if(version !== null && version.filter) {
 			if(!idToVersions.containsKey(id)) {
 				idToVersions.put(id, <String>newTreeSet([s1, s2 | compareStrings(s1, s2)]))
 			}
@@ -118,15 +118,15 @@ class ContentXmlHandler extends DefaultHandler {
 	}
 	
 	def SortedSet<String> getVersions(String url) {
-		if(url != null && expectedId != null) url.getVersions(id) else createEmptySortedSet
+		if(url !== null && expectedId !== null) url.getVersions(id) else createEmptySortedSet
 	}
 	
 	def SortedSet<String> getVersions(String url, String id) {
-		if(url != null && id != null) getIdToVersions(url)?.getNullSafe(id) else createEmptySortedSet
+		if(url !== null && id !== null) getIdToVersions(url)?.getNullSafe(id) else createEmptySortedSet
 	}	
 	
 	def private getNullSafe(SortedMap<String, SortedSet<String>> map, String key) {
-		if (map.get(id) == null) {
+		if (map.get(id) === null) {
 			map.put(id, createEmptySortedSet)
 		}
 		map.get(id)

@@ -7,7 +7,7 @@
     <package 
        uri = "http://www.abg.de/jreichert/TargetDefinition" 
        class = "de.abg.jreichert.repositorytarget.dsl.targetDefinition.TargetDefinitionPackage"
-       genModel = "de/abg/jreichert/repositorytarget/dsl/TargetDefinition.genmodel" /> 
+       genModel = "model/generated/TargetDefinition.genmodel" /> 
 	
   </extension>
 

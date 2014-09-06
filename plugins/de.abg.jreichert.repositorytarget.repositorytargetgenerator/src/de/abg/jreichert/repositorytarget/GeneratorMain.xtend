@@ -5,6 +5,7 @@ import java.io.FileWriter
 import java.io.File
 import de.abg.jreichert.repositorytarget.definition.AbstractTargetDefinition
 import de.abg.jreichert.repositorytarget.definition.TodoTargetDefinition
+import java.io.IOException
 
 class GeneratorMain {
 	private val TargetFilter targetFilter;
@@ -46,10 +47,14 @@ class GeneratorMain {
 	
 	def generate(String fileName, CharSequence fileContent) {
 		val parentFile = new File(fileName).parentFile
-		if(parentFile != null) parentFile.mkdirs
-		val writer = new FileWriter(fileName)
-		writer.write(fileContent.toString)
-		writer.close
+		if(parentFile !== null) parentFile.mkdirs
+		try {
+			val writer = new FileWriter(fileName)
+			writer.write(fileContent.toString)
+			writer.close
+		} catch (IOException exc) {
+			throw new RuntimeException(exc)
+		}
 	}	
 	
 	def generateSpray() {

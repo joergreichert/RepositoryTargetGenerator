@@ -4,6 +4,7 @@ import de.abg.jreichert.repositorytarget.database.LocationManager
 import de.abg.jreichert.repositorytarget.database.SessionManager
 import java.io.File
 import java.io.FileInputStream
+import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.JarURLConnection
 import java.net.URL
@@ -29,16 +30,20 @@ class ContentJarParser extends ContentParser {
 				contentFileName = "compositeContent"
 				lastModified = lastModifiedXmlUrl(url, contentFileName)
 				if (lastModified.longValue > -1) {
+
 					// ignore time stamp of composite update site
 					// localMap.put(urlStr, lastModified)
 					val compositeContent = getXmlContent(url, contentFileName)
+
 					//localContents.put(urlStr, compositeContent)
 					localMap.putAll(parseTimestamps(compositeContent, url, localContents))
 				} else {
+
 					// ignore time stamp of composite update site
 					// lastModified = lastModifiedJarUrl(url, contentFileName)
 					localMap.put(urlStr, lastModified)
 					val compositeContent = getJarContent(url, contentFileName)
+
 					//localContents.put(urlStr, compositeContent)
 					localMap.putAll(parseTimestamps(compositeContent, url, localContents))
 				}
@@ -51,11 +56,11 @@ class ContentJarParser extends ContentParser {
 		var contentFileName = "content"
 		val url = urlStr.toUrl
 		if (existsXmlUrl(url, contentFileName)) {
-			if(!localContents.containsKey(urlStr)) {
+			if (!localContents.containsKey(urlStr)) {
 				localContents.put(urlStr, getXmlContent(url, contentFileName))
 			}
 		} else if (existsJarUrl(url, contentFileName)) {
-			if(!localContents.containsKey(urlStr)) {
+			if (!localContents.containsKey(urlStr)) {
 				localContents.put(urlStr, getJarContent(url, contentFileName))
 			}
 		} else {
@@ -75,13 +80,14 @@ class ContentJarParser extends ContentParser {
 	def private void parseContents(String compositeContent, String parentLocation, Map<String, String> localContents) {
 		val locations = parseLocations(compositeContent, parentLocation)
 		for (location : locations.toSet) {
-			if(!localContents.containsKey(location)) {
+			if (!localContents.containsKey(location)) {
 				fillInternalContents(location, localContents)
 			}
 		}
 	}
 
-	def private Map<String, Long> parseTimestamps(String compositeContent, String parentLocation, Map<String, String> localContents) {
+	def private Map<String, Long> parseTimestamps(String compositeContent, String parentLocation,
+		Map<String, String> localContents) {
 		val Map<String, Long> map = newHashMap
 		val locations = parseLocations(compositeContent, parentLocation)
 		for (location : locations) {
@@ -91,38 +97,46 @@ class ContentJarParser extends ContentParser {
 	}
 
 	def private String getJarContent(String url, String contentFileName) {
-		val jarUrl = new URL("jar:" + url.toUrl + contentFileName + ".jar!/")
-		val connection = jarUrl.openConnection() as JarURLConnection
-		val jarFile = connection.getJarFile
-		var entry = jarFile.getJarEntry(contentFileName + ".xml")
-		val input = jarFile.getInputStream(entry)
-		val content = getContent(input)
-		jarFile.close
-		content
+		try {
+			val jarUrl = new URL("jar:" + url.toUrl + contentFileName + ".jar!/")
+			val connection = jarUrl.openConnection() as JarURLConnection
+			val jarFile = connection.getJarFile
+			var entry = jarFile.getJarEntry(contentFileName + ".xml")
+			val input = jarFile.getInputStream(entry)
+			val content = getContent(input)
+			jarFile.close
+			content
+		} catch (IOException exc) {
+			throw new RuntimeException(exc)
+		}
 	}
 
 	def private String getXmlContent(String url, String contentFileName) {
-		val xmlUrl = new URL(url.toUrl + contentFileName + ".xml")
-		if (xmlUrl.protocol == "file") {
-			val file = new File(xmlUrl.toURI.path).absoluteFile
-			if (file.exists && file.file)
-				getContent(new FileInputStream(file))
-			else {
-				val newFile = new File(System.getProperty("user.dir") + "/" + xmlUrl.toString.replace("file://", ""))
-				if(newFile.exists && newFile.file) getContent(new FileInputStream(newFile))
-			}
-		} else {
-			if (url.contains("file://")) {
-				val file = new File(xmlUrl.toURI.path.replace("jar:", ""))
-				val newXmlUrl = new URL("jar:" + file.absolutePath)
-				val connection = newXmlUrl.openConnection
-				val input = connection.inputStream
-				getContent(input)
+		try {
+			val xmlUrl = new URL(url.toUrl + contentFileName + ".xml")
+			if (xmlUrl.protocol == "file") {
+				val file = new File(xmlUrl.toURI.path).absoluteFile
+				if (file.exists && file.file)
+					getContent(new FileInputStream(file))
+				else {
+					val newFile = new File(System.getProperty("user.dir") + "/" + xmlUrl.toString.replace("file://", ""))
+					if (newFile.exists && newFile.file) getContent(new FileInputStream(newFile))
+				}
 			} else {
-				val connection = xmlUrl.openConnection
-				val input = connection.inputStream
-				getContent(input)
+				if (url.contains("file://")) {
+					val file = new File(xmlUrl.toURI.path.replace("jar:", ""))
+					val newXmlUrl = new URL("jar:" + file.absolutePath)
+					val connection = newXmlUrl.openConnection
+					val input = connection.inputStream
+					getContent(input)
+				} else {
+					val connection = xmlUrl.openConnection
+					val input = connection.inputStream
+					getContent(input)
+				}
 			}
+		} catch (Exception exc) {
+			throw new RuntimeException(exc)
 		}
 	}
 
@@ -147,30 +161,38 @@ class ContentJarParser extends ContentParser {
 	}
 
 	def private Long lastModified(String url, String contentFileName, String fileExt) {
-		val contentUrl = new URL(url.toUrl + contentFileName + "." + fileExt);
-		if (contentUrl.protocol == "file") {
-			val file = new File(contentUrl.toURI.path).absoluteFile
-			if (file.exists && file.file)
-				Long.valueOf(file.lastModified)
-			else {
-				val newFile = new File(System.getProperty("user.dir") + "/" + contentUrl.toString.replace("file://", ""))
-				if(newFile.exists && newFile.file) Long.valueOf(newFile.lastModified) else Long.valueOf(-1L)
-			}
-		} else {
-			if (url.contains("file://")) {
-				val file = new File(contentUrl.toURI.path.replace("jar:", "")).absoluteFile
-				if(file.exists && file.file) Long.valueOf(file.lastModified) else Long.valueOf(-1L)
+		try {
+			val contentUrl = new URL(url.toUrl + contentFileName + "." + fileExt);
+			if (contentUrl.protocol == "file") {
+				val file = new File(contentUrl.toURI.path).absoluteFile
+				if (file.exists && file.file)
+					Long.valueOf(file.lastModified)
+				else {
+					val newFile = new File(System.getProperty("user.dir") + "/" + contentUrl.toString.replace("file://", ""))
+					if (newFile.exists && newFile.file) Long.valueOf(newFile.lastModified) else Long.valueOf(-1L)
+				}
 			} else {
-				val conn = contentUrl.openConnection
-				if(conn.existsUrl) Long.valueOf(conn.lastModified) else Long.valueOf(-1L)
+				if (url.contains("file://")) {
+					val file = new File(contentUrl.toURI.path.replace("jar:", "")).absoluteFile
+					if (file.exists && file.file) Long.valueOf(file.lastModified) else Long.valueOf(-1L)
+				} else {
+					val conn = contentUrl.openConnection
+					if (conn.existsUrl) Long.valueOf(conn.lastModified) else Long.valueOf(-1L)
+				}
 			}
+		} catch (Exception exc) {
+			throw new RuntimeException(exc)
 		}
 	}
 
 	def private dispatch existsUrl(HttpURLConnection contentCon) {
-		contentCon.requestMethod = "HEAD";
-		val code = contentCon.responseCode
-		code == HttpURLConnection::HTTP_OK
+		try {
+			contentCon.requestMethod = "HEAD"
+			val code = contentCon.responseCode
+			code == HttpURLConnection::HTTP_OK
+		} catch (Exception exc) {
+			throw new RuntimeException(exc)
+		}
 	}
 
 	def private dispatch existsUrl(URLConnection contentCon) {
@@ -178,7 +200,7 @@ class ContentJarParser extends ContentParser {
 	}
 
 	def private toUrl(String url) {
-		if(url.endsWith("/")) url else url + "/"
+		if (url.endsWith("/")) url else url + "/"
 	}
 
 	def parseVersionForId(String url, String id, List<(String)=>boolean> filters) {
@@ -214,11 +236,12 @@ class ContentJarParser extends ContentParser {
 		localContents
 	}
 
-	def void fillInnerContents(Map<String, Long> urlToTimestamps, Map<String, Long> urlToDbTimestamps, Map<String, String> localContents) {
+	def void fillInnerContents(Map<String, Long> urlToTimestamps, Map<String, Long> urlToDbTimestamps,
+		Map<String, String> localContents) {
 		val innerUrls = getInnerUrls(urlToTimestamps, urlToDbTimestamps)
 		fillUpdatedContents(innerUrls, localContents)
 	}
-	
+
 	def private void fillUpdatedContents(Iterable<String> innerUrls, Map<String, String> localContents) {
 		for (innerUrl : innerUrls.toSet) {
 			fillInternalContents(innerUrl, localContents)
@@ -228,21 +251,21 @@ class ContentJarParser extends ContentParser {
 	def private Iterable<String> getInnerUrls(Map<String, Long> urlToTimestamps, Map<String, Long> urlToDbTimestamps) {
 		urlToTimestamps.entrySet.filter(
 			entry|checkDbTimestampOlderThanUrlTimestamp(entry.key, urlToDbTimestamps.get(entry.key), entry.value)
-		).map[key]		
+		).map[key]
 	}
 
 	def private boolean checkDbTimestampOlderThanUrlTimestamp(String url, Long dbTimestamp, Long remoteTimestamp) {
-		if (dbTimestamp == null) {
+		if (dbTimestamp === null) {
 			return true;
 		}
-		if (remoteTimestamp == null) {
+		if (remoteTimestamp === null) {
 			return false;
 		}
 		return dbTimestamp < remoteTimestamp
 	}
 
 	def private Map<String, Long> getTimestamps(String url, Map<String, String> localContents) {
-		if (locationToTimestamp == null || !locationToTimestamp.keySet.contains(url)) {
+		if (locationToTimestamp === null || !locationToTimestamp.keySet.contains(url)) {
 			locationToTimestamp = getInternalTimestamps(url, localContents)
 		}
 		locationToTimestamp
@@ -254,7 +277,7 @@ class ContentJarParser extends ContentParser {
 		for (entry : contentHandler.urlToIdToVersion.entrySet) {
 			locationManager.saveLocation(urlToTimestamps.get(entry.key), entry.key, entry.value)
 		}
-		if (urlToTimestamps.get(url) != null) {
+		if (urlToTimestamps.get(url) !== null) {
 			locationManager.saveCompositeLocation(url, urlToTimestamps.get(url), urlToTimestamps.keySet)
 		}
 	}

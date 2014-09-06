@@ -17,8 +17,6 @@ import org.eclipse.core.runtime.NullProgressMonitor
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.eclipse.xtext.validation.Check
 
-import static org.eclipse.xtext.validation.CheckType.*
-
 class TargetDefinitionValidator extends AbstractTargetDefinitionValidator {
 
 	public static val NOT_UPTODATE = "NOT_UPTODATE"

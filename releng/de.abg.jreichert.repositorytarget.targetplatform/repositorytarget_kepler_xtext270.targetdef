@@ -1,0 +1,26 @@
+TargetDefinition "Repository Target Generator - Eclipse 4.4, Xtext/Xtend 2.7"
+
+	targetFile = de.abg.jreichert.repositorytarget.targetplatform
+
+	http://www.xpect-tests.org/updatesite/nightly/ {
+		org.xpect.sdk 0.1.0.201409041611
+	}
+
+	http://download.eclipse.org/eclipse/updates/4.4 {
+		org.eclipse.sdk 4.4.0.v20140606-1558
+	}
+
+	http://download.eclipse.org/modeling/emf/emf/updates/milestones/ {
+		org.eclipse.emf.sdk 2.10.1.v20140901-1055
+	}
+
+	http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/ {
+		org.eclipse.xtext.redist 2.7.0.v201409021032,
+		org.eclipse.xtend.sdk 2.7.0.v201409021032,
+		org.eclipse.emf.mwe2.language.sdk 2.7.0.v201409021051,
+		org.eclipse.emf.mwe2.runtime.sdk 2.7.0.v201409021027
+	}
+
+	http://download.itemis.com/updates/releases/2.1.1/ {
+		de.itemis.xtext.antlr.sdk 2.1.1.v201405091103
+	}

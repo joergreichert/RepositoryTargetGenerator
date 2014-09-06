@@ -1,6 +1,6 @@
 /* XPECT_SETUP de.abg.jreichert.repositorytarget.dsl.formatting.TargetDefinitionFormatterTest END_SETUP */
 
-/* XPECT formatted --- 
+/* XPECT ! formatted --- 
 TargetDefinition "Spray Target Platform - Eclipse 4.3"
 
 	targetFile = spray-kepler

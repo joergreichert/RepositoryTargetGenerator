@@ -34,7 +34,7 @@ class EntityLiteralTest {
 			'''
 				MULTIPLE FILES WERE GENERATED
 				
-				File 1 : MyClass.java
+				File 1 : /myProject/xtend-gen/MyClass.java
 				
 				import de.abg.jreichert.repositorytarget.activeannotations.EntityLiteral;
 				import de.abg.jreichert.repositorytarget.activeannotations.Property;
@@ -67,7 +67,7 @@ class EntityLiteralTest {
 				  }
 				}
 				
-				File 2 : MyClass2.java
+				File 2 : /myProject/xtend-gen/MyClass2.java
 				
 				import de.abg.jreichert.repositorytarget.activeannotations.EntityLiteral;
 				import de.abg.jreichert.repositorytarget.activeannotations.Property;
@@ -89,7 +89,7 @@ class EntityLiteralTest {
 				  }
 				}
 				
-				File 3 : MyClass2Literal.java
+				File 3 : /myProject/xtend-gen/MyClass2Literal.java
 				
 				import org.sculptor.framework.domain.Property;
 				
@@ -102,7 +102,7 @@ class EntityLiteralTest {
 				  }
 				}
 				
-				File 4 : MyClass2LiteralImpl.java
+				File 4 : /myProject/xtend-gen/MyClass2LiteralImpl.java
 				
 				import org.sculptor.framework.domain.LeafProperty;
 				import org.sculptor.framework.domain.PropertiesCollection;
@@ -129,7 +129,7 @@ class EntityLiteralTest {
 				  }
 				}
 				
-				File 5 : MyClass2Literals.java
+				File 5 : /myProject/xtend-gen/MyClass2Literals.java
 				
 				import org.sculptor.framework.domain.Property;
 				
@@ -146,7 +146,7 @@ class EntityLiteralTest {
 				  }
 				}
 				
-				File 6 : MyClass3.java
+				File 6 : /myProject/xtend-gen/MyClass3.java
 				
 				import de.abg.jreichert.repositorytarget.activeannotations.Property;
 				
@@ -166,7 +166,7 @@ class EntityLiteralTest {
 				  }
 				}
 				
-				File 7 : MyClassLiteral.java
+				File 7 : /myProject/xtend-gen/MyClassLiteral.java
 				
 				import org.sculptor.framework.domain.Property;
 				
@@ -179,7 +179,7 @@ class EntityLiteralTest {
 				  }
 				}
 				
-				File 8 : MyClassLiteralImpl.java
+				File 8 : /myProject/xtend-gen/MyClassLiteralImpl.java
 				
 				import org.sculptor.framework.domain.LeafProperty;
 				import org.sculptor.framework.domain.PropertiesCollection;
@@ -210,7 +210,7 @@ class EntityLiteralTest {
 				  }
 				}
 				
-				File 9 : MyClassLiterals.java
+				File 9 : /myProject/xtend-gen/MyClassLiterals.java
 				
 				import org.sculptor.framework.domain.Property;
 				

@@ -4,6 +4,7 @@ import org.eclipse.xtend.lib.macro.TransformationContext
 import org.eclipse.xtend.lib.macro.declaration.AnnotationTarget
 import org.eclipse.xtend.lib.macro.declaration.TypeReference
 import org.eclipse.xtend.lib.macro.declaration.CompilationStrategy.CompilationContext
+import org.eclipse.xtend.lib.annotations.Accessors
 
 class AnnotationExtensions {
 	
@@ -43,13 +44,13 @@ class AnnotationExtensions {
 }
 
 class AnnotationSearch {
-	@org.eclipse.xtend.lib.Property AnnotationTarget type
-	@org.eclipse.xtend.lib.Property TransformationContext context
-	@org.eclipse.xtend.lib.Property Class<?> annotationClass
+	@Accessors AnnotationTarget type
+	@Accessors TransformationContext context
+	@Accessors Class<?> annotationClass
 }
 
 class AnnotationValueSearch<T> {
-	@org.eclipse.xtend.lib.Property AnnotationSearch annotationSearch
-	@org.eclipse.xtend.lib.Property String value
-	@org.eclipse.xtend.lib.Property Class<T> valueType	
+	@Accessors AnnotationSearch annotationSearch
+	@Accessors String value
+	@Accessors Class<T> valueType	
 }

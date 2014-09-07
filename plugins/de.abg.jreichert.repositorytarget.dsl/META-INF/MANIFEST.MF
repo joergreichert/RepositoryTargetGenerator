@@ -19,7 +19,8 @@ Require-Bundle: org.eclipse.xtext;bundle-version="[2.4.0,2.8.0)";visibility:=ree
  org.eclipse.xtext.common.types;bundle-version="[2.4.0,2.8.0)",
  de.abg.jreichert.repositorytarget.repositorytargetgenerator;bundle-version="0.1.0";visibility:=reexport,
  org.eclipse.core.runtime,
- org.objectweb.asm;bundle-version="5.0.1";resolution:=optional
+ org.objectweb.asm;bundle-version="5.0.1";resolution:=optional,
+ org.eclipse.xtext.xbase.lib
 Import-Package: org.apache.log4j,
  org.eclipse.xtext.xbase.lib
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

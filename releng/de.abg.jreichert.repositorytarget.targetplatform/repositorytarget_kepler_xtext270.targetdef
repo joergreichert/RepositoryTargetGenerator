@@ -15,8 +15,8 @@ TargetDefinition "Repository Target Generator - Eclipse 4.4, Xtext/Xtend 2.7"
 	}
 
 	http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/ {
-		org.eclipse.xtext.redist 2.7.0.v201409021032,
-		org.eclipse.xtend.sdk 2.7.0.v201409021032,
+		org.eclipse.xtext.redist 2.7.2.v201409160908,
+		org.eclipse.xtend.sdk 2.7.2.v201409160908,
 		org.eclipse.emf.mwe2.language.sdk 2.7.0.v201409021051,
 		org.eclipse.emf.mwe2.runtime.sdk 2.7.0.v201409021027
 	}

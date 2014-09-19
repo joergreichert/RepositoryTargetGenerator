@@ -9,7 +9,7 @@
    <feature url="features/org.eclipse.emf.sdk_0.0.0.jar" id="org.eclipse.emf.sdk" version="0.0.0">
       <category name="3rdparty"/>
    </feature>
-   <feature url="features/org.eclipse.xtext.sdk_0.0.0.jar" id="org.eclipse.xtext.sdk" version="0.0.0">
+   <feature url="features/org.eclipse.xtext.redist_0.0.0.jar" id="org.eclipse.xtext.redist" version="0.0.0">
       <category name="3rdparty"/>
    </feature>
    <feature url="features/org.eclipse.xtend.sdk_0.0.0.jar" id="org.eclipse.xtend.sdk" version="0.0.0">

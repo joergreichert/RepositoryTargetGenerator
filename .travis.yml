@@ -1,4 +1,6 @@
 language: java
+jdk:
+  - oraclejdk8
 script: cd releng/de.abg.jreichert.repositorytarget.distribution && mvn clean -B -V package -Pmodules-default,modules-assembly
 env:
   global:

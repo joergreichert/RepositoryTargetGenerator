@@ -3,7 +3,7 @@ TargetDefinition "Repository Target Generator - Eclipse 4.4.1, Xtext/Xtend 2.7.3
 	targetFile = de.abg.jreichert.repositorytarget.targetplatform
 
 	"Eclipse Luna" http://download.eclipse.org/releases/luna {
-		org.eclipse.sdk 
+		org.eclipse.sdk
 	}
 
 	"Eclipse Luna Updates" http://download.eclipse.org/eclipse/updates/4.4 {

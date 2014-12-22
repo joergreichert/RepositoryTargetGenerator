@@ -46,11 +46,28 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<executions>
 					<execution>
-						<id>test</id>
+						<id>test-formatter</id>
 						<phase>test</phase>
 						<configuration>
 							<jvm>${env.JAVA_HOME}/bin/java</jvm>
 							<testClassesDirectory>${project.build.outputDirectory}</testClassesDirectory>
+							<includes>
+								<include>**/*FormatterTest.java</include>
+							</includes>
+						</configuration>
+						<goals>
+							<goal>test</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>test-validation</id>
+						<phase>test</phase>
+						<configuration>
+							<jvm>${env.JAVA_HOME}/bin/java</jvm>
+							<testClassesDirectory>${project.build.outputDirectory}</testClassesDirectory>
+							<excludes>
+								<exclude>**/*FormatterTest.java</exclude>
+							</excludes>
 						</configuration>
 						<goals>
 							<goal>test</goal>

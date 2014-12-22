@@ -19,7 +19,7 @@
 	
 	<properties>
 		<distribution.dir>${project.basedir}/../../releng/de.abg.jreichert.repositorytarget.parent/target/repository</distribution.dir>
-		<github-site-maven-plugin-version>0.9</github-site-maven-plugin-version>
+		<github-site-maven-plugin-version>0.10</github-site-maven-plugin-version>
 	</properties>
 	
 	<modules>

@@ -49,6 +49,7 @@
 						<id>test</id>
 						<phase>test</phase>
 						<configuration>
+							<jvm>${env.JAVA_HOME}/bin/java</jvm>
 							<testClassesDirectory>${project.build.outputDirectory}</testClassesDirectory>
 						</configuration>
 						<goals>

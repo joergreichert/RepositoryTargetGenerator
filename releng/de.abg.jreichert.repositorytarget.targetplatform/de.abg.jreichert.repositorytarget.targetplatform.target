@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.6"?>
 
-<target includeMode="feature" name="Repository Target Generator - Eclipse 4.4, Xtext/Xtend 2.7" sequenceNumber="67">
+<target includeMode="feature" name="Repository Target Generator - Eclipse 4.4.1, Xtext/Xtend 2.7.3" sequenceNumber="67">
 	<locations>
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="org.xpect.sdk.feature.group" version="0.1.0.201409041611"/>
-			<repository location="http://www.xpect-tests.org/updatesite/nightly/"/>
-		</location>
-		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="org.eclipse.sdk.feature.group" version="4.4.0.v20140606-1558"/>
+			<unit id="org.eclipse.sdk.feature.group" version="4.4.0.v20140925-0400"/>
 			<repository location="http://download.eclipse.org/eclipse/updates/4.4"/>
 		</location>
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="org.eclipse.emf.sdk.feature.group" version="2.10.1.v20140901-1055"/>
-			<repository location="http://download.eclipse.org/modeling/emf/emf/updates/milestones/"/>
+			<unit id="org.eclipse.emf.sdk.feature.group" version="2.10.2.v20141013-0308"/>
+			<repository location="http://download.eclipse.org/modeling/emf/emf/updates/releases/"/>
 		</location>
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="org.eclipse.xtext.redist.feature.group" version="2.7.0.v201409021032"/>
-			<unit id="org.eclipse.xtend.sdk.feature.group" version="2.7.0.v201409021032"/>
+			<unit id="org.eclipse.xtext.redist.feature.group" version="2.7.3.v201411190455"/>
+			<unit id="org.eclipse.xtend.sdk.feature.group" version="2.7.3.v201411190455"/>
 			<unit id="org.eclipse.emf.mwe2.language.sdk.feature.group" version="2.7.0.v201409021051"/>
 			<unit id="org.eclipse.emf.mwe2.runtime.sdk.feature.group" version="2.7.0.v201409021027"/>
 			<repository location="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
@@ -25,6 +21,10 @@
 		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<unit id="de.itemis.xtext.antlr.sdk.feature.group" version="2.1.1.v201405091103"/>
 			<repository location="http://download.itemis.com/updates/releases/2.1.1/"/>
+		</location>
+		<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+			<unit id="org.xpect.sdk.feature.group" version="0.1.0.201409041611"/>
+			<repository location="http://www.xpect-tests.org/updatesite/nightly/"/>
 		</location>
 	</locations>
 	<environment>

@@ -1339,11 +1339,17 @@
       id="org.eclipse.xtext"
       label="TMF Xtext Releases">
     <requirement
-        name="org.eclipse.xtext.redist"/>
+        name="org.eclipse.xtext.redist.feature.group"
+        versionRange="2.7.3"/>
     <requirement
-        name="org.eclipse.xtend.sdk"/>
+        name="org.eclipse.xtend.sdk.feature.group"
+        versionRange="2.7.3"/>
     <requirement
-        name="org.eclipse.emf.mwe2.language.sdk"/>
+        name="org.eclipse.emf.mwe2.language.sdk.feature.group"
+        versionRange="2.7.0"/>
+    <requirement
+        name="org.eclipse.emf.mwe2.runtime.sdk.feature.group"
+        versionRange="2.7.0"/>
     <repository
         url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
     <description>Xtext &amp; Xtend</description>

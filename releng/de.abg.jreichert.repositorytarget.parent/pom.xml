@@ -50,7 +50,8 @@
 		<project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding>
 		<memoryInitial>128m</memoryInitial>
 		<memoryMaximum>1024m</memoryMaximum>
-		<memoryArgs>-Xms${memoryInitial} -Xmx${memoryMaximum} -XX:PermSize=256m -XX:MaxPermSize=256m</memoryArgs>
+		<memoryPermSizeArgs>-XX:PermSize=256m -XX:MaxPermSize=256m</memoryPermSizeArgs>
+		<memoryArgs>-Xms${memoryInitial} -Xmx${memoryMaximum}</memoryArgs>
 		<encodingArgs>-Dfile.encoding=${file.encoding}</encodingArgs>
 		<loggingArgs></loggingArgs>
 		<skip.mwe2>true</skip.mwe2>

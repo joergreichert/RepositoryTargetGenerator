@@ -1408,8 +1408,8 @@
       id="repository.target.generator.tasks"
       connectorKind="github"
       repositoryURL="https://github.com/joergreichert/RepositoryTargetGenerator"
-      userID="${github.id}"
-      password="${github.user.password}"/>
+      userID=""
+      password=""/>
   <stream name="master">
     <setupTask
         xsi:type="git:GitCloneTask"

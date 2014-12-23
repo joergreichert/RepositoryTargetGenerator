@@ -1518,8 +1518,6 @@
         name="Xtext &amp; Xtend"
         activeRepositoryList="${eclipse.target.platform}">
       <requirement
-          name="org.eclipse.sdk.ide"/>
-      <requirement
           name="org.eclipse.emf.sdk.feature.group"/>
       <requirement
           name="org.eclipse.xtext.redist.feature.group"/>

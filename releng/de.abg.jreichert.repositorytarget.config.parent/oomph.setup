@@ -1486,6 +1486,12 @@
         label="GitHub password"/>
     <setupTask
         xsi:type="git:GitCloneTask"
+        id="git.clone.repository.target.generator"
+        remoteURI="https://github.com/joergreichert/RepositoryTargetGenerator">
+      <description>Repository Target Generator git repository</description>
+    </setupTask>
+    <setupTask
+        xsi:type="git:GitCloneTask"
         id="git.clone.master"
         remoteURI="joergreichert/RepositoryTargetGenerator">
       <annotation

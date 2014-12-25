@@ -9,10 +9,9 @@
 		<relativePath>../../releng/de.abg.jreichert.repositorytarget.parent/pom.xml</relativePath>
 	</parent>
 
-	<groupId>de.abg.jreichert.repositorytarget</groupId>
 	<artifactId>de.abg.jreichert.repositorytarget.dsl.ui</artifactId>
-	<version>0.1.0-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
+
 	<build>
 		<plugins>	
 			<plugin>

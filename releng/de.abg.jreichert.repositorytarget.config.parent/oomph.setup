@@ -7,12 +7,14 @@
     xmlns:jdt="http://www.eclipse.org/oomph/setup/jdt/1.0"
     xmlns:launching="http://www.eclipse.org/oomph/setup/launching/1.0"
     xmlns:maven="http://www.eclipse.org/oomph/setup/maven/1.0"
+    xmlns:mylyn="http://www.eclipse.org/oomph/setup/mylyn/1.0"
     xmlns:predicates="http://www.eclipse.org/oomph/predicates/1.0"
+    xmlns:projects="http://www.eclipse.org/oomph/setup/projects/1.0"
     xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
     xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
     xmlns:setup.targlets="http://www.eclipse.org/oomph/setup/targlets/1.0"
     xmlns:setup.workingsets="http://www.eclipse.org/oomph/setup/workingsets/1.0"
-    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/jdt/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/JDT.ecore http://www.eclipse.org/oomph/setup/maven/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Maven.ecore http://www.eclipse.org/oomph/predicates/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Predicates.ecore http://www.eclipse.org/oomph/setup/targlets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupTarglets.ecore http://www.eclipse.org/oomph/setup/workingsets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupWorkingSets.ecore"
+    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/jdt/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/JDT.ecore http://www.eclipse.org/oomph/setup/launching/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Launching.ecore http://www.eclipse.org/oomph/setup/maven/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Maven.ecore http://www.eclipse.org/oomph/setup/mylyn/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Mylyn.ecore http://www.eclipse.org/oomph/predicates/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Predicates.ecore http://www.eclipse.org/oomph/setup/projects/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Projects.ecore http://www.eclipse.org/oomph/setup/targlets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupTarglets.ecore http://www.eclipse.org/oomph/setup/workingsets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupWorkingSets.ecore"
     name="repository.target.generator"
     label="Repository target generator">
   <setupTask
@@ -24,6 +26,13 @@
         value="1024m"
         vm="true">
       <description>Set the heap space needed to work with the projects of ${scope.project.label}</description>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:EclipseIniTask"
+        option="-Doomph.redirection.repository.target.generator.setup"
+        value="=https://raw.githubusercontent.com/joergreichert/RepositoryTargetGenerator/${scope.project.stream.name}/releng/de.abg.jreichert.repositorytarget.config.parent/oomph.setup->${git.clone.rtg.location|uri}/releng/de.abg.jreichert.repositorytarget.config.parent/oomph.setup"
+        vm="true">
+      <description>redirect changes to Oomph configuration triggered within the Eclipse instance to the setup file within the locally cloned repository, so it can be checked in</description>
     </setupTask>
     <setupTask
         xsi:type="setup:ResourceCreationTask"
@@ -1468,33 +1477,56 @@
   </setupTask>
   <setupTask
       xsi:type="setup:CompoundTask"
-      name="GitHub">
+      name="Projects">
     <setupTask
         xsi:type="git:GitCloneTask"
         id="git.clone.rtg"
-        remoteURI="https://github.com/joergreichert/RepositoryTargetGenerator.git"/>
-  </setupTask>
-  <setupTask
-      xsi:type="maven:MavenImportTask"
-      projectNameTemplate="">
-    <sourceLocator
-        rootFolder="${git.clone.rtg.location}">
-      <predicate
-          xsi:type="predicates:LocationPredicate"
-          pattern=".*/plugins/.*"/>
-      <predicate
-          xsi:type="predicates:LocationPredicate"
-          pattern=".*/features/.*"/>
-      <predicate
-          xsi:type="predicates:LocationPredicate"
-          pattern=".*/tests/.*"/>
-      <predicate
-          xsi:type="predicates:LocationPredicate"
-          pattern=".*/releng/.*"/>
-      <predicate
-          xsi:type="predicates:LocationPredicate"
-          pattern=".*/example/.*"/>
-    </sourceLocator>
+        remoteURI="https://github.com/joergreichert/RepositoryTargetGenerator.git">
+      <description>Repository Target Generator git repository</description>
+    </setupTask>
+    <setupTask
+        xsi:type="maven:MavenImportTask"
+        projectNameTemplate="">
+      <sourceLocator
+          rootFolder="${git.clone.rtg.location}">
+        <predicate
+            xsi:type="predicates:LocationPredicate"
+            pattern=".*/plugins/.*"/>
+        <predicate
+            xsi:type="predicates:LocationPredicate"
+            pattern=".*/features/.*"/>
+        <predicate
+            xsi:type="predicates:LocationPredicate"
+            pattern=".*/tests/.*"/>
+        <predicate
+            xsi:type="predicates:LocationPredicate"
+            pattern=".*/releng/.*"/>
+        <predicate
+            xsi:type="predicates:LocationPredicate"
+            pattern=".*/example/.*"/>
+      </sourceLocator>
+    </setupTask>
+    <setupTask
+        xsi:type="projects:ProjectsImportTask">
+      <sourceLocator
+          rootFolder="${git.clone.rtg.location}">
+        <predicate
+            xsi:type="predicates:LocationPredicate"
+            pattern=".*/plugins/.*"/>
+        <predicate
+            xsi:type="predicates:LocationPredicate"
+            pattern=".*/features/.*"/>
+        <predicate
+            xsi:type="predicates:LocationPredicate"
+            pattern=".*/tests/.*"/>
+        <predicate
+            xsi:type="predicates:LocationPredicate"
+            pattern=".*/releng/.*"/>
+        <predicate
+            xsi:type="predicates:LocationPredicate"
+            pattern=".*/example/.*"/>
+      </sourceLocator>
+    </setupTask>
   </setupTask>
   <setupTask
       xsi:type="launching:LaunchTask"
@@ -1507,6 +1539,25 @@
     <targlet
         name="${scope.project.label}"
         activeRepositoryList="${eclipse.target.platform}">
+      <annotation
+          source="http:/www.eclipse.org/oomph/targlets/TargetDefinitionGenerator">
+        <detail
+            key="location">
+          <value>${git.clone.rtg.location/releng/de.abg.jreichert.repositorytarget.targetplatform/de.abg.jreichert.repositorytarget.targetplatform.target}</value>
+        </detail>
+        <detail
+            key="includeAllPlatforms">
+          <value>false</value>
+        </detail>
+        <detail
+            key="includeSource">
+          <value>false</value>
+        </detail>
+        <detail
+            key="generateVersions">
+          <value>true</value>
+        </detail>
+      </annotation>
       <requirement
           name="de.abg.jreichert.repositorytarget.feature.feature.group"/>
       <requirement
@@ -1546,6 +1597,49 @@
             url="http://www.xpect-tests.org/updatesite/nightly/"/>
       </repositoryList>
     </targlet>
+  </setupTask>
+  <setupTask
+      xsi:type="setup:CompoundTask"
+      id=""
+      name="Tasks">
+    <setupTask
+        xsi:type="setup:VariableTask"
+        id=""
+        type="PASSWORD"
+        name="github.user.password"
+        label="GitHub password for issues"/>
+    <setupTask
+        xsi:type="mylyn:MylynQueriesTask"
+        connectorKind="github"
+        repositoryURL="https://github.com/joergreichert/RepositoryTargetGenerator"
+        userID="${github.user.id}"
+        password="${github.user.password}">
+      <query
+          summary="${scope.project.label} bugs">
+        <attribute
+            key="state"
+            value="open::"/>
+        <attribute
+            key="labels"
+            value="bug::"/>
+      </query>
+      <query
+          summary="${scope.project.label} features"
+          url="">
+        <attribute
+            key="state"
+            value="open::"/>
+        <attribute
+            key="labels"
+            value="enhancement::"/>
+      </query>
+      <query
+          summary="${scope.project.label} resolved">
+        <attribute
+            key="state"
+            value="closed::"/>
+      </query>
+    </setupTask>
   </setupTask>
   <stream name="master"/>
   <stream name="release"/>

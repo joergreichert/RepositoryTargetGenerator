@@ -1,3 +1,49 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+
+- [oomph-catalogue](#oomph-catalogue)
+  - [Setup](#setup)
+  - [Example walkthrough](#example-walkthrough)
+  - [Example status](#example-status)
+    - [C:\Users\Reichert\.p2](#c\users\reichert\p2)
+      - [pools.info](#poolsinfo)
+      - [profiles.info](#profilesinfo)
+    - [C:\_oomph_agent](#c\_oomph_agent)
+      - [pools.info](#poolsinfo-1)
+      - [profiles.info](#profilesinfo-1)
+    - [C:\Users\Reichert\.eclipse\org.eclipse.oomph.p2](#c\users\reichert\eclipse\orgeclipseoomphp2)
+      - [agents.info](#agentsinfo)
+      - [defaults.info](#defaultsinfo)
+    - [C:\Users\Reichert\.eclipse\org.eclipse.oomph.p2\setups](#c\users\reichert\eclipse\orgeclipseoomphp2\setups)
+      - [catalogs.setup](#catalogssetup)
+      - [locations.setup](#locationssetup)
+      - [user.setup](#usersetup)
+  - [Example for creating a new Oomph setup](#example-for-creating-a-new-oomph-setup)
+    - [Initial steps](#initial-steps)
+    - [General hints](#general-hints)
+    - [Start configuration](#start-configuration)
+    - [Compile configuration](#compile-configuration)
+    - [IDE features and plug-ins selection](#ide-features-and-plug-ins-selection)
+    - [IDE preferences](#ide-preferences)
+    - [Git clone](#git-clone)
+    - [Projects Import](#projects-import)
+    - [Launcher](#launcher)
+    - [Targlets / Target platform](#targlets--target-platform)
+    - [Working sets](#working-sets)
+    - [Mylyn](#mylyn)
+    - [Streams](#streams)
+    - [Tasks not used yet in this example](#tasks-not-used-yet-in-this-example)
+  - [Example for executing Oomph setup](#example-for-executing-oomph-setup)
+    - [Product](#product)
+    - [Projects](#projects)
+    - [Variables](#variables)
+    - [Confirmation](#confirmation)
+    - [In installed IDE](#in-installed-ide)
+  - [Resources](#resources)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 oomph-catalogue
 ===============
 
@@ -523,6 +569,7 @@ Custom product and project catalogue for my GitHub projects, inspired by [Alex' 
    * Maven Import
    * Launcher
    * Targlets / Target platform
+   * Mylyn Queries
    * Working sets
 
 ### Start configuration
@@ -771,10 +818,38 @@ Custom product and project catalogue for my GitHub projects, inspired by [Alex' 
      hidden configuration parameters)	 
 
 ## Example for executing Oomph setup
+### Product
+ * hit the refresh button (to load propably updated product configuration)
+ * Eclipse Standard/SDK
+ * Product version: Latest release (Luna)
+ * Bundle pool (check): C:\_oomph_bundle_pool
+ * Check if the Update Button is enabled, if yes, install the latest Oomph version, before you continue
+### Projects
+ * hit the refresh button (to load propably updated project configuration)
+ * Joerg-Projects/Joerg's GitHub projects/Repository target generator -> Double click
+ * stream: release
 ### Variables
- * Installation folder name: ReleaseTargetGenerator
- * Workspace folder name: release_target_generator
- * github.user.password
+ * Installation location rule: ${install.root/}${installation.id}
+ * Installation folder name: RepositoryTargetGeneratorDev
+ * Workspace location rule: ${workspace.container.root/}${workspace.id}
+ * Workspace folder name: repository_target_generator_dev
+ * Root workspace-container folder: C:\_workspaces
+ * Git clone location rule: ${git.container.root/}${@id.remoteURI|gitRepository/}${@id.checkoutBranch}
+ * Root Git-container folder: C:\git
+ * GitHub password for issues: ...
+ * JRE 1.8 Location: C:\ProgramData\Java\JDK8
+ * git.clone.rtg.description: bla
+ * GitHub user ID: de.abg.reichert.joerg@googlemail.com
+### Confirmation
+ * Mirrors (Checked)
+ * Offline (only check, if all P2 artefacts have been downloaded in previous sessions)
+ * Override (only check, if you want to override an existing installation)
+### In installed IDE
+ * close Welcome page
+ * confirm "Do you agree to download it (size 1MB) from 'http://download.itemis.com/antlr-generator-3.2.0-patch.jar'?" with y and Enter
+ * Check if the circle arrow symbol in the bottom status bar has no error marker (you can click on it to see the current setup status)
+ * if dialog pops up with requesting eclipse.exe to pass firewall, confirm
+ * With Help -> Perform Setup Tasks... you can manually trigger the setup tasks again
 
 ## Resources 
  * [Original project proposal](https://projects.eclipse.org/proposals/oomph) 

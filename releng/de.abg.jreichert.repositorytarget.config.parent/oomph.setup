@@ -69,6 +69,14 @@
         licenseConfirmationDisabled="true">
       <requirement
           name="org.eclipse.sdk"/>
+      <requirement
+          name="org.eclipse.e4.rcp.R441patch.feature.group"/>
+      <requirement
+          name="org.eclipse.equinox.core.feature.R441patch.feature.group"/>
+      <requirement
+          name="org.eclipse.equinox.core.sdk.R441patch.feature.group"/>
+      <requirement
+          name="org.eclipse.equinox.server.core.R441patch.feature.group"/>
       <repository
           url="http://download.eclipse.org/releases/luna"/>
       <repository
@@ -174,7 +182,27 @@
         name="org.eclipse.ui.editors">
       <setupTask
           xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.ui.editors/lineNumberRuler"
+          value="true"/>
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.ui.editors/overviewRuler_migration"
+          value="migrated_3.1"/>
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.ui.editors/printMargin"
+          value="true"/>
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.ui.editors/printMarginColumn"
+          value="120"/>
+      <setupTask
+          xsi:type="setup:PreferenceTask"
           key="/instance/org.eclipse.ui.editors/spacesForTabs"
+          value="true"/>
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.ui.editors/spellingEnabled"
           value="true"/>
       <setupTask
           xsi:type="setup:PreferenceTask"
@@ -1427,6 +1455,42 @@
     </setupTask>
     <setupTask
         xsi:type="setup:CompoundTask"
+        name="org.eclipse.m2e.core">
+      <setupTask
+          xsi:type="setup:VariableTask"
+          type="FOLDER"
+          name="maven3.installation"/>
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.m2e.core/eclipse.m2.defaultRuntime"
+          value="Maven3"/>
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.m2e.core/eclipse.m2.runtimes"
+          value="Maven3"/>
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.m2e.core/eclipse.m2.runtimesNodes/Maven3/location"
+          value="${maven3.installation}"/>
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.m2e.core/eclipse.m2.runtimesNodes/Maven3/type"
+          value="EXTERNAL"/>
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.m2e.core/eclipse.m2.WorkspacelifecycleMappingsLocation"
+          value="{workspace.location}/.metadata/.plugins/org.eclipse.m2e.core/lifecycle-mapping-metadata.xml"/>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:CompoundTask"
+        name="org.eclipse.pde.ui">
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.pde.ui/Preferences.MainPage.overwriteBuildFilesOnExport"
+          value="prompt"/>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:CompoundTask"
         name="org.eclipse.xtend.core.Xtend">
       <setupTask
           xsi:type="setup:PreferenceTask"
@@ -1438,6 +1502,14 @@
       <setupTask
           xsi:type="setup:PreferenceTask"
           key="/instance/org.eclipse.xtend.core.Xtend/outlet.DEFAULT_OUTPUT.cleanDirectory"
+          value="true"/>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:CompoundTask"
+        name="org.eclipse.ui.workbench">
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.ui.workbench/RUN_IN_BACKGROUND"
           value="true"/>
     </setupTask>
   </setupTask>
@@ -1478,6 +1550,13 @@
   <setupTask
       xsi:type="setup:CompoundTask"
       name="Projects">
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="github.user.id"
+        value="de.abg.reichert.joerg@googlemail.com"
+        label="Github user ID">
+      <description>The Github user ID</description>
+    </setupTask>
     <setupTask
         xsi:type="git:GitCloneTask"
         id="git.clone.rtg"

@@ -70,17 +70,7 @@
       <requirement
           name="org.eclipse.sdk"/>
       <requirement
-          name="org.eclipse.equinox.core.sdk.feature.group"/>
-      <requirement
-          name="org.eclipse.equinox.core.feature.feature.group"/>
-      <requirement
           name="org.eclipse.e4.rcp.R441patch.feature.group"/>
-      <requirement
-          name="org.eclipse.equinox.core.feature.R441patch.feature.group"/>
-      <requirement
-          name="org.eclipse.equinox.core.sdk.R441patch.feature.group"/>
-      <requirement
-          name="org.eclipse.equinox.server.core.R441patch.feature.group"/>
       <repository
           url="http://download.eclipse.org/releases/luna"/>
       <repository
@@ -1645,6 +1635,8 @@
           name="de.abg.jreichert.repositorytarget.feature.feature.group"/>
       <requirement
           name="org.eclipse.platform.feature.group"/>
+      <requirement
+          name="org.eclipse.e4.rcp.R441patch.feature.group"/>
       <requirement
           name="org.eclipse.jdt.feature.group"/>
       <requirement

@@ -70,6 +70,8 @@
       <requirement
           name="org.eclipse.sdk"/>
       <requirement
+          name="org.eclipse.equinox.core.sdk.feature.group"/>
+      <requirement
           name="org.eclipse.equinox.core.feature.feature.group"/>
       <requirement
           name="org.eclipse.e4.rcp.R441patch.feature.group"/>

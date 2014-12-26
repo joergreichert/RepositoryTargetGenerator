@@ -19,38 +19,39 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<maven-resources-plugin-version>2.6</maven-resources-plugin-version>
-		<maven-compiler-plugin-version>3.1</maven-compiler-plugin-version>
-		<maven-antrun-plugin-version>1.7</maven-antrun-plugin-version>
+		<maven-resources-plugin-version>2.7</maven-resources-plugin-version>
+		<maven-compiler-plugin-version>3.2</maven-compiler-plugin-version>
+		<maven-antrun-plugin-version>1.8</maven-antrun-plugin-version>
 		<maven-install-plugin-version>2.5.2</maven-install-plugin-version>
-		<maven-surefire-plugin-version>2.17</maven-surefire-plugin-version>
+		<maven-surefire-plugin-version>2.18</maven-surefire-plugin-version>
 		<maven-scm-plugin-version>1.9.2</maven-scm-plugin-version>
-		<maven-assembly-plugin-version>2.4.1</maven-assembly-plugin-version>
+		<maven-assembly-plugin-version>2.5.3</maven-assembly-plugin-version>
 		<maven-release-plugin-version>2.5.1</maven-release-plugin-version>
 		<maven-checkstyle-plugin-version>2.13</maven-checkstyle-plugin-version>
 		<findbugs-maven-plugin-version>2.5.5</findbugs-maven-plugin-version>
-		<maven-pmd-plugin-version>3.2</maven-pmd-plugin-version>
+		<maven-pmd-plugin-version>3.3</maven-pmd-plugin-version>
 		<build-helper-maven-plugin-version>1.9.1</build-helper-maven-plugin-version>
 		<eclipse-signing-maven-plugin-version>1.0.5</eclipse-signing-maven-plugin-version>
 		<exec-maven-plugin-version>1.3.2</exec-maven-plugin-version>
-		<xtend-maven-plugin-version>2.7.2</xtend-maven-plugin-version>
-		<xtend-library-version>2.7.2</xtend-library-version>
-		<xtext-version>2.7.2</xtext-version>
+		<xtend-maven-plugin-version>2.7.3</xtend-maven-plugin-version>
+		<xtend-library-version>2.7.3</xtend-library-version>
+		<xtext-version>2.7.3</xtext-version>
 		<jacoco-maven-plugin-version>0.7.2.201409121644</jacoco-maven-plugin-version>
 		<junit-version>4.11</junit-version>
-		<maven-jxr-plugin-version>2.4</maven-jxr-plugin-version>
+		<maven-jxr-plugin-version>2.5</maven-jxr-plugin-version>
 		<maven-project-info-reports-plugin-version>2.7</maven-project-info-reports-plugin-version>
 		<local-build-platform.version>[3.8,4.3)</local-build-platform.version>
-		<java-compile-version>1.7</java-compile-version>
-		<maven.compiler.source>1.7</maven.compiler.source>
-		<maven.compiler.target>1.7</maven.compiler.target>
+		<java-compile-version>1.8</java-compile-version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.encoding>UTF-8</project.encoding>
 		<file.encoding>${project.encoding}</file.encoding>
 		<project.build.sourceEncoding>${project.encoding}</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding>
 		<memoryInitial>128m</memoryInitial>
 		<memoryMaximum>1024m</memoryMaximum>
-		<memoryArgs>-Xms${memoryInitial} -Xmx${memoryMaximum} -XX:PermSize=256m -XX:MaxPermSize=256m</memoryArgs>
+		<memoryPermSizeArgs>-XX:PermSize=256m -XX:MaxPermSize=256m</memoryPermSizeArgs>
+		<memoryArgs>-Xms${memoryInitial} -Xmx${memoryMaximum}</memoryArgs>
 		<encodingArgs>-Dfile.encoding=${file.encoding}</encodingArgs>
 		<loggingArgs>-Dlog4j.configuration=file:${project.basedir}/../../plugins/de.abg.jreichert.repositorytarget.activeannotations/log4j.xml</loggingArgs>
 		<skip.mwe2>true</skip.mwe2>
@@ -249,6 +250,8 @@
 					</executions>
 					<configuration>
 						<skip>${skip.mwe2}</skip>
+						<killAfter>-1</killAfter>
+						<cleanupDaemonThreads>false</cleanupDaemonThreads>						
 						<includeProjectDependencies>false</includeProjectDependencies>
 						<includePluginDependencies>true</includePluginDependencies>
 						<mainClass>org.eclipse.emf.mwe2.launch.runtime.Mwe2Launcher</mainClass>
@@ -295,6 +298,30 @@
 						</dependency>
 					</dependencies>
 				</plugin>
+            <plugin>
+               <groupId>org.eclipse.m2e</groupId>
+               <artifactId>lifecycle-mapping</artifactId>
+               <version>1.0.0</version>
+               <configuration>
+                  <lifecycleMappingMetadata>
+                     <pluginExecutions>
+                        <pluginExecution>
+                           <pluginExecutionFilter>
+                              <groupId>org.codehaus.mojo</groupId>
+                              <artifactId>exec-maven-plugin</artifactId>
+                              <versionRange>[1.3.2,)</versionRange>
+                              <goals>
+                                 <goal>java</goal>
+                              </goals>
+                           </pluginExecutionFilter>
+                           <action>
+                              <execute/>
+                           </action>
+                        </pluginExecution>
+                     </pluginExecutions>
+                  </lifecycleMappingMetadata>
+               </configuration>
+            </plugin>				
 			</plugins>
 		</pluginManagement>
 	</build>

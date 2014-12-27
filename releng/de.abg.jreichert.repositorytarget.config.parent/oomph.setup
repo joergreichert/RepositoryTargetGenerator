@@ -72,8 +72,6 @@
       <requirement
           name="org.eclipse.e4.rcp.R441patch.feature.group"/>
       <repository
-          url="http://download.eclipse.org/releases/luna"/>
-      <repository
           url="http://download.eclipse.org/eclipse/updates/4.4"/>
       <description>Eclipse Core</description>
     </setupTask>
@@ -1537,7 +1535,7 @@
         name="Documentation">
       <predicate
           xsi:type="predicates:LocationPredicate"
-          pattern=".*/wiki/.*"/>
+          pattern=".*/wiki"/>
     </workingSet>
     <workingSet
         name="Update Site"
@@ -1659,13 +1657,15 @@
       <requirement
           name="org.eclipse.xtext.xbase.lib"
           versionRange="[2.7.3,2.8.0)"/>
+      <requirement
+          name="org.xpect.sdk.feature.group"/>
+      <requirement
+          name="org.eclipse.jdt.junit.runners.feature.feature.group"/>
       <sourceLocator
           rootFolder="${git.clone.rtg.location}"
           locateNestedProjects="true"/>
       <repositoryList
           name="Luna">
-        <repository
-            url="http://download.eclipse.org/releases/luna"/>
         <repository
             url="http://download.eclipse.org/eclipse/updates/4.4"/>
         <repository

@@ -71,6 +71,8 @@
           name="org.eclipse.sdk"/>
       <requirement
           name="org.eclipse.e4.rcp.R441patch.feature.group"/>
+	  <repository
+		  url="http://download.eclipse.org/releases/luna"/>
       <repository
           url="http://download.eclipse.org/eclipse/updates/4.4"/>
       <description>Eclipse Core</description>
@@ -1660,6 +1662,8 @@
           locateNestedProjects="true"/>
       <repositoryList
           name="Luna">
+        <repository
+            url="http://download.eclipse.org/releases/luna"/>
         <repository
             url="http://download.eclipse.org/eclipse/updates/4.4"/>
         <repository

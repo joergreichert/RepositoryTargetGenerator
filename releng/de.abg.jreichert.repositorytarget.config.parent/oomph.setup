@@ -83,7 +83,7 @@
       <requirement
           name="org.eclipse.emf.sdk.feature.group"/>
       <requirement
-          name="org.eclipse.xtext.redist.feature.group"
+          name="org.eclipse.xtext.sdk.feature.group"
           versionRange="2.7.3"/>
       <requirement
           name="org.eclipse.xtend.sdk.feature.group"
@@ -1646,16 +1646,10 @@
       <requirement
           name="org.eclipse.emf.sdk.feature.group"/>
       <requirement
-          name="org.eclipse.xtext.redist.feature.group"
+          name="org.eclipse.xtext.sdk.feature.group"
           versionRange="[2.7.3,2.8.0)"/>
       <requirement
-          name="org.eclipse.xtext.ui.feature.group"
-          versionRange="[2.7.3,2.8.0)"/>
-      <requirement
-          name="org.eclipse.xtend.lib"
-          versionRange="[2.7.3,2.8.0)"/>
-      <requirement
-          name="org.eclipse.xtext.xbase.lib"
+          name="org.eclipse.xtend.sdk.feature.group"
           versionRange="[2.7.3,2.8.0)"/>
       <requirement
           name="org.xpect.sdk.feature.group"/>

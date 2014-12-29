@@ -19,28 +19,28 @@ TargetDefinition "Spray Target Platform - Eclipse 4.3"
 	}
 
 	"Eclipse Kepler" http://download.eclipse.org/releases/kepler strictVersion {
-		org.eclipse.sdk 4.3.0.v20130605-2000,
-		org.eclipse.pde 3.9.0.v20130605-2000,
-		org.eclipse.emf.sdk 2.9.0.v20130610-0406 category = EMF,
+		org.eclipse.sdk 4.3.2.v20140221-1852,
+		org.eclipse.pde 3.9.1.v20140221-1700,
+		org.eclipse.emf.sdk 2.9.2.v20140203-1126 category = EMF,
 		org.eclipse.emf.transaction.sdk 1.7.0.201306111400 category = EMF,
 		org.eclipse.emf.eef.sdk-feature 1.2.0.201301111054 category = EMF,
-		org.eclipse.gef.sdk 3.9.0.201305060205 category = ( EMF, GraphicalEditing ),
-		org.eclipse.zest.sdk 1.5.0.201305060205 category = ( EMF, GraphicalEditing ),
-		org.eclipse.graphiti.sdk.plus.feature 0.10.0.v20130612-0936 category = ( EMF, GraphicalEditing ),
-		org.eclipse.swt noFeature 3.102.0.v20130605-1539,
-		org.eclipse.xtext.sdk 2.4.2.v201306120542 category = Xtext,
-		org.eclipse.xtend.sdk 2.4.2.v201306120542 category = Xtext,
-		org.eclipse.emf.mwe2.language.sdk 2.4.0.v201306110940 category = Xtext,
-		org.eclipse.emf.mwe2.runtime.sdk 2.4.0.v201306110341 category = Xtext
+		org.eclipse.gef.sdk 3.9.1.201308190730 category = ( EMF, GraphicalEditing ),
+		org.eclipse.zest.sdk 1.5.1.201308190730 category = ( EMF, GraphicalEditing ),
+		org.eclipse.graphiti.sdk.plus.feature 0.10.2.v20140217-1225 category = ( EMF, GraphicalEditing ),
+		org.eclipse.swt noFeature 3.102.1.v20140206-1334,
+		org.eclipse.xtext.sdk 2.4.3.v201309030823 category = Xtext,
+		org.eclipse.xtend.sdk 2.4.3.v201309030823 category = Xtext,
+		org.eclipse.emf.mwe2.language.sdk 2.4.1.v201309030840 category = Xtext,
+		org.eclipse.emf.mwe2.runtime.sdk 2.4.1.v201309030422 category = Xtext
 	}
 
 	"SWTBot" http://download.eclipse.org/technology/swtbot/releases/latest/ {
-		org.eclipse.swtbot.eclipse 2.1.1.201307101628 category = Testing,
-		org.eclipse.swtbot.eclipse.gef 2.1.1.201307101628 category = ( Testing, GraphicalEditing )
+		org.eclipse.swtbot.eclipse 2.2.1.201402241301 category = Testing,
+		org.eclipse.swtbot.eclipse.gef 2.2.1.201402241301 category = ( Testing, GraphicalEditing )
 	}
 
 	"Xpect" http://www.xpect-tests.org/updatesite/nightly/ category = ( Xtext, Testing ) {
-		org.xpect.sdk 0.1.0.201308071738
+		org.xpect.sdk 0.1.0.201409041611
 	}
 
 	"Xtext utils" http://xtext-utils.eclipselabs.org.codespot.com/git.distribution/releases/unittesting-0.9.x category = Testing {
@@ -57,23 +57,23 @@ http://download.itemis.com/updates/releases/2.0.0/ category = Xtext {
 de.itemis.xtext.antlr.sdk 2.0.0.v201108011202 , de.itemis.xtext.antlr.feature
 2.0.0.v201108011202 } "Eclipse Kepler"
 http://download.eclipse.org/releases/kepler strictVersion { org.eclipse.sdk
-4.3.0.v20130605-2000 , org.eclipse.pde 3.9.0.v20130605-2000 ,
-org.eclipse.emf.sdk 2.9.0.v20130610-0406 category = EMF ,
+4.3.2.v20140221-1852 , org.eclipse.pde 3.9.1.v20140221-1700 ,
+org.eclipse.emf.sdk 2.9.2.v20140203-1126 category = EMF ,
 org.eclipse.emf.transaction.sdk 1.7.0.201306111400 category = EMF ,
 org.eclipse.emf.eef.sdk-feature 1.2.0.201301111054 category = EMF ,
-org.eclipse.gef.sdk 3.9.0.201305060205 category = ( EMF , GraphicalEditing ) ,
-org.eclipse.zest.sdk 1.5.0.201305060205 category = ( EMF , GraphicalEditing )
-, org.eclipse.graphiti.sdk.plus.feature 0.10.0.v20130612-0936 category = ( EMF
-, GraphicalEditing ) , org.eclipse.swt noFeature 3.102.0.v20130605-1539 ,
-org.eclipse.xtext.sdk 2.4.2.v201306120542 category = Xtext ,
-org.eclipse.xtend.sdk 2.4.2.v201306120542 category = Xtext ,
-org.eclipse.emf.mwe2.language.sdk 2.4.0.v201306110940 category = Xtext ,
-org.eclipse.emf.mwe2.runtime.sdk 2.4.0.v201306110341 category = Xtext }
+org.eclipse.gef.sdk 3.9.1.201308190730 category = ( EMF , GraphicalEditing ) ,
+org.eclipse.zest.sdk 1.5.1.201308190730 category = ( EMF , GraphicalEditing )
+, org.eclipse.graphiti.sdk.plus.feature 0.10.2.v20140217-1225 category = ( EMF
+, GraphicalEditing ) , org.eclipse.swt noFeature 3.102.1.v20140206-1334 ,
+org.eclipse.xtext.sdk 2.4.3.v201309030823 category = Xtext ,
+org.eclipse.xtend.sdk 2.4.3.v201309030823 category = Xtext ,
+org.eclipse.emf.mwe2.language.sdk 2.4.1.v201309030840 category = Xtext ,
+org.eclipse.emf.mwe2.runtime.sdk 2.4.1.v201309030422 category = Xtext }
 "SWTBot" http://download.eclipse.org/technology/swtbot/releases/latest/ {
-org.eclipse.swtbot.eclipse 2.1.1.201307101628 category = Testing ,
-org.eclipse.swtbot.eclipse.gef 2.1.1.201307101628 category = ( Testing ,
+org.eclipse.swtbot.eclipse 2.2.1.201402241301 category = Testing ,
+org.eclipse.swtbot.eclipse.gef 2.2.1.201402241301 category = ( Testing ,
 GraphicalEditing ) } "Xpect" http://www.xpect-tests.org/updatesite/nightly/
-category = ( Xtext , Testing ) { org.xpect.sdk 0.1.0.201308071738 }
+category = ( Xtext , Testing ) { org.xpect.sdk 0.1.0.201409041611 }
 "Xtext utils"
 http://xtext-utils.eclipselabs.org.codespot.com/git.distribution/releases/unittesting-0.9.x
 category = Testing { org.eclipselabs.xtext.utils.unittesting.feature

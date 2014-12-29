@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.8"?>
-<target name="Generated from Repository target generator" sequenceNumber="69">
+<target name="Generated from Repository target generator" sequenceNumber="70">
   <locations>
+    <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
+      <unit id="org.eclipse.platform.feature.group" version="4.4.0.v20140925-0400"/>
+      <repository location="http://download.eclipse.org/releases/luna"/>
+    </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="org.eclipse.e4.rcp.R441patch.feature.group" version="1.0.0"/>
       <unit id="org.eclipse.platform.feature.group" version="4.4.0.v20140925-0400"/>
@@ -13,10 +17,7 @@
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="org.eclipse.emf.sdk.feature.group" version="2.10.2.v20141013-0308"/>
-      <unit id="org.eclipse.xtend.standalone" version="2.7.3.v201411190455"/>
-      <unit id="org.eclipse.xtend2.lib" version="2.7.3.v201411190455"/>
-      <unit id="org.eclipse.xtext.redist.feature.group" version="2.7.3.v201411190455"/>
-      <unit id="org.eclipse.xtext.ui.feature.group" version="2.7.3.v201411190455"/>
+      <unit id="org.eclipse.xtext.sdk.feature.group" version="2.7.3.v201411190455"/>
       <repository location="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">

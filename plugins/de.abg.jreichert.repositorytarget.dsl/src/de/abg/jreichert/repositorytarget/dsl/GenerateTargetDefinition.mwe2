@@ -33,7 +33,10 @@ Workflow {
     		forcedResourceSet = theResourceSet
     		uri = grammarURI
     		fragment = grammarAccess.GrammarAccessFragment auto-inject {}
-    		fragment = ecore.EMFGeneratorFragment auto-inject {  javaModelDirectory = "../${projectName}/src-gen"  }
+    		fragment = ecore.EMFGeneratorFragment auto-inject {  
+				emfRuntimeVersion = "2.10"
+				javaModelDirectory = "../${projectName}/src-gen"  
+			}
     		fragment = serializer.SerializerFragment auto-inject {  generateStub = false  }
     		fragment = resourceFactory.ResourceFactoryFragment auto-inject {}
     		fragment = parser.antlr.XtextAntlrGeneratorFragment auto-inject {}

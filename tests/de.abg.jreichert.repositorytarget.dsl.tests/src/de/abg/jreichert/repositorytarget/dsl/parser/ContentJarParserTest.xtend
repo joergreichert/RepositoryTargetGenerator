@@ -2,10 +2,14 @@ package de.abg.jreichert.repositorytarget.dsl.parser
 
 import com.google.inject.Inject
 import de.abg.jreichert.repositorytarget.database.LocationManager
+import de.abg.jreichert.repositorytarget.database.SessionManager
 import de.abg.jreichert.repositorytarget.dsl.TargetDefinitionInjectorProvider
 import de.abg.jreichert.repositorytarget.dsl.logic.ReadOutP2Repository
 import de.abg.jreichert.repositorytarget.xml.ContentJarParser
 import de.abg.jreichert.repositorytarget.xml.ContentXmlHandler
+import java.util.List
+import java.util.Map.Entry
+import java.util.SortedSet
 import org.eclipse.core.runtime.NullProgressMonitor
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
@@ -16,7 +20,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
-import de.abg.jreichert.repositorytarget.database.SessionManager
 
 @RunWith(XtextRunner)
 @InjectWith(TargetDefinitionInjectorProvider)
@@ -563,19 +566,34 @@ class ContentJarParserTest {
 		val idVersionPairs1 = urlToIdVersionPairs.get(expectedURL1)
 		assertNotNull("idVersionPairs1", idVersionPairs1)
 		assertEquals("expected idVersionPairs 1 count", 6, idVersionPairs1.size)
-		for(entry : idVersionPairs1.entrySet) {
-			println("key: " + entry.key + ", value: " + entry.value)
-		}
+		
+      val entries1 = idVersionPairs1.entrySet.sortBy[key]
+		assertEntry("201304242052.repositorytarget", "1.0.0.01-cBzFg6773593A7A73C7", entries1, 0)
+      assertEntry("de.abg.jreichert.repositorytarget.dsl", "0.1.0.201304242049", entries1, 1)
+      assertEntry("de.abg.jreichert.repositorytarget.dsl.ui", "0.1.0.201304242049", entries1, 2)
+      assertEntry("de.abg.jreichert.repositorytarget.feature.feature.group", "0.1.0.201304242052", entries1, 3)
+      assertEntry("de.abg.jreichert.repositorytarget.feature.feature.jar", "0.1.0.201304242052", entries1, 4)
+      assertEntry("de.abg.jreichert.repositorytarget.repositorytargetgenerator", "0.1.0.201304242049", entries1, 5)
 		
 		val idVersionPairs2 = urlToIdVersionPairs.get(expectedURL2)
 		assertNotNull("idVersionPairs2", idVersionPairs2)
 		assertNotNull("idVersionPairs2", idVersionPairs2)
 		assertEquals("expected idVersionPairs 2 count", 6, idVersionPairs2.size)
-		for(entry : idVersionPairs2.entrySet) {
-			println("key: " + entry.key + ", value: " + entry.value)
-		}
-//		assertEquals("expected idVersionPair keys", "[201211111547.repositorytarget, 201304242052.repositorytarget, de.abg.jreichert.repositorytarget.dsl, de.abg.jreichert.repositorytarget.dsl.ui, de.abg.jreichert.repositorytarget.feature.feature.group, de.abg.jreichert.repositorytarget.feature.feature.jar, de.abg.jreichert.repositorytarget.repositorytargetgenerator]", idVersionPairs.keySet.toString)
+
+      val entries2 = idVersionPairs2.entrySet.sortBy[key]
+      assertEntry("201211111547.repositorytarget", "1.0.0.01-cBzFg67735755555CAG", entries2, 0)
+      assertEntry("de.abg.jreichert.repositorytarget.dsl", "0.1.0.201211111542", entries2, 1)
+      assertEntry("de.abg.jreichert.repositorytarget.dsl.ui", "0.1.0.201211111542", entries2, 2)
+      assertEntry("de.abg.jreichert.repositorytarget.feature.feature.group", "0.1.0.201211111547", entries2, 3)
+      assertEntry("de.abg.jreichert.repositorytarget.feature.feature.jar", "0.1.0.201211111547", entries2, 4)
+      assertEntry("de.abg.jreichert.repositorytarget.repositorytargetgenerator", "0.1.0.201211111542", entries2, 5)
 	}
+   
+   def assertEntry(String expectedKey, String expectedValue, List<Entry<String, SortedSet<String>>> entries, int index) {
+      assertEquals("expected key at " + index, expectedKey, entries.get(index).key)
+      assertEquals("expected value size at " + index, 1, entries.get(index).value.size)
+      assertEquals("expected value at " + index, expectedValue, entries.get(index).value.head)
+   }
 
 	@Test
 	def void testCaching() {

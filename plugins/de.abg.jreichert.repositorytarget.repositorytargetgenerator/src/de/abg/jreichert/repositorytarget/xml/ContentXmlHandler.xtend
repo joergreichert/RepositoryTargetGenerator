@@ -1,5 +1,7 @@
 package de.abg.jreichert.repositorytarget.xml
 
+import com.google.common.collect.ArrayListMultimap
+import com.google.common.collect.Multimap
 import java.util.List
 import java.util.Set
 import java.util.SortedMap
@@ -11,6 +13,7 @@ import org.xml.sax.helpers.DefaultHandler
 class ContentXmlHandler extends DefaultHandler {
 
 	private String id;
+   private var Multimap<String, String> locationToLocation = ArrayListMultimap.create();
 	private SortedMap<String, SortedMap<String, SortedSet<String>>> localUrlToIdToVersions = newTreeMap([s1, s2 | compareStrings(s1, s2)])
 	private String version;
 	private String url;
@@ -147,4 +150,12 @@ class ContentXmlHandler extends DefaultHandler {
 	def private String getVersion(SortedSet<String> versions) {
 		if (versions.size() > 0)  versions.first() else ""
 	}
+	
+   def setLocationToLocation(Multimap<String, String> locationToLocation) {
+      this.locationToLocation = locationToLocation
+   }  
+
+   def getLocationToLocation() {
+      return locationToLocation
+   }	
 }

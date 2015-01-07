@@ -16,6 +16,8 @@ class ReadOutP2Repository {
 			parser.beginSession
 			fetchContent(parser, repositoryLocation, contentHandler, monitor)			
 			monitor.done()
+      } catch(Exception e) {
+         e.printStackTrace
 		} finally {
 			parser.endSession
 		}

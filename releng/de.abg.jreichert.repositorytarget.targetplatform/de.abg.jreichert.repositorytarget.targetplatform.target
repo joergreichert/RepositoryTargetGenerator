@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.8"?>
-<target name="Generated from Repository target generator" sequenceNumber="70">
+<target name="Generated from Repository target generator" sequenceNumber="71">
   <locations>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="org.eclipse.platform.feature.group" version="4.4.0.v20140925-0400"/>

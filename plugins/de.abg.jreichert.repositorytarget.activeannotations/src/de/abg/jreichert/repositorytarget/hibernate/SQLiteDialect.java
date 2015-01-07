@@ -1,4 +1,4 @@
-package de.abg.jreichert.repositorytarget.database;
+package de.abg.jreichert.repositorytarget.hibernate;
 
 import java.sql.Types;
 

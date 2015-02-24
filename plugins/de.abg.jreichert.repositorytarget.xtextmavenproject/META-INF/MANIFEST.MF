@@ -4,8 +4,8 @@ Bundle-Name: de.abg.jreichert.repositorytarget.xtextmavenproject
 Bundle-SymbolicName: de.abg.jreichert.repositorytarget.xtextmavenproject
 Bundle-Version: 0.1.0.qualifier
 Export-Package: de.abg.jreichert.xtextmavenproject
-Require-Bundle: org.eclipse.xtend.lib;bundle-version="[2.4.0,2.8.0)",
- org.eclipse.xtext.generator;bundle-version="[2.4.0,2.8.0)",
- org.eclipse.xtext;bundle-version="[2.4.0,2.8.0)",
- org.eclipse.xtext.ecore;bundle-version="[2.4.0,2.8.0)"
+Require-Bundle: org.eclipse.xtend.lib;bundle-version="[2.4.0,2.9.0)",
+ org.eclipse.xtext.generator;bundle-version="[2.4.0,2.9.0)",
+ org.eclipse.xtext;bundle-version="[2.4.0,2.9.0)",
+ org.eclipse.xtext.ecore;bundle-version="[2.4.0,2.9.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

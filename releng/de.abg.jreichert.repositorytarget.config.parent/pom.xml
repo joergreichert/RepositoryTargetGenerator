@@ -18,12 +18,12 @@
 		<platform-version-name>kepler</platform-version-name>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<tycho-version>0.21.0</tycho-version>
+		<tycho-version>0.22.0</tycho-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven-clean-plugin-version>2.5</maven-clean-plugin-version>
 		<maven-deploy-plugin-version>2.8.2</maven-deploy-plugin-version>
 		<local-build-platform.version>[3.8,4.3)</local-build-platform.version>
-		<xtend-library.version>2.7.2</xtend-library.version>
+		<xtend-library.version>2.8.0-SNAPSHOT</xtend-library.version>
 		<ui.test.vmargs></ui.test.vmargs>
 		<coverageAgent></coverageAgent>
 		<it.coverage.argLine></it.coverage.argLine>
@@ -136,7 +136,7 @@
 	<repositories>
 		<repository>
 			<snapshots>
-				<enabled>false</enabled>
+				<enabled>true</enabled>
 			</snapshots>
 			<id>central</id>
 			<name>Maven Repository Switchboard</name>

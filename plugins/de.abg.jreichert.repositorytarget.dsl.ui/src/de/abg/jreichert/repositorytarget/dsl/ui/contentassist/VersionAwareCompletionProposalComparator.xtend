@@ -22,11 +22,21 @@ class VersionAwareCompletionProposalComparator extends ICompletionProposalCompar
            super.compare(o1, o2) 
          }
       } else {
-        -result 
+         if(o1.priority == TargetDefinitionProposalProvider.VERSION_PRIORITY || 
+            o2.priority == TargetDefinitionProposalProvider.VERSION_PRIORITY) {
+            -result
+         } else {
+            result
+         } 
       }
    }
    
    def dispatch internalCompare(ICompletionProposal o1, ICompletionProposal o2) {
       super.compare(o1, o2) 
+   }
+   
+   // work around for https://bugs.eclipse.org/bugs/show_bug.cgi?id=460691
+   override equals(Object obj) {
+      super.equals(obj)
    }
 }

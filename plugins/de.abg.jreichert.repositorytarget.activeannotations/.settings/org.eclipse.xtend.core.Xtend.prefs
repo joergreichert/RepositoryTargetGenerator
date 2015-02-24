@@ -1,5 +1,6 @@
 .version=1
 //outlet.DEFAULT_OUTPUT.sourceFolder.src/test/java.directory=src/test/generated-sources/xtend
+BuilderConfiguration.is_project_specific=true
 autobuilding=true
 blank.line.around.expressions=0
 blank.lines.after.imports=1

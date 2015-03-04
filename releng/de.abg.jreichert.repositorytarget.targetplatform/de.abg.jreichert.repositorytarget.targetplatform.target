@@ -7,7 +7,6 @@
       <repository location="http://download.eclipse.org/releases/luna"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
-      <unit id="org.eclipse.e4.rcp.R441patch.feature.group" version="1.0.0"/>
       <unit id="org.eclipse.platform.feature.group" version="4.4.0.v20140925-0400"/>
       <repository location="http://download.eclipse.org/eclipse/updates/4.4"/>
     </location>
@@ -21,7 +20,7 @@
       <repository location="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
-      <unit id="de.itemis.xtext.antlr" version="2.1.1.v201405091103"/>
+      <unit id="de.itemis.xtext.antlr.feature.feature.group" version="2.1.1.v201405091103"/>
       <repository location="http://download.itemis.com/updates/releases/2.1.1/"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">

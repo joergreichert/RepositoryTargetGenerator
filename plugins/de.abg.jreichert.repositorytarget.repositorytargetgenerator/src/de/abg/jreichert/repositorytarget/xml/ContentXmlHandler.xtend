@@ -8,9 +8,8 @@ import java.util.SortedMap
 import java.util.SortedSet
 import org.xml.sax.Attributes
 import org.xml.sax.SAXException
-import org.xml.sax.helpers.DefaultHandler
 
-class ContentXmlHandler extends DefaultHandler {
+class ContentXmlHandler extends P2TimestampContentXmlHandler {
 
 	private String id;
    private var Multimap<String, String> locationToLocation = ArrayListMultimap.create();

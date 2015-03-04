@@ -16,7 +16,21 @@ import java.util.TreeSet
 import org.hibernate.Transaction
 import org.hibernate.criterion.Restrictions
 import org.sculptor.framework.accessapi.ConditionalCriteriaBuilder
+import java.text.SimpleDateFormat
 
+/**
+ * Demönstration for PlantUML.
+ * <p>
+ * Example of use:
+ * <p>
+ * <img src="LocationManager.png">
+ */
+/*
+ * @startuml
+ * Bob -> Alice : hello
+ * Alice --> Bob : OK
+ * @enduml
+ */
 class LocationManager {
 
 	def getById(Long id) {
@@ -30,6 +44,7 @@ class LocationManager {
 		var Object result = null
 		try {
 			tx = session.beginTransaction
+			location.lastLookupTimestamp = new SimpleDateFormat().format(new Date()).toString
 			val id = session.save(location)
 			tx.commit
 			result = getById((id as Long))
@@ -236,5 +251,19 @@ class LocationManager {
 	def saveVersion(String uri, String id, String version) {
 		throw new UnsupportedOperationException("TODO: auto-generated method stub")
 	}
-	
+   
+   def getChildLocations(String parentLocationStr) {
+      val session = SessionManager::currentSession
+      val parentLocation = getByURL(parentLocationStr)
+      if(parentLocation !== null) {
+         (new CustomJpaHibFindByConditionAccessImpl(Location, session) => [
+            addCondition(
+               ConditionalCriteriaBuilder.criteriaFor(Location)
+                  .withProperty(LocationLiterals.parentLocation.id).eq(parentLocation.id)
+                  .buildSingle()
+            )  
+            performExecute
+         ]).result.map[url]
+      } else newArrayList
+   }
 }

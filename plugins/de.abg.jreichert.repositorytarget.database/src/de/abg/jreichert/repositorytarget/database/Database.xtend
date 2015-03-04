@@ -37,6 +37,9 @@ class Location {
 	@JoinColumn(name="location_id")  
 	Location parentLocation
 
+   @Property
+   String lastLookupTimestamp
+
 	@Property
 	@OneToMany(mappedBy="parentLocation", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	@Sort
@@ -91,6 +94,9 @@ class Unit {
 	@OneToMany(mappedBy="unit", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	@Sort
 	Set<Version> versions = <Version>newTreeSet[a,b|a.name.compareTo(b.name)]
+
+   @Property
+   String lastLookupTimestamp
 	
 	override String toString() '''
 		unit (
@@ -125,6 +131,9 @@ class Version {
 
 	@Property
 	String name
+	
+   @Property
+   String lastLookupTimestamp
 	
 	override String toString() {
 		'''version ( unitId=«unit?.id», id=«id», name=«name» )'''

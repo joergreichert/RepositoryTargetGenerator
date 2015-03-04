@@ -30,21 +30,31 @@ class TargetDefinitionFormatter extends AbstractDeclarativeFormatter {
 		c.setLinewrap(2,2,2).before(targetAccess.targetFileKeyword_2_0)
 		c.setLinewrap(2,2,2).after(targetAccess.targetFileNameAssignment_2_2)
 
-		c.setIndentationIncrement.before(targetAccess.categoriesKeyword_3_0);
-		c.setLinewrap(2,2,2).before(targetAccess.categoriesKeyword_3_0)
-		c.setLinewrap.after(targetAccess.leftCurlyBracketKeyword_3_1)
-		c.setLinewrap(2,2,2).after(targetAccess.rightCurlyBracketKeyword_3_4)
-		c.setIndentationDecrement.after(targetAccess.rightCurlyBracketKeyword_3_4);
+      c.setIndentationIncrement.before(targetAccess.cacheExpirationAfterSecondsKeyword_3_0);
+      c.setIndentationDecrement.after(targetAccess.cacheExpirationAfterSecondsAssignment_3_2);
+      c.setLinewrap(2,2,2).before(targetAccess.cacheExpirationAfterSecondsKeyword_3_0)
+      c.setLinewrap(2,2,2).after(targetAccess.cacheExpirationAfterSecondsAssignment_3_2)
 
-		c.setLinewrap.before(targetAccess.categoriesAssignment_3_2)
-		c.setLinewrap.before(targetAccess.categoriesAssignment_3_3_1)
+      c.setIndentationIncrement.before(targetAccess.mirrorURLKeyword_4_0);
+      c.setIndentationDecrement.after(targetAccess.mirrorAssignment_4_2);
+      c.setLinewrap(2,2,2).before(targetAccess.mirrorURLKeyword_4_0)
+      c.setLinewrap(2,2,2).after(targetAccess.mirrorAssignment_4_2)
+
+		c.setIndentationIncrement.before(targetAccess.categoriesKeyword_5_0);
+		c.setLinewrap(2,2,2).before(targetAccess.categoriesKeyword_5_0)
+		c.setLinewrap.after(targetAccess.leftCurlyBracketKeyword_5_1)
+		c.setLinewrap(2,2,2).after(targetAccess.rightCurlyBracketKeyword_5_4)
+		c.setIndentationDecrement.after(targetAccess.rightCurlyBracketKeyword_5_4);
+
+		c.setLinewrap.before(targetAccess.categoriesAssignment_5_2)
+		c.setLinewrap.before(targetAccess.categoriesAssignment_5_3_1)
 		c.setNoLinewrap.before(categoryAccess.longNameAssignment_1)
 		c.setNoLinewrap.before(categoryAccess.descriptionKeyword_2_0)
 		c.setNoLinewrap.between(categoryAccess.descriptionKeyword_2_0, categoryAccess.descriptionSTRINGTerminalRuleCall_2_1_0)
 
-		c.setLinewrap(2,2,2).around(targetAccess.locationsAssignment_4)
-		c.setIndentationIncrement.before(targetAccess.locationsAssignment_4);
-		c.setIndentationDecrement.after(targetAccess.locationsAssignment_4);
+		c.setLinewrap(2,2,2).around(targetAccess.locationsAssignment_6)
+		c.setIndentationIncrement.before(targetAccess.locationsAssignment_6);
+		c.setIndentationDecrement.after(targetAccess.locationsAssignment_6);
 
 		c.setNoLinewrap.between(locationAccess.repositoryLocationURLTerminalRuleCall_1_0, locationAccess.categoryKeyword_2_0)
 		c.setNoLinewrap.between(locationAccess.repositoryLocationURLTerminalRuleCall_1_0, locationAccess.strictVersionStrictVersionKeyword_3_0)

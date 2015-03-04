@@ -29,24 +29,10 @@ class ContentJarParser extends ContentParser {
 			} else {
 				contentFileName = "compositeContent"
 				lastModified = lastModifiedXmlUrl(url, contentFileName)
-				if (lastModified.longValue > -1) {
-
-					// ignore time stamp of composite update site
-					// localMap.put(urlStr, lastModified)
-					val compositeContent = getXmlContent(url, contentFileName)
-
-					//localContents.put(urlStr, compositeContent)
-					localMap.putAll(parseTimestamps(compositeContent, url, localContents, contentHandler))
-				} else {
-
-					// ignore time stamp of composite update site
-					// lastModified = lastModifiedJarUrl(url, contentFileName)
-					localMap.put(urlStr, lastModified)
-					val compositeContent = getJarContent(url, contentFileName)
-
-					//localContents.put(urlStr, compositeContent)
-					localMap.putAll(parseTimestamps(compositeContent, url, localContents, contentHandler))
-				}
+				val compositeContent = getXmlContent(url, contentFileName)
+				val childLocationTimestamps = parseTimestamps(compositeContent, url, localContents, contentHandler) 
+				localMap.putAll(childLocationTimestamps)
+            localMap.put(urlStr, #[childLocationTimestamps.values.max, lastModified].max)
 			}
 		}
 		localMap
@@ -265,7 +251,7 @@ class ContentJarParser extends ContentParser {
 		return dbTimestamp < remoteTimestamp
 	}
 
-	def private Map<String, Long> getTimestamps(String url, Map<String, String> localContents, ContentXmlHandler contentHandler) {
+	def Map<String, Long> getTimestamps(String url, Map<String, String> localContents, ContentXmlHandler contentHandler) {
 		if (locationToTimestamp === null || !locationToTimestamp.keySet.contains(url)) {
 			locationToTimestamp = getInternalTimestamps(url, localContents, contentHandler)
 		}
@@ -275,12 +261,11 @@ class ContentJarParser extends ContentParser {
 	def void save(String url, ContentXmlHandler contentHandler) {
 		val urlToTimestamps = getTimestamps(url, newHashMap, contentHandler)
 		val locationManager = new LocationManager();
+		locationManager.getTimestamps(urlToTimestamps)
 		for (entry : contentHandler.urlToIdToVersion.entrySet) {
 			locationManager.saveLocation(urlToTimestamps.get(entry.key), entry.key, entry.value)
 		}
-		if (urlToTimestamps.get(url) !== null) {
-			locationManager.saveCompositeLocation(url, urlToTimestamps.get(url), urlToTimestamps.keySet)
-		}
+		locationManager.saveCompositeLocation(url, urlToTimestamps.get(url) ?: -1L, urlToTimestamps.keySet)
 	}
 
 	def beginSession() {

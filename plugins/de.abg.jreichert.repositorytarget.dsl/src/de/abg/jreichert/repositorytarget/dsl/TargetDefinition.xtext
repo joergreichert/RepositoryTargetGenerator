@@ -4,7 +4,9 @@ generate targetDefinition "http://www.abg.de/jreichert/TargetDefinition"
 
 Target:
 	'TargetDefinition' name=STRING
-	('targetFile' '=' targetFileName=ID)?
+   ('targetFile' '=' targetFileName=ID)?
+	('cacheExpirationAfterSeconds' '=' cacheExpirationAfterSeconds=VERSION)?
+   ('mirrorURL' '=' mirror=STRING)?
 	('categories' '{'
 		categories+=Category (',' categories+=Category)*
 	'}')?	

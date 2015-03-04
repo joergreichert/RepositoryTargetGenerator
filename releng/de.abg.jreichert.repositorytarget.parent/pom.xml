@@ -108,7 +108,7 @@
 					<configuration>
 						<useUIHarness>false</useUIHarness>
 						<useUIThread>false</useUIThread>
-						<argLine>${memoryArgs} ${ui.test.vmargs} ${it.coverage.argLine} ${loggingArgs}</argLine>
+						<argLine>${memoryArgs} ${ui.test.vmargs} ${coverageAgent} ${loggingArgs}</argLine>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -164,11 +164,7 @@
 					<artifactId>maven-release-plugin</artifactId>
 					<version>${maven-release-plugin-version}</version>
 					<configuration>
-						<preparationGoals>clean -DnewVersion=${releaseVersion}
-							-Dprudent=true
-							org.eclipse.tycho:tycho-versions-plugin:set-version
-							verify
-							scm:checkin</preparationGoals>
+						<preparationGoals>clean -DnewVersion=${releaseVersion} -Dprudent=true org.eclipse.tycho:tycho-versions-plugin:set-version verify scm:checkin</preparationGoals>
 						<arguments>-Prelease</arguments>
 					</configuration>
 				</plugin>
@@ -333,7 +329,76 @@
                      </pluginExecutions>
                   </lifecycleMappingMetadata>
                </configuration>
-            </plugin>				
+            </plugin>	
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.1</version>
+				<configuration>
+					<excludePackageNames>org.eclipse.*:*.parser.*</excludePackageNames>
+					<encoding>UTF-8</encoding>
+					<minmemory>128m</minmemory>
+					<maxmemory>800m</maxmemory>
+					<outputDirectory>${project.build.directory}/javadoc</outputDirectory>
+					<reportOutputDirectory>${project.reporting.outputDirectory}</reportOutputDirectory>
+					<additionalparam>-Xdoclint:none</additionalparam>
+					<quiet>true</quiet>
+					<locale>de_DE</locale>
+					<tags>
+						<tag>
+							<name>startuml</name>
+							<placement>X</placement>
+						</tag>
+						<tag>
+							<name>enduml</name>
+							<placement>X</placement>
+						</tag>
+						<tag>
+							<name>generated</name>
+							<placement>X</placement>
+						</tag>
+					</tags>
+				</configuration>				
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+				  <reportPlugins>
+					<plugin>
+					  <groupId>org.apache.maven.plugins</groupId>
+					  <artifactId>maven-javadoc-plugin</artifactId>
+					  <configuration>
+						<excludePackageNames>org.eclipse.*:*.parser.*</excludePackageNames>
+						<encoding>UTF-8</encoding>
+						<minmemory>128m</minmemory>
+						<maxmemory>800m</maxmemory>
+						<outputDirectory>${project.build.directory}/javadoc</outputDirectory>
+						<reportOutputDirectory>${project.reporting.outputDirectory}</reportOutputDirectory>
+						<additionalparam>-Xdoclint:none</additionalparam>
+						<quiet>true</quiet>
+						<locale>de_DE</locale>
+						<tags>
+							<tag>
+								<name>startuml</name>
+								<placement>X</placement>
+							</tag>
+							<tag>
+								<name>enduml</name>
+								<placement>X</placement>
+							</tag>
+							<tag>
+								<name>generated</name>
+								<placement>X</placement>
+							</tag>
+						</tags>
+					  </configuration>
+					</plugin>
+				  </reportPlugins>
+				</configuration>
+			  </plugin>					
+
 			</plugins>
 		</pluginManagement>
 	</build>
@@ -552,11 +617,16 @@
 		</profile>
 		<profile>
 			<id>codeCoverage</id>
+			<activation>
+				<property>
+					<name>codeCoverage</name>
+				</property>
+			</activation>
 			<properties>
 				<jacoco.propertyName>coverageAgent</jacoco.propertyName>
 				<jacoco.append>true</jacoco.append>
-				<jacoco.destFile>${session.executionRootDirectory}/../org.eclipse.xtext.example.fowlerdsl.parent/target/jacoco.exec</jacoco.destFile>
-				<jacoco.it.destFile>${session.executionRootDirectory}/../org.eclipse.xtext.example.fowlerdsl.parent/target/jacoco_it.exec</jacoco.it.destFile>
+				<!--jacoco.destFile>${session.executionRootDirectory}/../../plugins/de.abg.jreichert.repositorytarget.activeannotations/target/jacoco.exec</jacoco.destFile-->
+				<!--jacoco.it.destFile>${session.executionRootDirectory}/../../plugins/de.abg.jreichert.repositorytarget.activeannotations/target/jacoco_it.exec</jacoco.it.destFile-->
 				<!--jacoco.sessionId>junit4runnerSession</jacoco.sessionId -->
 				<!--jacoco.dumpOnExit>true</jacoco.dumpOnExit -->
 				<!--jacoco.output>file</jacoco.output -->
@@ -592,6 +662,16 @@
 									<propertyName>it.coverage.argLine</propertyName>
 								</configuration>
 							</execution>
+                             <execution>
+              					  <id>jacoco-site</id>
+								  <phase>verify</phase>
+					                <goals>
+					                    <goal>report-integration</goal>
+					                </goals>
+					                <configuration>
+					                   	 <dataFile>${jacoco.destFile}</dataFile>
+					                </configuration>
+           					 </execution>
 						</executions>
 					</plugin>
 				</plugins>
@@ -611,6 +691,124 @@
 				</plugins>
 			</build>
 		</profile>
+		<profile>
+			<id>publishJavadoc</id>
+			<build>
+				<plugins>
+					 <plugin>
+						  <groupId>com.github.jeluard</groupId>
+						  <artifactId>plantuml-maven-plugin</artifactId>
+						  <version>7941</version>
+						  <configuration>
+							<sourceFiles>
+							  <directory>${basedir}</directory>
+							  <includes>
+								<include>**/*.java</include>
+								<include>**/*.xtend</include>
+							  </includes>
+							  <excludes>
+								<exclude>**/xtend-gen/**/*.java</exclude>
+							  </excludes>
+							</sourceFiles>
+							<outputInSourceDirectory>true</outputInSourceDirectory>
+							<!--outputDirectory>${project.build.directory}/site/apidocs</outputDirectory-->
+						  </configuration>
+						  <executions>
+							<execution>
+								<id>default</id>
+								<phase>none</phase>
+								<goals>
+									<goal>generate</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>symphony-plantuml</id>
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>generate</goal>
+								</goals>
+							</execution>
+						  </executions>
+					 </plugin>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>1.8</version>
+						<executions>
+						  <execution>
+							<id>plantuml-file-copy</id>
+							<phase>generate-resources</phase>
+							<configuration>
+							  <target>
+								<!-- Windows copy -->
+								<copy todir="${project.build.directory}/site/apidocs">
+									<fileset dir="${basedir}" casesensitive="false">
+										<include name="**/*.png"/>
+									</fileset>
+									<mapper type="regexp" from=".*\\?src\\(.*\.png)" to="\1" />
+								</copy>
+								<!-- Unix/MacOS copy -->
+								<copy todir="${project.build.directory}/site/apidocs">
+									<fileset dir="${basedir}" casesensitive="true">
+										<include name="**/*.png"/>
+									</fileset>
+									<mapper type="regexp" from=".*/?src/(.*\.png)" to="\1" />
+								</copy>
+							  </target>
+							</configuration>
+							<goals>
+							  <goal>run</goal>
+							</goals>
+						  </execution>
+						</executions>
+					  </plugin>				 
+					 <plugin>
+						<groupId>org.eclipse.tycho.extras</groupId>
+						<artifactId>tycho-document-bundle-plugin</artifactId>
+						<version>${tycho-version}</version>
+						<!-- execution must be in the bundle that should become the doc plug-in -->
+						<!--executions>
+							<execution>
+								<id>symphony-document-bundle</id>
+								<phase>process-classes</phase>
+								<goals>
+									<goal>javadoc</goal>
+								</goals>
+							</execution>
+						</executions-->
+						<configuration>
+							<skipTocGen>true</skipTocGen>
+							<outputDirectory>${project.build.directory}/site/reference-api/</outputDirectory>						
+							<tocFile>${project.build.directory}/site/tocjavadoc.xml</tocFile>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+			<reporting>
+				<plugins>
+					<plugin>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<reportSets>
+							<reportSet>
+								<id>default-javadoc</id>
+								<configuration>
+								</configuration>
+								<reports>
+									<report>javadoc</report>
+								</reports>
+							</reportSet>
+							<reportSet>
+								<id>aggregate-javadoc</id>
+								<configuration>
+								</configuration>
+								<reports>
+									<report>aggregate</report>
+								</reports>
+							</reportSet>
+						</reportSets>
+					</plugin>
+				</plugins>
+			</reporting>
+		</profile>		
 	</profiles>
 
 	<dependencyManagement>

@@ -12,6 +12,19 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
+/**
+ * Demonstration for PlantUML.
+ * <p>
+ * Example of use:
+ * <p>
+ * <img src="SessionManager.png">
+ */
+/*
+ * @startuml
+ * Bob -> Alice : hello
+ * Alice --> Bob : OK
+ * @enduml
+ */
 @SuppressWarnings("javadoc")
 public class SessionManager {
 

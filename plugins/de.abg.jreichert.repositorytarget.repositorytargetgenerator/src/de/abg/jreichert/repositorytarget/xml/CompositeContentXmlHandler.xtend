@@ -3,9 +3,8 @@ package de.abg.jreichert.repositorytarget.xml
 import java.util.List
 import org.xml.sax.Attributes
 import org.xml.sax.SAXException
-import org.xml.sax.helpers.DefaultHandler
 
-class CompositeContentXmlHandler extends DefaultHandler {
+class CompositeContentXmlHandler extends P2TimestampContentXmlHandler {
 
 	private String location;
 	private val children = <String>newArrayList()
@@ -19,12 +18,9 @@ class CompositeContentXmlHandler extends DefaultHandler {
 		}
 	}
 
-	override characters(char[] ch, int start, int length)
-			throws SAXException {
-	}
-
 	override startElement(String uri, String localName, String qName,
 			Attributes atts) throws SAXException {
+		super.startElement(uri, localName, qName, atts)	   
 		if (localName.equals("child")) {
 			child = atts.getValue("location");
 			if (child !== null) {
@@ -42,7 +38,7 @@ class CompositeContentXmlHandler extends DefaultHandler {
 			}
 		}
 	}
-
+	
 	def List<String> getLocations() {
 		return children;
 	}

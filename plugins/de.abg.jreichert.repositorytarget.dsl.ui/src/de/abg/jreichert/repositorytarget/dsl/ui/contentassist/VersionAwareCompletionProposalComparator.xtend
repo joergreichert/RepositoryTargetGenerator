@@ -22,7 +22,12 @@ class VersionAwareCompletionProposalComparator extends ICompletionProposalCompar
            super.compare(o1, o2) 
          }
       } else {
-        -result 
+         if(o1.priority == TargetDefinitionProposalProvider.VERSION_PRIORITY || 
+            o2.priority == TargetDefinitionProposalProvider.VERSION_PRIORITY) {
+            -result
+         } else {
+            result
+         } 
       }
    }
    

@@ -711,7 +711,6 @@
 							  </excludes>
 							</sourceFiles>
 							<outputInSourceDirectory>true</outputInSourceDirectory>
-							<!--outputDirectory>${project.build.directory}/site/apidocs</outputDirectory-->
 						  </configuration>
 						  <executions>
 							<execution>
@@ -722,7 +721,7 @@
 								</goals>
 							</execution>
 							<execution>
-								<id>symphony-plantuml</id>
+								<id>rtg-plantuml</id>
 								<phase>generate-sources</phase>
 								<goals>
 									<goal>generate</goal>
@@ -765,16 +764,6 @@
 						<groupId>org.eclipse.tycho.extras</groupId>
 						<artifactId>tycho-document-bundle-plugin</artifactId>
 						<version>${tycho-version}</version>
-						<!-- execution must be in the bundle that should become the doc plug-in -->
-						<!--executions>
-							<execution>
-								<id>symphony-document-bundle</id>
-								<phase>process-classes</phase>
-								<goals>
-									<goal>javadoc</goal>
-								</goals>
-							</execution>
-						</executions-->
 						<configuration>
 							<skipTocGen>true</skipTocGen>
 							<outputDirectory>${project.build.directory}/site/reference-api/</outputDirectory>						

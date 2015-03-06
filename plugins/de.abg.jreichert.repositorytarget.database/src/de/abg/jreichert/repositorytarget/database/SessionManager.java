@@ -12,19 +12,6 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
-/**
- * Demonstration for PlantUML.
- * <p>
- * Example of use:
- * <p>
- * <img src="SessionManager.png">
- */
-/*
- * @startuml
- * Bob -> Alice : hello
- * Alice --> Bob : OK
- * @enduml
- */
 @SuppressWarnings("javadoc")
 public class SessionManager {
 
@@ -33,19 +20,19 @@ public class SessionManager {
 	static {
 		try {
 			Configuration cfg = new Configuration()
-					.addAnnotatedClass(Location.class)
-					.addAnnotatedClass(Unit.class)
-					.addAnnotatedClass(Version.class)
-					.setProperty("hibernate.dialect",
-							de.abg.jreichert.repositorytarget.hibernate.SQLiteDialect.class.getName())
+			.addAnnotatedClass(Location.class)
+			.addAnnotatedClass(Unit.class)
+			.addAnnotatedClass(Version.class)
+			.setProperty("hibernate.dialect",
+					de.abg.jreichert.repositorytarget.hibernate.SQLiteDialect.class.getName())
 					.setProperty("hibernate.connection.driver_class",
 							org.sqlite.JDBC.class.getName())
-					.setProperty("hibernate.show_sql", "false")
-					.setProperty("hibernate.format_sql", "false")
-					.setProperty("hibernate.connection.username", "")
-					.setProperty("hibernate.connection.password", "")
-					.setProperty("hibernate.current_session_context_class", "thread")
-					.setProperty("connection.pool_size", "1");
+							.setProperty("hibernate.show_sql", "false")
+							.setProperty("hibernate.format_sql", "false")
+							.setProperty("hibernate.connection.username", "")
+							.setProperty("hibernate.connection.password", "")
+							.setProperty("hibernate.current_session_context_class", "thread")
+							.setProperty("connection.pool_size", "1");
 
 			if (Platform.isRunning()) {
 				IPath path = Activator.getDefault().getStateLocation()
@@ -74,7 +61,7 @@ public class SessionManager {
 						"jdbc:sqlite:" + path);
 			}
 			ServiceRegistry serviceRegistry = new ServiceRegistryBuilder()
-					.applySettings(cfg.getProperties()).buildServiceRegistry();
+			.applySettings(cfg.getProperties()).buildServiceRegistry();
 			ClassLoader oldClassLoader = Thread.currentThread().getContextClassLoader();
 			try {
 				Thread.currentThread().setContextClassLoader(Location.class.getClassLoader());
@@ -84,10 +71,10 @@ public class SessionManager {
 			}
 		} catch (Exception e) {
 			Activator
-					.getDefault()
-					.getLog()
-					.log(new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(),
-							e.getMessage(), e));
+			.getDefault()
+			.getLog()
+			.log(new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(),
+					e.getMessage(), e));
 			throw new RuntimeException(e);
 		}
 	}

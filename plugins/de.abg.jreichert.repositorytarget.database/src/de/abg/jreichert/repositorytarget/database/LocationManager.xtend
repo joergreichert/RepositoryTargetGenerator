@@ -18,19 +18,6 @@ import org.hibernate.criterion.Restrictions
 import org.sculptor.framework.accessapi.ConditionalCriteriaBuilder
 import java.text.SimpleDateFormat
 
-/**
- * Demönstration for PlantUML.
- * <p>
- * Example of use:
- * <p>
- * <img src="LocationManager.png">
- */
-/*
- * @startuml
- * Bob -> Alice : hello
- * Alice --> Bob : OK
- * @enduml
- */
 class LocationManager {
 
 	def getById(Long id) {

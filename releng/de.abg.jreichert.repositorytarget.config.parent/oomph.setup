@@ -1632,6 +1632,8 @@
           name="org.xpect.sdk.feature.group"/>
       <requirement
           name="org.eclipse.jdt.junit.runners.feature.feature.group"/>
+      <requirement
+          name="de.itemis.xtext.antlr.sdk.feature.group"/>
       <sourceLocator
           rootFolder="${git.clone.rtg.location}"
           locateNestedProjects="true"/>

@@ -74,13 +74,45 @@
       <requirement
           name="org.eclipse.emf.sdk.feature.group"/>
       <requirement
-          name="org.eclipse.xtext.sdk.feature.group"/>
+          name="org.eclipse.xtext.sdk.feature.group">
+        <annotation
+            source="http://www.eclipse.org/oomph/setup/FeatureSubstitution">
+          <detail
+              key="versionRange">
+            <value>[${xtext.version.lower.range},${xtext.version.upper.range})</value>
+          </detail>
+        </annotation>
+      </requirement>
       <requirement
-          name="org.eclipse.xtend.sdk.feature.group"/>
+          name="org.eclipse.xtend.sdk.feature.group">
+        <annotation
+            source="http://www.eclipse.org/oomph/setup/FeatureSubstitution">
+          <detail
+              key="versionRange">
+            <value>[${xtext.version.lower.range},${xtext.version.upper.range})</value>
+          </detail>
+        </annotation>
+      </requirement>
       <requirement
-          name="org.eclipse.emf.mwe2.language.sdk.feature.group"/>
+          name="org.eclipse.emf.mwe2.language.sdk.feature.group">
+        <annotation
+            source="http://www.eclipse.org/oomph/setup/FeatureSubstitution">
+          <detail
+              key="versionRange">
+            <value>[${xtext.version.lower.range},${xtext.version.upper.range})</value>
+          </detail>
+        </annotation>
+      </requirement>
       <requirement
-          name="org.eclipse.emf.mwe2.runtime.sdk.feature.group"/>
+          name="org.eclipse.emf.mwe2.runtime.sdk.feature.group">
+        <annotation
+            source="http://www.eclipse.org/oomph/setup/FeatureSubstitution">
+          <detail
+              key="versionRange">
+            <value>[${xtext.version.lower.range},${xtext.version.upper.range})</value>
+          </detail>
+        </annotation>
+      </requirement>
       <repository
           url="${emf.p2.uri}"/>
       <repository
@@ -1625,9 +1657,25 @@
       <requirement
           name="org.eclipse.emf.sdk.feature.group"/>
       <requirement
-          name="org.eclipse.xtext.sdk.feature.group"/>
+          name="org.eclipse.xtext.sdk.feature.group">
+        <annotation
+            source="http://www.eclipse.org/oomph/setup/FeatureSubstitution">
+          <detail
+              key="versionRange">
+            <value>[${xtext.version.lower.range},${xtext.version.upper.range})</value>
+          </detail>
+        </annotation>
+      </requirement>
       <requirement
-          name="org.eclipse.xtend.sdk.feature.group"/>
+          name="org.eclipse.xtend.sdk.feature.group">
+        <annotation
+            source="http://www.eclipse.org/oomph/setup/FeatureSubstitution">
+          <detail
+              key="versionRange">
+            <value>[${xtext.version.lower.range},${xtext.version.upper.range})</value>
+          </detail>
+        </annotation>
+      </requirement>
       <requirement
           name="org.xpect.sdk.feature.group"/>
       <requirement
@@ -1732,6 +1780,16 @@
         xsi:type="setup:VariableTask"
         name="target.generate.versions"
         value="true"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="xtext.version.lower.range"
+        value="2.7"
+        label=""/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="xtext.version.upper.range"
+        value="2.8"
+        label=""/>
   </stream>
   <stream name="release">
     <setupTask
@@ -1747,8 +1805,43 @@
         xsi:type="setup:VariableTask"
         name="target.generate.versions"
         value="true"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="xtext.version.lower.range"
+        value="2.7"
+        label=""/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="xtext.version.upper.range"
+        value="2.8"
+        label=""/>
   </stream>
   <stream name="xtext28">
+    <setupTask
+        xsi:type="setup:VariableTask"
+        type="URI"
+        name="emf.p2.uri"
+        value="http://download.eclipse.org/modeling/emf/emf/updates/releases/"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="xtext.p2.uri"
+        value="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="target.generate.versions"
+        value="true"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="xtext.version.lower.range"
+        value="2.8"
+        label=""/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="xtext.version.upper.range"
+        value="2.9"
+        label=""/>
+  </stream>
+  <stream name="xtext29">
     <setupTask
         xsi:type="setup:VariableTask"
         type="URI"
@@ -1762,6 +1855,16 @@
         xsi:type="setup:VariableTask"
         name="target.generate.versions"
         value="false"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="xtext.version.lower.range"
+        value="2.9"
+        label=""/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="xtext.version.upper.range"
+        value="3.0"
+        label=""/>
   </stream>
   <logicalProjectContainer
       xsi:type="setup:Project"

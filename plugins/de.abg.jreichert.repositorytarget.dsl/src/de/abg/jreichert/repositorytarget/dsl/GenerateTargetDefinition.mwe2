@@ -17,7 +17,7 @@ Workflow {
     	resourceSet = org.eclipse.xtext.resource.XtextResourceSet:theResourceSet {}
 		platformUri = "${runtimeProject}/.."
     }
-
+    
 	component = DirectoryCleaner {  directory = "${runtimeProject}/src-gen"     }
 	component = DirectoryCleaner {  directory = "${runtimeProject}/model"       }
 	component = DirectoryCleaner {  directory = "${runtimeProject}.ui/src-gen"  }

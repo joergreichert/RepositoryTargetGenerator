@@ -99,7 +99,7 @@
             source="http://www.eclipse.org/oomph/setup/FeatureSubstitution">
           <detail
               key="versionRange">
-            <value>[${xtext.version.lower.range},${xtext.version.upper.range})</value>
+            <value>[${mwe2.version.lower.range},${mwe2.version.upper.range})</value>
           </detail>
         </annotation>
       </requirement>
@@ -109,7 +109,7 @@
             source="http://www.eclipse.org/oomph/setup/FeatureSubstitution">
           <detail
               key="versionRange">
-            <value>[${xtext.version.lower.range},${xtext.version.upper.range})</value>
+            <value>[${mwe2.version.lower.range},${mwe2.version.upper.range})</value>
           </detail>
         </annotation>
       </requirement>
@@ -1790,6 +1790,16 @@
         name="xtext.version.upper.range"
         value="2.8"
         label=""/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="mwe2.version.lower.range"
+        value="2.7"
+        label=""/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="mwe2.version.upper.range"
+        value="2.8"
+        label=""/>
   </stream>
   <stream name="release">
     <setupTask
@@ -1813,6 +1823,16 @@
     <setupTask
         xsi:type="setup:VariableTask"
         name="xtext.version.upper.range"
+        value="2.8"
+        label=""/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="mwe2.version.lower.range"
+        value="2.7"
+        label=""/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="mwe2.version.upper.range"
         value="2.8"
         label=""/>
   </stream>
@@ -1840,6 +1860,16 @@
         name="xtext.version.upper.range"
         value="2.9"
         label=""/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="mwe2.version.lower.range"
+        value="2.7"
+        label=""/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="mwe2.version.upper.range"
+        value="2.9"
+        label=""/>
   </stream>
   <stream name="xtext29">
     <setupTask
@@ -1863,6 +1893,16 @@
     <setupTask
         xsi:type="setup:VariableTask"
         name="xtext.version.upper.range"
+        value="3.0"
+        label=""/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="mwe2.version.lower.range"
+        value="2.7"
+        label=""/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="mwe2.version.upper.range"
         value="3.0"
         label=""/>
   </stream>

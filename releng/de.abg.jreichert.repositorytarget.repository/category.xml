@@ -1,38 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.eclipse.sdk_0.0.0.jar" id="org.eclipse.sdk" version="0.0.0">
-      <category name="3rdparty"/>
-   </feature>
-   <feature url="features/org.eclipse.pde_0.0.0.jar" id="org.eclipse.pde" version="0.0.0">
-      <category name="3rdparty"/>
-   </feature>
-   <feature url="features/org.eclipse.emf.sdk_0.0.0.jar" id="org.eclipse.emf.sdk" version="0.0.0">
-      <category name="3rdparty"/>
-   </feature>
-   <feature url="features/org.eclipse.xtext.redist_0.0.0.jar" id="org.eclipse.xtext.redist" version="0.0.0">
-      <category name="3rdparty"/>
-   </feature>
-   <feature url="features/org.eclipse.xtend.sdk_0.0.0.jar" id="org.eclipse.xtend.sdk" version="0.0.0">
-      <category name="3rdparty"/>
-   </feature>
-   <feature url="features/org.eclipse.emf.mwe2.language.sdk_0.0.0.jar" id="org.eclipse.emf.mwe2.language.sdk" version="0.0.0">
-      <category name="3rdparty"/>
-   </feature>
-   <feature url="features/org.eclipse.emf.mwe2.runtime.sdk_0.0.0.jar" id="org.eclipse.emf.mwe2.runtime.sdk" version="0.0.0">
-      <category name="3rdparty"/>
-   </feature>
-   <feature url="features/de.itemis.xtext.antlr.sdk_0.0.0.jar" id="de.itemis.xtext.antlr.sdk" version="0.0.0">
-      <category name="3rdparty"/>
-   </feature>
-   <feature url="features/de.itemis.xtext.antlr.feature_0.0.0.jar" id="de.itemis.xtext.antlr.feature" version="0.0.0">
-      <category name="3rdparty"/>
-   </feature>
-   <feature url="features/org.xpect.sdk_0.0.0.jar" id="org.xpect.sdk" version="0.0.0">
-      <category name="3rdparty"/>
-   </feature>
-   <category-def name="3rdparty" label="Third Party">
-      <description>
-         Repository Target Generator - Eclipse 4.4M2, Xtext/Xtend 2.7.0
-      </description>
-   </category-def>
+	<feature url="features/org.eclipse.platform_0.0.0.jar" id="org.eclipse.platform" version="0.0.0">
+		<category name="3rdparty"/>
+	</feature>
+	<feature url="features/org.eclipse.emf.sdk_0.0.0.jar" id="org.eclipse.emf.sdk" version="0.0.0">
+		<category name="3rdparty"/>
+	</feature>
+	<feature url="features/org.eclipse.xtext.sdk_0.0.0.jar" id="org.eclipse.xtext.sdk" version="0.0.0">
+		<category name="3rdparty"/>
+	</feature>
+	<feature url="features/de.itemis.xtext.antlr.sdk_0.0.0.jar" id="de.itemis.xtext.antlr.sdk" version="0.0.0">
+		<category name="3rdparty"/>
+	</feature>
+	<feature url="features/org.eclipse.jdt.junit.runners.feature_0.0.0.jar" id="org.eclipse.jdt.junit.runners.feature" version="0.0.0">
+		<category name="3rdparty"/>
+	</feature>
+	<feature url="features/org.xpect.sdk_0.0.0.jar" id="org.xpect.sdk" version="0.0.0">
+		<category name="3rdparty"/>
+	</feature>
+	<category-def name="3rdparty" label="3rd party dependencies" />
 </site>

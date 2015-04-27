@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.8"?>
-<target name="Generated from Repository target generator" sequenceNumber="72">
+<target name="Generated from Repository target generator" sequenceNumber="77">
   <locations>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
-      <unit id="org.eclipse.platform.feature.group" version="4.4.0.v20140925-0400"/>
-      <repository location="http://download.eclipse.org/releases/luna"/>
-    </location>
-    <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
-      <unit id="org.eclipse.e4.rcp.R441patch.feature.group" version="1.0.0"/>
-      <unit id="org.eclipse.platform.feature.group" version="4.4.0.v20140925-0400"/>
+      <unit id="org.eclipse.jdt.feature.group" version="3.10.1.v20150204-1700"/>
+      <unit id="org.eclipse.pde.ui" version="3.8.101.v20141001-1400"/>
+      <unit id="org.eclipse.platform.feature.group" version="4.4.2.v20150204-1700"/>
+      <unit id="org.objectweb.asm" version="5.0.1.v201404251740"/>
       <repository location="http://download.eclipse.org/eclipse/updates/4.4"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
-      <unit id="org.eclipse.emf.sdk.feature.group" version="2.11.0.v20150223-0306"/>
-      <repository location="http://download.eclipse.org/modeling/emf/emf/updates/interim/"/>
+      <unit id="com.google.guava" version="15.0.0.v201403281430"/>
+      <unit id="org.eclipse.draw2d" version="3.9.101.201408150207"/>
+      <unit id="org.eclipse.emf.sdk.feature.group" version="2.10.2.v20150123-0452"/>
+      <unit id="org.eclipse.xpand" version="2.0.0.v201406030414"/>
+      <unit id="org.eclipse.xtend.typesystem.emf" version="2.0.0.v201406030414"/>
+      <repository location="http://download.eclipse.org/releases/luna"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
-      <unit id="org.eclipse.emf.sdk.feature.group" version="2.11.0.v20150223-0306"/>
-      <unit id="org.eclipse.xtext.sdk.feature.group" version="2.8.0.v201502240732"/>
-      <repository location="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/latest/"/>
+      <unit id="org.eclipse.xtext.sdk.feature.group" version="2.8.2.v201504100559"/>
+      <repository location="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
-      <unit id="de.itemis.xtext.antlr" version="2.1.1.v201405091103"/>
+      <unit id="de.itemis.xtext.antlr.sdk.feature.group" version="2.1.1.v201405091103"/>
       <repository location="http://download.itemis.com/updates/releases/2.1.1/"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">

@@ -20,13 +20,13 @@ public class SessionManager {
 	static {
 		try {
 			Configuration cfg = new Configuration()
-					.addAnnotatedClass(Location.class)
-					.addAnnotatedClass(Unit.class)
-					.addAnnotatedClass(Version.class)
-					.setProperty("hibernate.dialect",
-							de.abg.jreichert.repositorytarget.hibernate.SQLiteDialect.class.getName())
-					.setProperty("hibernate.connection.driver_class",
-							org.sqlite.JDBC.class.getName())
+			.addAnnotatedClass(Location.class)
+			.addAnnotatedClass(Unit.class)
+			.addAnnotatedClass(Version.class)
+					// .setProperty("hibernate.dialect",
+					// de.abg.jreichert.repositorytarget.hibernate.SQLiteDialect.class.getName())
+			.setProperty("hibernate.connection.driver_class",
+					org.sqlite.JDBC.class.getName())
 					.setProperty("hibernate.show_sql", "false")
 					.setProperty("hibernate.format_sql", "false")
 					.setProperty("hibernate.connection.username", "")
@@ -61,7 +61,7 @@ public class SessionManager {
 						"jdbc:sqlite:" + path);
 			}
 			ServiceRegistry serviceRegistry = new ServiceRegistryBuilder()
-					.applySettings(cfg.getProperties()).buildServiceRegistry();
+			.applySettings(cfg.getProperties()).buildServiceRegistry();
 			ClassLoader oldClassLoader = Thread.currentThread().getContextClassLoader();
 			try {
 				Thread.currentThread().setContextClassLoader(Location.class.getClassLoader());
@@ -71,10 +71,10 @@ public class SessionManager {
 			}
 		} catch (Exception e) {
 			Activator
-					.getDefault()
-					.getLog()
-					.log(new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(),
-							e.getMessage(), e));
+			.getDefault()
+			.getLog()
+			.log(new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(),
+					e.getMessage(), e));
 			throw new RuntimeException(e);
 		}
 	}

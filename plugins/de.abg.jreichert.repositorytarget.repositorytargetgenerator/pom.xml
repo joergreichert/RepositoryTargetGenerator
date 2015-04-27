@@ -25,12 +25,6 @@
 								<exclude>.gitignore</exclude>
 							</excludes>
 						</fileset>
-						<fileset>
-							<directory>xtend-gen</directory>
-							<excludes>
-								<exclude>.gitignore</exclude>
-							</excludes>
-						</fileset>
 					</filesets>
 				</configuration>
 			</plugin>

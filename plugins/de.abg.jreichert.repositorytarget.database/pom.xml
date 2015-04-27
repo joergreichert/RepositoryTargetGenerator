@@ -16,7 +16,7 @@
 	<build>
 		<resources>
 			<resource>
-				<directory>${project.build.directory}/xtend-gen</directory>
+				<directory>${project.build.directory}/generated-sources/xtend</directory>
 			</resource>
 		</resources>
 		<plugins>

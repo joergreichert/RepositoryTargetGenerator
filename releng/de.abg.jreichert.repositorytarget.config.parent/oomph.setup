@@ -1705,7 +1705,7 @@
         <repository
             url="http://download.eclipse.org/releases/mars"/>
         <repository
-            url="http://download.eclipse.org/eclipse/updates/4.5milestones"/>
+            url="http://download.eclipse.org/eclipse/updates/4.5"/>
         <repository
             url="${emf.p2.uri}"/>
         <repository
